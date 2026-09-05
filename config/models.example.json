@@ -1,0 +1,23 @@
+{
+  "providers": {
+    "openai":   { "base_url": "https://api.openai.com/v1",              "api_key_env": "IRIS_OPENAI_API_KEY",   "timeout_s": 90 },
+    "zhipu":    { "base_url": "https://open.bigmodel.cn/api/paas/v4",    "api_key_env": "IRIS_ZHIPU_API_KEY",    "timeout_s": 90 },
+    "deepseek": { "base_url": "https://api.deepseek.com/v1",             "api_key_env": "IRIS_DEEPSEEK_API_KEY", "timeout_s": 90 }
+  },
+  "models": {
+    "gpt-6-astra":      { "provider": "openai", "capabilities": ["reasoning", "vision"] },
+    "gpt-5.6-sol":      { "provider": "openai", "capabilities": ["reasoning", "vision"] },
+    "gpt-5.6-terra":    { "provider": "openai", "capabilities": ["reasoning"] },
+    "gpt-5.6-luna":     { "provider": "openai", "capabilities": ["reasoning"] },
+    "glm-5.3":          { "provider": "zhipu",  "capabilities": ["reasoning"] },
+    "glm-5.3-flash":    { "provider": "zhipu",  "capabilities": ["reasoning", "vision"] },
+    "deepseek-v4-pro":  { "provider": "deepseek", "capabilities": ["reasoning"] },
+    "deepseek-v4-flash":{ "provider": "deepseek", "capabilities": ["reasoning"] }
+  },
+  "routes": {
+    "reasoning": { "chain": ["gpt-5.6-sol", "glm-5.3", "deepseek-v4-pro"],
+                   "note": "GPT-6 Astra 未全面开放；全面开放后链首切 gpt-6-astra" },
+    "vision":    { "chain": ["gpt-6-astra", "gpt-5.6-sol", "glm-5.3-flash"],
+                   "note": "DeepSeek 系多模态模型可用后追加 deepseek-v4-flash" }
+  }
+}

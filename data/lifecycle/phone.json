@@ -1,0 +1,22 @@
+{
+ "family": "phone",
+ "source_note": "学术实证（IGI Global 2015, Price and Sales Volume Patterns of Mobile Handsets）：中位机型第 5 销售月约 89%、两年约 47% 上市价。",
+ "curve": [
+  [
+   0,
+   1
+  ],
+  [
+   5,
+   0.89
+  ],
+  [
+   12,
+   0.7
+  ],
+  [
+   24,
+   0.47
+  ]
+ ]
+}

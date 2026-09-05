@@ -1,0 +1,89 @@
+{
+ "products": {},
+ "proxy_demo": {
+  "family": "gpu",
+  "months_since_launch": 1.4,
+  "price_pct": 0.9615,
+  "expect_price": 8652,
+  "proxy": true,
+  "source_note": "量级参考（非精确实证，B01 标定）：媒体转述 idealo 2021 发布半年约 -24%；形状沿用电子耐用品实证（IGI 2015 手机曲线）放缓版。显卡受供需冲击，需异常门控。"
+ },
+ "gate_demo": {
+  "abnormal": false,
+  "reasons": [],
+  "note": "",
+  "vol_threshold": 0.9
+ },
+ "rtx5080": {
+  "promo": {
+   "30": {
+    "horizon_days": 30,
+    "n": 3,
+    "mean_pct": -0.03,
+    "ci95_pct": [
+     -8.58,
+     8.52
+    ],
+    "min_pct": -5.93,
+    "max_pct": 8.49
+   },
+   "60": {
+    "horizon_days": 60,
+    "n": 3,
+    "mean_pct": -0.36,
+    "ci95_pct": [
+     -11.65,
+     10.92
+    ],
+    "min_pct": -8.0,
+    "max_pct": 10.92
+   },
+   "90": {
+    "horizon_days": 90,
+    "n": 3,
+    "mean_pct": 1.88,
+    "ci95_pct": [
+     -10.42,
+     14.18
+    ],
+    "min_pct": -5.15,
+    "max_pct": 14.4
+   }
+  },
+  "supply": {
+   "30": {
+    "horizon_days": 30,
+    "n": 2,
+    "mean_pct": 5.29,
+    "ci95_pct": [
+     -0.9,
+     11.47
+    ],
+    "min_pct": 2.13,
+    "max_pct": 8.44
+   },
+   "60": {
+    "horizon_days": 60,
+    "n": 2,
+    "mean_pct": 6.4,
+    "ci95_pct": [
+     -3.58,
+     16.37
+    ],
+    "min_pct": 1.31,
+    "max_pct": 11.49
+   },
+   "90": {
+    "horizon_days": 90,
+    "n": 2,
+    "mean_pct": 8.05,
+    "ci95_pct": [
+     -7.08,
+     23.18
+    ],
+    "min_pct": 0.33,
+    "max_pct": 15.77
+   }
+  }
+ }
+}

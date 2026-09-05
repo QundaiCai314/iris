@@ -1,0 +1,110 @@
+{
+ "rtx5070-gigabyte-mid": {
+  "n": 5,
+  "bins": [],
+  "brier": 0.2178,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5070-gigabyte-mid",
+  "notes": [
+   "校准样本过少(5)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx5070-gigabyte-mid-pdd": {
+  "n": 5,
+  "bins": [],
+  "brier": 0.2295,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5070-gigabyte-mid-pdd",
+  "notes": [
+   "校准样本过少(5)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx5070-msi-entry": {
+  "n": 5,
+  "bins": [],
+  "brier": 0.3271,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5070-msi-entry",
+  "notes": [
+   "校准样本过少(5)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx5070ti-gigabyte-entry": {
+  "n": 5,
+  "bins": [],
+  "brier": 0.2461,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5070ti-gigabyte-entry",
+  "notes": [
+   "校准样本过少(5)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx5070ti-msi-mid": {
+  "n": 5,
+  "bins": [],
+  "brier": 0.2483,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5070ti-msi-mid",
+  "notes": [
+   "校准样本过少(5)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx5080-asus-tuf-mid": {
+  "n": 6,
+  "bins": [],
+  "brier": 0.4984,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5080-asus-tuf-mid",
+  "notes": [
+   "校准样本过少(6)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx5080-colorful-igame-high": {
+  "n": 6,
+  "bins": [],
+  "brier": 0.59,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5080-colorful-igame-high",
+  "notes": [
+   "校准样本过少(6)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx5080-msi-ventus-entry": {
+  "n": 6,
+  "bins": [],
+  "brier": 0.5175,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5080-msi-ventus-entry",
+  "notes": [
+   "校准样本过少(6)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx5080-msi-ventus-entry-pdd": {
+  "n": 6,
+  "bins": [],
+  "brier": 0.6667,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx5080-msi-ventus-entry-pdd",
+  "notes": [
+   "校准样本过少(6)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ }
+}

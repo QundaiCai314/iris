@@ -1,0 +1,82 @@
+[
+ {
+  "event_id": "launch-5080",
+  "type": "launch",
+  "title": "RTX 5080 发布",
+  "date": "2025-01-30",
+  "scope": "rtx5080",
+  "confidence": "official"
+ },
+ {
+  "event_id": "launch-5070ti",
+  "type": "launch",
+  "title": "RTX 5070 Ti 发布",
+  "date": "2025-02-20",
+  "scope": "rtx5070ti",
+  "confidence": "official"
+ },
+ {
+  "event_id": "launch-5070",
+  "type": "launch",
+  "title": "RTX 5070 发布",
+  "date": "2025-03-05",
+  "scope": "rtx5070",
+  "confidence": "official"
+ },
+ {
+  "event_id": "promo-618-2025",
+  "type": "promo",
+  "title": "2025 618 大促",
+  "date": "2025-06-18",
+  "scope": "all",
+  "confidence": "official"
+ },
+ {
+  "event_id": "promo-1111-2025",
+  "type": "promo",
+  "title": "2025 双11 大促",
+  "date": "2025-11-11",
+  "scope": "all",
+  "confidence": "official"
+ },
+ {
+  "event_id": "promo-618-2026",
+  "type": "promo",
+  "title": "2026 618 大促",
+  "date": "2026-06-18",
+  "scope": "all",
+  "confidence": "official"
+ },
+ {
+  "event_id": "promo-1111-2026",
+  "type": "promo",
+  "title": "2026 双11 大促（预报）",
+  "date": "2026-11-11",
+  "scope": "all",
+  "confidence": "synthetic"
+ },
+ {
+  "event_id": "supply-2025-11",
+  "type": "supply",
+  "title": "行情启动：AI 需求与供给紧张报道",
+  "date": "2025-11-01",
+  "scope": "rtx5080,rtx5070ti",
+  "confidence": "reported"
+ },
+ {
+  "event_id": "supply-2026-05",
+  "type": "supply",
+  "title": "抢购潮与渠道溢价峰值",
+  "date": "2026-05-15",
+  "scope": "rtx5080",
+  "confidence": "reported"
+ },
+ {
+  "event_id": "policy-2026-03",
+  "type": "policy",
+  "title": "显卡进口/税率调整传闻",
+  "date": "2026-03-01",
+  "scope": "all",
+  "confidence": "reported"
+ }
+]

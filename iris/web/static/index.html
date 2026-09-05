@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iris 鸢尾 · 现在买合适吗？</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Iris <span>鸢尾</span></h1>
+    <p class="sub">个人消费「购买时机」量化 Agent —— 贴链接 → 答画像 → 概率化决策卡</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <ol class="steps">
+    <li id="step-i" class="on">① 输入商品</li>
+    <li id="step-q">② 需求画像</li>
+    <li id="step-c">③ 决策卡</li>
+  </ol>
+
+  <!-- 第一步：输入 -->
+  <section id="view-input" class="view">
+    <p class="tip">粘贴商品链接或描述（demo 库覆盖 RTX 5080 / 5070 Ti / 5070；其他品类演示闸门流程）。</p>
+    <textarea id="text" rows="2" placeholder="例如：https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G"></textarea>
+    <div class="row">
+      <button id="btn-resolve">解析商品</button>
+      <span class="examples">
+        示例：
+        <button class="chip" data-ex="https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G">RTX 5080 链接</button>
+        <button class="chip" data-ex="技嘉 RTX 5070 显卡 12G">RTX 5070 描述</button>
+        <button class="chip" data-ex="布洛芬缓释胶囊 退烧止痛药">药品（必需闸门）</button>
+      </span>
+    </div>
+    <div id="resolve-out"></div>
+  </section>
+
+  <!-- 第二步：问卷 -->
+  <section id="view-questions" class="view hidden">
+    <p id="q-flow" class="tip"></p>
+    <div id="q-body"></div>
+    <div id="q-nav" class="row hidden">
+      <button id="btn-prev" class="ghost">← 上一题（可回去修改选项）</button>
+    </div>
+  </section>
+
+  <!-- 第三步：决策卡 -->
+  <section id="view-card" class="view hidden">
+    <div id="no-data" class="panel hidden"></div>
+    <div id="card-root"></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>演示价序列为合成数据（source=synthetic-demo，截至 2026-09-03），结论仅用于演示引擎；
+     概率经校准口径输出，回测不承诺未来。U 参数 A1-A7 为待标定假设，可在卡片「假设编辑器」调整。</p>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

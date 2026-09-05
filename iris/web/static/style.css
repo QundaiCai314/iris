@@ -1,0 +1,61 @@
+:root {
+  --green:#21a366; --yellow:#d99a1b; --red:#d93a3a;
+  --ink:#222; --sub:#666; --line:#e4e4e4; --bg:#faf9f7; --card:#fff;
+}
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; background:var(--bg); color:var(--ink); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+header { background: #1c1f2b; color:#fff; padding: 18px 0 16px; }
+header h1 { margin: 0; font-size: 26px; letter-spacing: 1px; }
+header h1 span { color:#7ab7ff; }
+.sub { margin: 6px 0 0; color:#c9d2e3; font-size: 13px; }
+
+.steps { list-style:none; display:flex; gap:18px; padding:0; margin:16px 0 12px; font-size:14px; color:#999; }
+.steps li { cursor:default; }
+.steps li.on { color:var(--ink); font-weight:700; border-bottom:3px solid #7ab7ff; padding-bottom:3px; }
+
+.view { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 18px 22px; margin-bottom:18px; }
+.tip { color:var(--sub); font-size:13px; margin: 4px 0 10px; }
+textarea { width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; font:inherit; }
+.row { display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap; }
+button { padding:8px 18px; border:0; border-radius:8px; background:#1c1f2b; color:#fff; font-size:14px; cursor:pointer; }
+button.ghost { background:#eee; color:#333; }
+button.chip { background:#eef3fb; color:#1c4f8f; padding:5px 10px; font-size:12px; border:1px solid #cddcf2; }
+button:disabled { opacity:.5; cursor:not-allowed; }
+.hidden { display:none; }
+
+.q-text { font-size:16px; font-weight:600; margin: 6px 0 14px; }
+.q-opt { display:block; width:100%; text-align:left; background:#f6f7fa; border:1px solid var(--line); color:#222; padding:11px 14px; border-radius:8px; margin-bottom:8px; }
+.q-opt:hover { border-color:#7ab7ff; background:#eef5ff; }
+.q-opt.picked { border-color:#1c4f8f; background:#dcebfc; font-weight:600; }
+.progress { color:var(--sub); font-size:12px; margin-bottom: 4px; }
+
+.banner { display:flex; gap:14px; align-items:center; flex-wrap:wrap; padding:14px 16px; border-radius:10px; margin-bottom:14px; color:#fff; }
+.banner .big { font-size:22px; font-weight:800; }
+.banner .mid { font-size:15px; }
+.banner.green { background:var(--green); }
+.banner.yellow { background:var(--yellow); }
+.banner.red { background:var(--red); }
+
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.panel { border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin:10px 0; background:#fff; }
+.panel h3, .panel h4 { margin: 2px 0 8px; }
+.kpi { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin: 8px 0 4px; }
+.kpi div { background:#f6f7fa; border-radius:8px; padding:8px 10px; }
+.kpi b { display:block; font-size:17px; }
+.kpi span { color:var(--sub); font-size:12px; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th, td { border-bottom:1px solid var(--line); padding:6px 8px; text-align:right; }
+th:first-child, td:first-child { text-align:left; }
+tr.best td { background:#f0f7ef; font-weight:700; }
+.cond { padding:8px 10px; border-left:4px solid #7ab7ff; background:#f6f9ff; margin:6px 0; font-size:14px; border-radius:0 8px 8px 0; }
+details { border:1px solid var(--line); border-radius:8px; padding:8px 12px; margin:6px 0; font-size:13px; }
+summary { cursor:pointer; color:#1c4f8f; }
+.light-dot { display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+.light-dot.green { background:var(--green); } .light-dot.yellow { background:var(--yellow); } .light-dot.red { background:var(--red); }
+select { padding:6px 8px; border:1px solid var(--line); border-radius:6px; }
+.editor-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.editor-grid label { font-size:12px; color:var(--sub); display:block; margin-bottom:3px; }
+.muted { color:var(--sub); font-size:12px; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; background:#fde; color:#a44; margin-left:8px; }
+footer { color:#999; font-size:12px; padding: 8px 16px 30px; line-height:1.7; }

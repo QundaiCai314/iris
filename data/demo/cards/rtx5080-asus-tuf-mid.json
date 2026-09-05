@@ -1,0 +1,610 @@
+{
+ "schema_version": "1.0",
+ "meta": {
+  "product_id": "rtx5080",
+  "sku_id": "rtx5080-asus-tuf-mid",
+  "asof_date": "2026-09-03",
+  "generated_at": "2026-09-03",
+  "engine_version": "0.3.0"
+ },
+ "stats": {
+  "asof": "2026-09-03",
+  "last_price": 9024,
+  "lookbacks": {
+   "90": {
+    "n": 91,
+    "min": 8309,
+    "max": 9321,
+    "mean": 8993.96,
+    "median": 9051.0,
+    "iqr": 116.5,
+    "pct_position": 0.3076923076923077
+   },
+   "365": {
+    "n": 366,
+    "min": 6724,
+    "max": 9490,
+    "mean": 8465.06,
+    "median": 8673.0,
+    "iqr": 1024.0,
+    "pct_position": 0.6584699453551912
+   },
+   "730": {
+    "n": 582,
+    "min": 6712,
+    "max": 9490,
+    "mean": 8173.38,
+    "median": 8220.5,
+    "iqr": 1550.25,
+    "pct_position": 0.7852233676975945
+   }
+  },
+  "ma": {
+   "20": 9023.1,
+   "60": 9056.45
+  },
+  "volatility": {
+   "window_days": 90,
+   "annualized": 0.1424,
+   "pct_position": 0.5788561525129983
+  },
+  "trend": -0.0037
+ },
+ "p1": {
+  "30": {
+   "window_days": 30,
+   "drop": 0.05,
+   "asof": "2026-09-03",
+   "last_price": 9024,
+   "threshold": 8572.8,
+   "bucket": 2,
+   "buckets": 4,
+   "percentile_position": 0.6585,
+   "method": "v1-history-frequency",
+   "method_note": "同分位段历史窗口频率；事件相位修正由 M3 提供（v2）",
+   "n": 35,
+   "n_sufficient": true,
+   "min_n": 30,
+   "sample": {
+    "first_date": "2025-02-04",
+    "last_date": "2025-11-28",
+    "span_days": 297,
+    "note": "ok"
+   },
+   "wait_stats": {
+    "n_windows": 35,
+    "saving_pct": 18.2779,
+    "loss_pct": 0.0,
+    "net_pct": 18.2779
+   },
+   "probability": 1.0,
+   "ci95": [
+    0.9011,
+    1.0
+   ],
+   "hits": 35,
+   "direction": "down",
+   "confidence": "sufficient"
+  },
+  "60": {
+   "window_days": 60,
+   "drop": 0.05,
+   "asof": "2026-09-03",
+   "last_price": 9024,
+   "threshold": 8572.8,
+   "bucket": 2,
+   "buckets": 4,
+   "percentile_position": 0.6585,
+   "method": "v1-history-frequency",
+   "method_note": "同分位段历史窗口频率；事件相位修正由 M3 提供（v2）",
+   "n": 35,
+   "n_sufficient": true,
+   "min_n": 30,
+   "sample": {
+    "first_date": "2025-02-04",
+    "last_date": "2025-11-28",
+    "span_days": 297,
+    "note": "ok"
+   },
+   "wait_stats": {
+    "n_windows": 35,
+    "saving_pct": 19.2854,
+    "loss_pct": 0.0,
+    "net_pct": 19.2854
+   },
+   "probability": 1.0,
+   "ci95": [
+    0.9011,
+    1.0
+   ],
+   "hits": 35,
+   "direction": "down",
+   "confidence": "sufficient"
+  },
+  "180": {
+   "window_days": 180,
+   "drop": 0.05,
+   "asof": "2026-09-03",
+   "last_price": 9024,
+   "threshold": 8572.8,
+   "bucket": 2,
+   "buckets": 4,
+   "percentile_position": 0.6585,
+   "method": "v1-history-frequency",
+   "method_note": "同分位段历史窗口频率；事件相位修正由 M3 提供（v2）",
+   "n": 35,
+   "n_sufficient": true,
+   "min_n": 30,
+   "sample": {
+    "first_date": "2025-02-04",
+    "last_date": "2025-11-28",
+    "span_days": 297,
+    "note": "ok"
+   },
+   "wait_stats": {
+    "n_windows": 35,
+    "saving_pct": 19.7249,
+    "loss_pct": 0.0,
+    "net_pct": 19.7249
+   },
+   "probability": 1.0,
+   "ci95": [
+    0.9011,
+    1.0
+   ],
+   "hits": 35,
+   "direction": "down",
+   "confidence": "sufficient"
+  }
+ },
+ "events": {
+  "promo": {
+   "horizons": {
+    "30": {
+     "horizon_days": 30,
+     "n": 3,
+     "mean_pct": -0.03,
+     "ci95_pct": [
+      -8.58,
+      8.52
+     ],
+     "min_pct": -5.93,
+     "max_pct": 8.49
+    },
+    "60": {
+     "horizon_days": 60,
+     "n": 3,
+     "mean_pct": -0.36,
+     "ci95_pct": [
+      -11.65,
+      10.92
+     ],
+     "min_pct": -8.0,
+     "max_pct": 10.92
+    },
+    "90": {
+     "horizon_days": 90,
+     "n": 3,
+     "mean_pct": 1.88,
+     "ci95_pct": [
+      -10.42,
+      14.18
+     ],
+     "min_pct": -5.15,
+     "max_pct": 14.4
+    }
+   },
+   "control_used": false,
+   "control_note": ""
+  },
+  "supply": {
+   "horizons": {
+    "30": {
+     "horizon_days": 30,
+     "n": 2,
+     "mean_pct": 5.29,
+     "ci95_pct": [
+      -0.9,
+      11.47
+     ],
+     "min_pct": 2.13,
+     "max_pct": 8.44
+    },
+    "60": {
+     "horizon_days": 60,
+     "n": 2,
+     "mean_pct": 6.4,
+     "ci95_pct": [
+      -3.58,
+      16.37
+     ],
+     "min_pct": 1.31,
+     "max_pct": 11.49
+    },
+    "90": {
+     "horizon_days": 90,
+     "n": 2,
+     "mean_pct": 8.05,
+     "ci95_pct": [
+      -7.08,
+      23.18
+     ],
+     "min_pct": 0.33,
+     "max_pct": 15.77
+    }
+   },
+   "control_used": true,
+   "control_note": ""
+  },
+  "launch": {
+   "horizons": {
+    "30": {
+     "horizon_days": 30,
+     "n": 1,
+     "mean_pct": 0.44,
+     "ci95_pct": [
+      0.44,
+      0.44
+     ],
+     "min_pct": 0.44,
+     "max_pct": 0.44
+    },
+    "60": {
+     "horizon_days": 60,
+     "n": 1,
+     "mean_pct": 20.22,
+     "ci95_pct": [
+      20.22,
+      20.22
+     ],
+     "min_pct": 20.22,
+     "max_pct": 20.22
+    },
+    "90": {
+     "horizon_days": 90,
+     "n": 1,
+     "mean_pct": 21.44,
+     "ci95_pct": [
+      21.44,
+      21.44
+     ],
+     "min_pct": 21.44,
+     "max_pct": 21.44
+    }
+   },
+   "control_used": true,
+   "control_note": ""
+  },
+  "upcoming": [
+   {
+    "type": "promo",
+    "title": "2026 双11 大促（预报）",
+    "date": "2026-11-11",
+    "days_ahead": 69,
+    "beyond_days": 9,
+    "confidence": "synthetic",
+    "summary_text": "历史 3 起 promo 事件，60 天窗平均 -0.36%（n=3，仅量级参考）"
+   }
+  ]
+ },
+ "alternatives": {
+  "target": {
+   "sku_id": "rtx5080-asus-tuf-mid",
+   "label": "ASUS RTX5080 mid",
+   "price": 9024,
+   "benchmark": 100.0,
+   "per_yuan": 11.082
+  },
+  "rows": [
+   {
+    "row_type": "same_product",
+    "sku_id": "rtx5080-msi-ventus-entry-pdd",
+    "product_id": "rtx5080",
+    "label": "MSI RTX5080 entry",
+    "brand": "msi",
+    "tier": "entry",
+    "channel": "pdd",
+    "benchmark": 96.0,
+    "bench_ratio": 0.96,
+    "price": 8229,
+    "saving_abs": 795,
+    "saving_pct": 8.81,
+    "diff_pct": -8.81,
+    "per_yuan": 11.666,
+    "per_yuan_target": 11.082,
+    "satisfies_need": true,
+    "need_bench_ratio": 0.75,
+    "note": "同型号换品牌/渠道：档位 mid -> entry；散热 3fan -> 2fan；渠道 jd -> pdd；品牌 asus -> msi（溢价成分含售后/生态/叙事，值不值由你判断）"
+   },
+   {
+    "row_type": "same_product",
+    "sku_id": "rtx5080-msi-ventus-entry",
+    "product_id": "rtx5080",
+    "label": "MSI RTX5080 entry",
+    "brand": "msi",
+    "tier": "entry",
+    "channel": "jd",
+    "benchmark": 96.0,
+    "bench_ratio": 0.96,
+    "price": 8789,
+    "saving_abs": 235,
+    "saving_pct": 2.6,
+    "diff_pct": -2.6,
+    "per_yuan": 10.923,
+    "per_yuan_target": 11.082,
+    "satisfies_need": true,
+    "need_bench_ratio": 0.75,
+    "note": "同型号换品牌/渠道：档位 mid -> entry；散热 3fan -> 2fan；品牌 asus -> msi（溢价成分含售后/生态/叙事，值不值由你判断）"
+   },
+   {
+    "row_type": "same_product",
+    "sku_id": "rtx5080-colorful-igame-high",
+    "product_id": "rtx5080",
+    "label": "COLORFUL RTX5080 high",
+    "brand": "colorful",
+    "tier": "high",
+    "channel": "jd",
+    "benchmark": 103.0,
+    "bench_ratio": 1.03,
+    "price": 9421,
+    "saving_abs": -397,
+    "saving_pct": -4.4,
+    "diff_pct": 4.4,
+    "per_yuan": 10.933,
+    "per_yuan_target": 11.082,
+    "satisfies_need": true,
+    "need_bench_ratio": 0.75,
+    "note": "同型号换品牌/渠道：档位 mid -> high；品牌 asus -> colorful（溢价成分含售后/生态/叙事，值不值由你判断）"
+   },
+   {
+    "row_type": "substitute",
+    "sku_id": "rtx5070ti-gigabyte-entry",
+    "product_id": "rtx5070ti",
+    "label": "GIGABYTE RTX5070TI entry",
+    "brand": "gigabyte",
+    "tier": "entry",
+    "channel": "jd",
+    "benchmark": 84.0,
+    "bench_ratio": 0.84,
+    "price": 5034,
+    "saving_abs": 3990,
+    "saving_pct": 44.22,
+    "diff_pct": -44.22,
+    "per_yuan": 16.687,
+    "per_yuan_target": 11.082,
+    "satisfies_need": true,
+    "need_bench_ratio": 0.75,
+    "note": "跨型号降档替代：按性能分对齐——每元性能为目标 150.6%"
+   },
+   {
+    "row_type": "substitute",
+    "sku_id": "rtx5070ti-msi-mid",
+    "product_id": "rtx5070ti",
+    "label": "MSI RTX5070TI mid",
+    "brand": "msi",
+    "tier": "mid",
+    "channel": "jd",
+    "benchmark": 85.0,
+    "bench_ratio": 0.85,
+    "price": 5154,
+    "saving_abs": 3870,
+    "saving_pct": 42.89,
+    "diff_pct": -42.89,
+    "per_yuan": 16.492,
+    "per_yuan_target": 11.082,
+    "satisfies_need": true,
+    "need_bench_ratio": 0.75,
+    "note": "跨型号降档替代：按性能分对齐——每元性能为目标 148.8%"
+   },
+   {
+    "row_type": "substitute",
+    "sku_id": "rtx5070-gigabyte-mid-pdd",
+    "product_id": "rtx5070",
+    "label": "GIGABYTE RTX5070 mid",
+    "brand": "gigabyte",
+    "tier": "mid",
+    "channel": "pdd",
+    "benchmark": 70.0,
+    "bench_ratio": 0.7,
+    "price": 3236,
+    "saving_abs": 5788,
+    "saving_pct": 64.14,
+    "diff_pct": -64.14,
+    "per_yuan": 21.632,
+    "per_yuan_target": 11.082,
+    "satisfies_need": false,
+    "need_bench_ratio": 0.75,
+    "note": "跨型号降档替代：按性能分对齐——每元性能为目标 195.2%"
+   },
+   {
+    "row_type": "substitute",
+    "sku_id": "rtx5070-msi-entry",
+    "product_id": "rtx5070",
+    "label": "MSI RTX5070 entry",
+    "brand": "msi",
+    "tier": "entry",
+    "channel": "jd",
+    "benchmark": 68.0,
+    "bench_ratio": 0.68,
+    "price": 3274,
+    "saving_abs": 5750,
+    "saving_pct": 63.72,
+    "diff_pct": -63.72,
+    "per_yuan": 20.77,
+    "per_yuan_target": 11.082,
+    "satisfies_need": false,
+    "need_bench_ratio": 0.75,
+    "note": "跨型号降档替代：按性能分对齐——每元性能为目标 187.4%"
+   },
+   {
+    "row_type": "substitute",
+    "sku_id": "rtx5070-gigabyte-mid",
+    "product_id": "rtx5070",
+    "label": "GIGABYTE RTX5070 mid",
+    "brand": "gigabyte",
+    "tier": "mid",
+    "channel": "jd",
+    "benchmark": 70.0,
+    "bench_ratio": 0.7,
+    "price": 3347,
+    "saving_abs": 5677,
+    "saving_pct": 62.91,
+    "diff_pct": -62.91,
+    "per_yuan": 20.914,
+    "per_yuan_target": 11.082,
+    "satisfies_need": false,
+    "need_bench_ratio": 0.75,
+    "note": "跨型号降档替代：按性能分对齐——每元性能为目标 188.7%"
+   }
+  ],
+  "method_note": "R03 §2/§3 降级版：属性近邻配对直接比价，不做 hedonic 回归（同型号 SKU 样本少）；可量化项 = 总价差与属性清单，品牌/售后/生态为不可观测项，价值判断交给用户",
+  "ref": "R03 §2-4"
+ },
+ "decision": {
+  "recommendation": "switch",
+  "traffic_light": "yellow",
+  "mode": "timing_engine",
+  "window_days": 60,
+  "n_windows": 35,
+  "confidence": "sufficient",
+  "note": "",
+  "decomposition": {
+   "wait_days": 60,
+   "n_windows": 35,
+   "price": 9024,
+   "saving_pct": 19.2854,
+   "saving_yuan": 1740.31,
+   "u_pct": 7.569,
+   "u_yuan": 683.03,
+   "loss_history_pct": 0.0,
+   "supply_premium_pct": 1.0,
+   "r_pct": 1.0,
+   "r_yuan": 90.24,
+   "buffer_pct": 2.1577,
+   "buffer_yuan": 194.71,
+   "net_pct": 8.5587,
+   "net_yuan": 772.34,
+   "params": {
+    "usage_loss_monthly_pct": 3.84,
+    "vol_pct_position": 0.5789,
+    "supply_hot": true,
+    "assumption": "假设 A1-A7（方向有出处：R05 §2.3/§3、总纲 §1.3；数值待 B05 标定，展示时可调）"
+   }
+  },
+  "p2": {
+   "probability": 0.0139,
+   "n_scenarios": 72,
+   "buy_count": 1,
+   "wait_count": 71,
+   "confidence": "sufficient",
+   "method": "perturbation-grid-v1",
+   "note": "确定性参数扰动网格（分层采样 v1）：P2 = 各（档位/期限/波动率/通胀预期/供需）情景下「裁决 = 买」的份额；替代品维度单列于 alternatives 节，不进 P2",
+   "dimensions": {
+    "wait_tier_mult": [
+     1.6,
+     1.2,
+     0.8
+    ],
+    "wait_days": [
+     45,
+     60
+    ],
+    "vol_pct": [
+     0.43,
+     0.58,
+     0.73
+    ],
+    "price_view_factor": [
+     0.7,
+     1.0
+    ],
+    "supply_premium_pct": [
+     0.0,
+     1.0
+    ]
+   }
+  },
+  "conditions": [
+   {
+    "scenario": "wait_if_same_only",
+    "text": "若 不急着用（默认看 60 天），且只认准这一款、不接受平替：历史同价位段窗口等 60 天，平均可省约 19.29%（35 个窗口），扣等待成本与风险后净期望 8.56% -> 可等。中途若要用，按最新价格重跑本卡。",
+    "ref": "p1.wait_stats + 假设 A1-A7（方向有出处：R05 §2.3/§3、总纲 §1.3；数值待 B05 标定，展示时可调）"
+   },
+   {
+    "scenario": "supply",
+    "text": "若最近缺货/涨价消息多：供需紧张期间「等」要承受再涨风险（已计入 R 的供需附加），急用就别拖。",
+    "ref": "总纲 §1.3 / A3"
+   },
+   {
+    "scenario": "event_2026-11-11",
+    "text": "若能等到 2026-11-11（约 69 天后）：历史 3 起 promo 事件，60 天窗平均 -0.36%（n=3，仅量级参考）；该窗口超出 60 天主窗 9 天，作为备选触发点不作承诺",
+    "ref": "R01 事件窗口（n 小仅量级参考）"
+   },
+   {
+    "scenario": "switch",
+    "text": "若能接受降档替代：GIGABYTE RTX5070TI entry 现价 5034 元，比目标省 ¥3990（44.22%），性能为目标的 84.0%；若只是预算或价格问题，先看替代矩阵——值不值由你判断。",
+    "ref": "R03 §3（A5 门槛 8.0%）"
+   }
+  ],
+  "switch_to": {
+   "row_type": "substitute",
+   "sku_id": "rtx5070ti-gigabyte-entry",
+   "product_id": "rtx5070ti",
+   "label": "GIGABYTE RTX5070TI entry",
+   "brand": "gigabyte",
+   "tier": "entry",
+   "channel": "jd",
+   "benchmark": 84.0,
+   "bench_ratio": 0.84,
+   "price": 5034,
+   "saving_abs": 3990,
+   "saving_pct": 44.22,
+   "diff_pct": -44.22,
+   "per_yuan": 16.687,
+   "per_yuan_target": 11.082,
+   "satisfies_need": true,
+   "need_bench_ratio": 0.75,
+   "note": "跨型号降档替代：按性能分对齐——每元性能为目标 150.6%",
+   "rule": "A5 门槛：节省 >= 8% 且满足用途最低性能比 0.75"
+  },
+  "params_note": "假设 A1-A7（方向有出处：R05 §2.3/§3、总纲 §1.3；数值待 B05 标定，展示时可调）"
+ },
+ "evidence": [
+  {
+   "ref": "data: synthetic-demo",
+   "note": "演示价序列为合成剧本（含真实量级锚点），非真实抓取；结论仅演示引擎"
+  },
+  {
+   "ref": "p1.windows.60",
+   "note": "P1 = 同分位段历史窗口降价频率，n=35，Wilson 95% CI（R04）"
+  },
+  {
+   "ref": "stats.lookbacks.365/730",
+   "note": "时间参考锚：现价近 1/2 年分位（总纲 §1.4）"
+  },
+  {
+   "ref": "events.promo",
+   "note": "事件研究 promo：horizon60 mean=-0.36% n=3（R01；n<30 仅参考）"
+  },
+  {
+   "ref": "events.supply",
+   "note": "事件研究 supply：horizon60 mean=6.4% n=2（R01；n<30 仅参考）"
+  },
+  {
+   "ref": "events.launch",
+   "note": "事件研究 launch：horizon60 mean=20.22% n=1（R01；n<30 仅参考）"
+  },
+  {
+   "ref": "R03 §2-4",
+   "note": "替代矩阵属性近邻配对；品牌/售后/生态不可观测项标注「值不值由你判断」"
+  },
+  {
+   "ref": "R05 §3 + 假设 A1-A7",
+   "note": "U 参数方向有出处（享乐品等待成本更高、贴现档位映射），数值待 B05 标定，展示可调"
+  },
+  {
+   "ref": "总纲 §2.5 + §1.2",
+   "note": "裁决 = G - U - R - buffer；buffer 随波动率分位加宽（(S,s)）"
+  }
+ ]
+}

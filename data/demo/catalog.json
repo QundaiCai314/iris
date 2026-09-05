@@ -1,0 +1,165 @@
+{
+ "products": [
+  {
+   "product_id": "rtx5080",
+   "name": "RTX 5080 16G",
+   "category": "显卡",
+   "launch_date": "2025-01-30",
+   "lifecycle_family": "gpu",
+   "status": "active"
+  },
+  {
+   "product_id": "rtx5070ti",
+   "name": "RTX 5070 Ti 16G",
+   "category": "显卡",
+   "launch_date": "2025-02-20",
+   "lifecycle_family": "gpu",
+   "status": "active"
+  },
+  {
+   "product_id": "rtx5070",
+   "name": "RTX 5070 12G",
+   "category": "显卡",
+   "launch_date": "2025-03-05",
+   "lifecycle_family": "gpu",
+   "status": "active"
+  }
+ ],
+ "skus": [
+  {
+   "sku_id": "rtx5080-asus-tuf-mid",
+   "product_id": "rtx5080",
+   "brand": "asus",
+   "tier": "mid",
+   "channel": "jd",
+   "attributes": {
+    "vram_gb": 16,
+    "tdp_w": 320,
+    "cooling": "3fan",
+    "warranty_years": 3,
+    "benchmark": 100.0
+   },
+   "launch_price": 8599
+  },
+  {
+   "sku_id": "rtx5080-msi-ventus-entry",
+   "product_id": "rtx5080",
+   "brand": "msi",
+   "tier": "entry",
+   "channel": "jd",
+   "attributes": {
+    "vram_gb": 16,
+    "tdp_w": 320,
+    "cooling": "2fan",
+    "warranty_years": 3,
+    "benchmark": 96.0
+   },
+   "launch_price": 8299
+  },
+  {
+   "sku_id": "rtx5080-colorful-igame-high",
+   "product_id": "rtx5080",
+   "brand": "colorful",
+   "tier": "high",
+   "channel": "jd",
+   "attributes": {
+    "vram_gb": 16,
+    "tdp_w": 320,
+    "cooling": "3fan",
+    "warranty_years": 3,
+    "benchmark": 103.0
+   },
+   "launch_price": 8999
+  },
+  {
+   "sku_id": "rtx5070ti-msi-mid",
+   "product_id": "rtx5070ti",
+   "brand": "msi",
+   "tier": "mid",
+   "channel": "jd",
+   "attributes": {
+    "vram_gb": 16,
+    "tdp_w": 300,
+    "cooling": "3fan",
+    "warranty_years": 3,
+    "benchmark": 85.0
+   },
+   "launch_price": 6499
+  },
+  {
+   "sku_id": "rtx5070ti-gigabyte-entry",
+   "product_id": "rtx5070ti",
+   "brand": "gigabyte",
+   "tier": "entry",
+   "channel": "jd",
+   "attributes": {
+    "vram_gb": 16,
+    "tdp_w": 300,
+    "cooling": "2fan",
+    "warranty_years": 3,
+    "benchmark": 84.0
+   },
+   "launch_price": 6299
+  },
+  {
+   "sku_id": "rtx5070-gigabyte-mid",
+   "product_id": "rtx5070",
+   "brand": "gigabyte",
+   "tier": "mid",
+   "channel": "jd",
+   "attributes": {
+    "vram_gb": 12,
+    "tdp_w": 250,
+    "cooling": "3fan",
+    "warranty_years": 3,
+    "benchmark": 70.0
+   },
+   "launch_price": 4299
+  },
+  {
+   "sku_id": "rtx5070-msi-entry",
+   "product_id": "rtx5070",
+   "brand": "msi",
+   "tier": "entry",
+   "channel": "jd",
+   "attributes": {
+    "vram_gb": 12,
+    "tdp_w": 250,
+    "cooling": "2fan",
+    "warranty_years": 3,
+    "benchmark": 68.0
+   },
+   "launch_price": 4199
+  },
+  {
+   "sku_id": "rtx5080-msi-ventus-entry-pdd",
+   "product_id": "rtx5080",
+   "brand": "msi",
+   "tier": "entry",
+   "channel": "pdd",
+   "attributes": {
+    "vram_gb": 16,
+    "tdp_w": 320,
+    "cooling": "2fan",
+    "warranty_years": 3,
+    "benchmark": 96.0
+   },
+   "launch_price": 7950
+  },
+  {
+   "sku_id": "rtx5070-gigabyte-mid-pdd",
+   "product_id": "rtx5070",
+   "brand": "gigabyte",
+   "tier": "mid",
+   "channel": "pdd",
+   "attributes": {
+    "vram_gb": 12,
+    "tdp_w": 250,
+    "cooling": "3fan",
+    "warranty_years": 3,
+    "benchmark": 70.0
+   },
+   "launch_price": 4120
+  }
+ ]
+}

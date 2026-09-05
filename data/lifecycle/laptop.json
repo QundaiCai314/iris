@@ -1,0 +1,22 @@
+{
+ "family": "laptop",
+ "source_note": "量级参考：算力价格年降 20-30% 趋势（Computers & Industrial Engineering 2000）+ idealo 媒体数据形状。",
+ "curve": [
+  [
+   0,
+   1
+  ],
+  [
+   6,
+   0.85
+  ],
+  [
+   12,
+   0.75
+  ],
+  [
+   24,
+   0.6
+  ]
+ ]
+}
