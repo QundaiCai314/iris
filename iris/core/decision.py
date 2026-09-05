@@ -388,20 +388,100 @@ def build_conditions(profile: Dict, dec: Dict, p2: Dict,
                       "ref": "总纲 §2.6 样本纪律"})
     _check_copy([c["text"] for c in conds])
     return conds
+def plain_language(profile: Dict, dec: Dict, p2: Dict,
+                   fc_windows: Dict) -> Dict:
+    """M7.2 通俗结论：把裁决翻成一句零术语的大白话（Web 首屏 Banner 同源）。
+
+    只在 P1/P2 有数值时才引用概率；必需/期限闸门直接给行动指令；
+    红线词由 build_decision 里 _check_copy 统一拦截（测试覆盖）。
+    """
+    rec = dec["recommendation"]
+    mode = dec.get("mode", "")
+    comp = dec.get("decomposition") or {}
+    wd = int(comp.get("wait_days") or dec.get("window_days") or HORIZON_DAYS)
+    p1w = fc_windows.get(str(wd)) or fc_windows.get("60") or {}
+    p1_prob = p1w.get("probability")
+    p2_prob = (p2 or {}).get("probability")
+    if p1_prob is not None:
+        p1_prob = int(round(float(p1_prob) * 100.0))
+    if p2_prob is not None:
+        p2_prob = int(round(float(p2_prob) * 100.0))
+
+    if mode.startswith("essential"):
+        s = dec.get("switch_to") or {}
+        if s:
+            return {"verdict": "买便宜的那个",
+                    "text": ("必需品类时点不重要，但别买贵：%s 现价 %d 元，比你现在"
+                             "看的省 ¥%d（约 %s%%）——同型号挑便宜的买，性能一样。"
+                             % (s.get("label") or s.get("sku_id")
+                                or "更便宜的候选", int(s.get("price") or 0),
+                                int(s.get("saving_abs") or 0),
+                                "%.1f" % (s.get("saving_pct") or 0)))}
+        return {"verdict": "直接买",
+                "text": "这东西属于必需品：什么时候买差别不大，重点是别买贵——"
+                        "同款先比价，哪个渠道便宜就买哪个，省下的才是真钱。"}
+    if mode == "deadline_now":
+        return {"verdict": "直接买",
+                "text": "你现在就要用、等不起：为等降价而耽误正事，省下的钱抵不过"
+                        "麻烦，直接买最省心。"}
+    if rec == "switch":
+        s = dec.get("switch_to") or {}
+        return {"verdict": "换成它",
+                "text": ("换个买法更划算：%s 现价 %d 元，比你现在看的省 ¥%d"
+                         "（约 %s%%），性能约为你原目标的 %s%%，满足你的用途"
+                         "——值不值由你判断。"
+                         % (s.get("label") or s.get("sku_id") or "更便宜的候选",
+                            int(s.get("price") or 0),
+                            int(s.get("saving_abs") or 0),
+                            "%.1f" % (s.get("saving_pct") or 0),
+                            "%.0f" % ((s.get("bench_ratio") or 1.0) * 100)))}
+    if rec == "wait":
+        why = ""
+        if p1_prob is not None:
+            why += ("历史数据显示，价格走到现在这个位置后，未来 %d 天内降价 ≥5%%"
+                    " 的概率约为 %d%%；" % (wd, p1_prob))
+        elif comp:
+            why += ("历史上和你情况相似时，等满 %d 天平均能等到便宜 %.1f%%"
+                    "（%d 个历史窗口）；" % (wd, comp.get("saving_pct") or 0,
+                                            comp.get("n_windows") or 0))
+        if p2_prob is not None:
+            why += ("把等待期里你用不到的损失也算进去，'现在买'仍然是最优的"
+                    "概率只有 %d%%。" % p2_prob)
+        else:
+            why += "历史样本还不多，结论先当参考，别急着下单。"
+        if profile.get("deadline", "none") in ("none", "within_90"):
+            tail = "你并不急着用：先按兵不动，过一阵子再来问一次，让数字替你做决定。"
+        else:
+            tail = "你只能再等约 %d 天：先按兵不动，临近期限时再来问一次。" % wd
+        return {"verdict": "先等一等", "text": why + tail}
+    # rec == buy（时机引擎）
+    head = ""
+    if p2_prob is not None:
+        head = ("综合你的使用情况模拟后，'现在买'仍然是最优的概率约 %d%%——"
+                % p2_prob)
+    if dec.get("supply_hot"):
+        tail = "最近缺货、涨价的消息多，再等可能等来更贵的价格：在你接受的价位内，现在买更省心。"
+    else:
+        tail = "等待省下的钱抵不过等待期里你用不到的损失，现在买更划算。"
+    return {"verdict": "现在买", "text": head + tail}
+
 
 
 def build_decision(profile: Dict, fc_windows: Dict, vol_pct: Optional[float],
                    best_alt: Optional[Dict] = None,
                    upcoming: Optional[List[Dict]] = None) -> Dict:
-    """M5 汇总入口：decide + P2 + 条件句 -> 决策卡 decision 字段。"""
+    """M5 汇总入口：decide + P2 + 条件句 + plain_language 通俗层 -> decision 字段。"""
     supply_on = supply_hot(profile)
     dec = decide(profile, fc_windows, vol_pct, best_alt=best_alt, supply_on=supply_on)
     p2 = p2_probability(profile, fc_windows, vol_pct, supply_on=supply_on)
     conds = build_conditions(profile, dec, p2, upcoming)
+    pl = plain_language(profile, dec, p2, fc_windows)
+    _check_copy([pl["verdict"], pl["text"]])
     return {"recommendation": dec["recommendation"],
             "traffic_light": dec["traffic_light"],
             "mode": dec.get("mode"), "window_days": dec.get("window_days"),
             "n_windows": dec.get("n_windows"), "confidence": dec.get("confidence"),
-            "note": dec.get("note", ""), "decomposition": dec.get("decomposition"),
+            "note": dec.get("note", ""), "plain_language": pl,
+            "decomposition": dec.get("decomposition"),
             "p2": p2, "conditions": conds, "switch_to": dec.get("switch_to"),
             "params_note": ASSUMPTION_REF}

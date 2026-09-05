@@ -4,7 +4,7 @@
 运行：python scripts/backtest.py [--every 14] [--out data/demo/backtest_report.json]
       python scripts/backtest.py --skus rtx5080-asus-tuf-mid --max-points-per-sku 2  # 快速调试
 
-验收（TASK_PLAN M7.1）：报告含「回测 != 未来保证」免责声明；结果可复现（引擎确定性）。
+验收：报告含「回测 != 未来保证」免责声明；结果可复现（引擎确定性）。
 """
 import argparse
 import json

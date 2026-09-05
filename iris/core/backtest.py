@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""M7.1 截断历史回测（walk-forward 样本外；TASK_PLAN M7.1，红线 P4）。
+"""M7.1 截断历史回测（walk-forward 样本外；红线 P4，详见 docs/redline-check.md）。
 
 做什么：沿每个 SKU 价格序列取 asof 网格；每个 asof 只用其之前的数据
 （describe / forecast_windows 以截断子序列调用；best_alt=None 不引入跨 SKU

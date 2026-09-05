@@ -6,8 +6,8 @@
   python scripts/render_card_cli.py --scenario gpu_low   # 剧本 2（5070 低位）
   python scripts/render_card_cli.py --interactive        # 粘贴文本 -> 画像问答 -> 出卡
 
-结构：标题/元信息 -> K线 sparkline -> 价格统计 -> P1 三窗 -> 裁决/分解/P2 ->
-事件摘要 -> 替代矩阵 -> 依据链。每个数字块标注 ref（口径出处，M6.1 验收：
+结构：标题/元信息 -> K线 sparkline -> 裁决 + P2 + 大白话（结论速览）-> P1 三窗 ->
+完整账本（分解/换购/条件句）-> 事件摘要 -> 替代矩阵 -> 依据链。每个数字块标注 ref（口径出处，M6.1 验收：
 抽查任意数字可指认来源）。
 """
 import argparse
@@ -72,7 +72,21 @@ def render(card) -> None:
               (w["date"], w["open"], w["high"], w["low"], w["close"]))
     print(line)
 
-    # P1 双概率（并列展示：P1 客观频率 + P2 决策概率）
+    # 结论速览：裁决 + P2 + 大白话（与 Web Banner 同源口径）
+    comp = d.get("decomposition")
+    p2 = d["p2"]
+    print(">>> 裁决：%-6s  红绿灯：%s  (confidence=%s)"
+          % (d["recommendation"], light_word(d["traffic_light"]),
+             d["confidence"]))
+    print("P2 = 现在买是 60 天视野内最优决策的概率  %.0f%%（%d 情景参数扰动）"
+          % (p2["probability"] * 100, p2["n_scenarios"]))
+    print("   [ref: decision.p2 + D5（扰动维：档位/期限/波动率/通胀预期/供需）]")
+    pl = d.get("plain_language")
+    if pl:
+        print("大白话[%s]：%s" % (pl.get("verdict", ""), pl.get("text", "")))
+    print(line)
+
+    # P1 客观频率：未来 30/60/180 天降价 ≥5% 的历史概率（口径 R04）
     p1 = card["p1"]
     print("P1 降价概率（未来 N 天降价 ≥5% 的历史频率）   [ref: p1.windows + R04]")
     for w in ("30", "60", "180"):
@@ -90,16 +104,8 @@ def render(card) -> None:
                                               ws["saving_pct"], ws["loss_pct"]))
     print(line)
 
-    # P2 + 裁决 + 分解
-    comp = d.get("decomposition")
-    p2 = d["p2"]
-    print("P2 = 现在买是 60 天视野内最优决策的概率  %.0f%%（%d 情景参数扰动）"
-          % (p2["probability"] * 100, p2["n_scenarios"]))
-    print("   [ref: decision.p2 + D5（扰动维：档位/期限/波动率/通胀预期/供需）]")
-    print()
-    print(">>> 裁决：%-6s  红绿灯：%s  (confidence=%s)"
-          % (d["recommendation"], light_word(d["traffic_light"]),
-             d["confidence"]))
+    # 完整账本（技术细节）：决策分解 + 换购候选 + 条件句
+
     if comp:
         print("  分解（元/占现价%）   [ref: decision.decomposition + R05 §3/A1-A7]")
         print("    G 等待收益    : %8.0f 元 (%5.2f%%)" % (comp["saving_yuan"],

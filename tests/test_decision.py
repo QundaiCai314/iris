@@ -200,3 +200,29 @@ def test_build_decision_switches_with_alt():
     assert d["recommendation"] == "switch"
     assert d["switch_to"]["sku_id"] == "s2"
     assert any(c["scenario"] == "switch" for c in d["conditions"])
+
+
+def test_plain_language_present_for_each_rec():
+    alt = {"row_type": "same_product", "satisfies_need": True,
+           "saving_pct": 15.0, "saving_abs": 150, "price": 850,
+           "bench_ratio": 0.98, "label": "MSI VENTUS", "sku_id": "s2"}
+    cases = [
+        (_profile(necessity="essential", deadline="within_30"), _fcs(),
+         "buy", None),
+        (_profile(deadline="now"), _fcs(), "buy", None),
+        (_profile(usage_intensity="rarely", hedonic="utilitarian",
+                  wait_tier="high"), _fcs(s60=10.0, l60=0.0), "wait", None),
+        (_profile(usage_intensity="high", hedonic="hedonic", wait_tier="low"),
+         _fcs(s60=1.0, l60=0.0), "buy", None),
+        (_profile(usage_intensity="high", deadline="within_30",
+                  alt_acceptable="no"), _fcs(s60=1.0, l60=0.0), "switch", alt),
+    ]
+    for p, fcs, want, ba in cases:
+        d = build_decision(p, fcs, 0.5, best_alt=ba)
+        assert d["recommendation"] == want
+        pl = d["plain_language"]
+        assert pl["verdict"], pl
+        assert len(pl["text"]) >= 10, pl
+        for banned in BANNED_WORDS:
+            assert banned not in pl["verdict"], banned
+            assert banned not in pl["text"], "%s in %s" % (banned, pl["text"])

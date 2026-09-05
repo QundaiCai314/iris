@@ -16,6 +16,7 @@ from typing import Dict, List, Optional
 
 from iris.agent.needs import detect_model, parse_product_text
 from iris.core.alternatives import best_switch, build_rows
+from iris.core.behavior import build_behavior_hints
 from iris.core.card import build_card as card_build, validate_card
 from iris.core.decision import build_decision
 from iris.core.events import build_event_study
@@ -176,7 +177,8 @@ def evidence_for(profile: Dict, fcw: Dict, slim: Dict) -> List[Dict]:
     return ev
 
 
-def build_card(profile: Dict, sku_id: str) -> Dict:
+def build_card(profile: Dict, sku_id: str, rerun_count: int = 0,
+               just_resolved: bool = False) -> Dict:
     """画像 + SKU -> 全字段决策卡（M6 端到端主入口）。"""
     d = load_demo()
     if sku_id not in d["skus"]:
@@ -202,6 +204,8 @@ def build_card(profile: Dict, sku_id: str) -> Dict:
     card["decision"] = dec
     card["evidence"] = evidence_for(profile, fcw, slim)
     card["kline"] = resample_ohlc(ser.points, freq_days=7)   # 周 OHLC（CLI/Web 渲染用）
+    card["behavior_hints"] = build_behavior_hints(
+        card, rerun_count=rerun_count, just_resolved=just_resolved)
     errs = validate_card(card)
     if errs:
         raise ValueError("决策卡校验失败: %s" % errs)

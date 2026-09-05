@@ -6,4 +6,5 @@ config/local*.json
 .env.local
 *.log
 data/raw/
+data/users/
 _serve_*.txt

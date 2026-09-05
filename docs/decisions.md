@@ -5,7 +5,7 @@
 ## D1 技术栈（2026-09-04 定案，用户授权 agent 选「最合适最稳健」）
 - 后端：Python 3.12.12，独立虚拟环境 F:/Iris/.venv（由 F:/AstrBot/backend/python/python.exe 创建，隔离宿主，pip 26.2.1 可用）；Web 框架 FastAPI + uvicorn（已装 0.141.1 / 0.52.4）；数据库 SQLite（标准库）；服务端口 8123（沿用用户旧项目习惯）。
 - 统计核心：纯标准库实现（滚动分位 / 波动率 / 历史模拟），不依赖 numpy / pandas。数据量在千点级，纯 Python 足够快，且每个口径可读可审计（研究规范 P1：无出处参数 = bug；黑盒向量化反而难审）。
-- 前端：frontend/ 纯静态（HTML + 原生 JS + 自绘 SVG K 线），无构建步骤、无 CDN，离线可用；FastAPI 托管静态文件；前后端通过 /api/* JSON 分离。
+- 前端：iris/web/static/ 纯静态（HTML + 原生 JS + 自绘 SVG K 线），无构建步骤、无 CDN，离线可用；FastAPI 托管静态文件；前后端通过 /api/* JSON 分离。
 - LLM 客户端：标准库 urllib 自研 OpenAI 兼容客户端（iris/llm），不绑供应商 SDK；失败自动沿候选链降级。
 - 测试：pytest（已装 9.1.1，tests/）；git 已 init，.gitignore 排除 .venv / 本地配置。
 - 否决：Node 全栈（本机量化与脚本生态弱于 Python）；numpy/pandas（重依赖、审计性差、收益低）；React + Vite 构建链（演示期维护成本高，违反离线稳健目标）。
@@ -21,7 +21,7 @@
 - 无 key 兜底：问卷生成走规则决策树（M4.2），语义解析走人工确认（M4.3），整体开发不被阻塞。
 
 ## D3 界面形态（2026-09-04 定案）
-CLI 先行（scripts/demo_cli.py，M5 验收用）→ Web 版（M6：FastAPI 托管静态前端，127.0.0.1:8123，粘贴链接 → 问答 → 决策卡页）。
+CLI 先行（scripts/render_card_cli.py，M5/M6 验收用）→ Web 版（M6：FastAPI 托管静态前端，127.0.0.1:8123，粘贴链接 → 问答 → 决策卡页）。
 
 ## D4 演示数据（2026-09-04 定案）
 合成价格序列（显卡场景：5080 / 5070 / 5070Ti 多品牌 SKU，含换代事件与大促日历）+ 用户提供少量真实价格点打「用户回填」标签；真实历史价抓取（慢慢买等）列为 B01 渐进目标，demo 不赌实时抓取（spec 6）。
