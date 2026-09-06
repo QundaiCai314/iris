@@ -584,3 +584,39 @@ th[style*="width:120px"] { font-family: var(--sans); letter-spacing: 0; text-tra
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ══ 登录 / 注册 模态 · 模式切换 ══ */
+.auth-switch {
+  display: flex;
+  gap: 0;
+  margin: 0 0 20px;
+  border-bottom: 2px solid var(--line);
+}
+.auth-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 0;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: color .18s ease, border-color .18s ease;
+}
+.auth-tab:hover { color: var(--sub); }
+.auth-tab.on { color: var(--brand); border-bottom-color: var(--brand); }
+.modal-card.mode-register { border-top-color: var(--green); }
+.modal-card.mode-register .auth-tab.on { color: var(--green); border-bottom-color: var(--green); }
+.auth-hint {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--dim);
+  letter-spacing: .3px;
+}

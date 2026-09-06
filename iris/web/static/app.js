@@ -124,12 +124,31 @@ function initSession() {
 var AUTH = { mode: "login" };
 function authLabels() {
   var reg = AUTH.mode === "register";
-  $("auth-title").textContent = reg ? "注册" : "登录";
+  $("auth-title").textContent = reg ? "创建账号" : "欢迎回来";
   $("auth-sub").textContent = reg
-    ? "注册后：每次出卡自动存档，同品类免重填，还能关注商品。"
-    : "登录后：每次出卡自动存档，同品类免重填，还能关注商品。";
-  $("btn-auth-go").textContent = reg ? "注册并登录" : "登录";
-  $("btn-auth-toggle").textContent = reg ? "已有账号？去登录" : "没有账号？去注册";
+    ? "30 秒完成注册，决策记录开始自动存档。"
+    : "输入账号密码，继续你的决策记录。";
+  $("auth-user-hint").textContent = reg ? "2-20 位中文 / 字母 / 数字 / 下划线" : "你注册时填的用户名";
+  $("auth-pass-hint").textContent = reg ? "至少 6 位，建议字母 + 数字组合" : "至少 6 位";
+  $("btn-auth-go").textContent = reg ? "创建账号" : "登录";
+  $("auth-benefit-title").textContent = reg ? "注册即获得" : "登录后能得到";
+  var items = reg
+    ? [["历史自动存档", "从第一张决策卡开始记录，不用手动保存"],
+       ["画像免重填", "下次同品类问卷自动预填，直接出卡"],
+       ["关注商品", "收藏查过的 SKU，随时回来重新决策"]]
+    : [["历史自动存档", "每次决策卡完整快照，一键还原回看"],
+       ["画像免重填", "同品类问卷自动预填，直接沿用出卡"],
+       ["关注商品", "收藏查过的 SKU，随时回来重新出卡"]];
+  $("auth-benefit-list").innerHTML = items.map(function (it) {
+    return "<li><b>" + esc(it[0]) + "</b> — " + esc(it[1]) + "</li>";
+  }).join("");
+  $("atab-login").classList.toggle("on", !reg);
+  $("atab-login").setAttribute("aria-selected", !reg ? "true" : "false");
+  $("atab-register").classList.toggle("on", reg);
+  $("atab-register").setAttribute("aria-selected", reg ? "true" : "false");
+  $("auth-card").classList.toggle("mode-register", reg);
+  var passInput = $("auth-pass");
+  passInput.setAttribute("autocomplete", reg ? "new-password" : "current-password");
 }
 function openAuth(mode) {
   S.afterAuth = LAST_MAIN || "view-input";
@@ -943,9 +962,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   $("btn-auth-go").onclick = doAuth;
-  $("btn-auth-toggle").onclick = function () {
-    AUTH.mode = AUTH.mode === "register" ? "login" : "register";
-    authLabels(); $("auth-err").textContent = "";
+  $("atab-login").onclick = function () {
+    if (AUTH.mode !== "login") { AUTH.mode = "login"; authLabels(); $("auth-err").textContent = ""; }
+  };
+  $("atab-register").onclick = function () {
+    if (AUTH.mode !== "register") { AUTH.mode = "register"; authLabels(); $("auth-err").textContent = ""; }
   };
   $("btn-auth-back").onclick = function () {
     S.afterAuth = null;
