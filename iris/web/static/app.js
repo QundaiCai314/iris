@@ -84,7 +84,7 @@ function refreshUserBar() {
 }
 function authExpired() {
   forgetUser(); refreshUserBar();
-  show("view-input"); setStep(1);
+  show("view-input"); setStep(1); setNav("view-input");
   $("resolve-out").innerHTML = '<p class="tip">登录已过期，请重新登录（游客模式仍可使用）。</p>';
 }
 function applyLogin(uname, t) {
@@ -117,7 +117,7 @@ function initSession() {
   if (!token()) { refreshUserBar(); return; }
   api("GET", "/api/me").then(function (info) {
     S.user = info.username; refreshUserBar();
-  }).catch(function () { forgetUser(); refreshUserBar(); });
+  }).catch(function () { forgetUser(); refreshUserBar(); setNav("view-input"); });
 }
 
 /* ---------- 登录 / 注册 视图 ---------- */
@@ -732,6 +732,7 @@ function bindCardEvents(card) {
 /* ---------- 我的数据（历史 / 关注 / 账号） ---------- */
 var ME = { tab: "history" };
 function openMe() {
+  if (!loggedIn()) { S.afterAuth = "view-me"; openAuth("login"); return; }
   S.afterAuth = null;
   show("view-me");
   setNav("view-me");
