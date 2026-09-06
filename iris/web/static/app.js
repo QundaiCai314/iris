@@ -47,11 +47,7 @@ function show(id) {
     var el = $(v);
     if (el) { el.classList.toggle("hidden", v !== id); }
   });
-  var isMain = (id === "view-input" || id === "view-questions" || id === "view-card");
-  var root = $("flow-root");
-  if (root) { root.classList.toggle("hidden", !isMain); }
-  var steps = $("steps"); if (steps) { steps.classList.toggle("hidden", !isMain); }
-  if (isMain) { LAST_MAIN = id; }
+  if (id !== "view-me") { LAST_MAIN = id; }
   window.scrollTo(0, 0);
 }
 function setStep(i) {
@@ -59,11 +55,9 @@ function setStep(i) {
 }
 function setNav(view) {
   var cur = view === "view-me" ? "me" : "flow";
-  document.querySelectorAll(".sbtn[data-view]").forEach(function (b) {
+  document.querySelectorAll(".tnav[data-view]").forEach(function (b) {
     b.classList.toggle("on", b.getAttribute("data-view") === cur);
   });
-  var f = $("flow-root"); if (f) { f.classList.toggle("hidden", view === "view-me" || !view); }
-  var m = $("view-me"); if (m) { m.classList.toggle("hidden", view !== "view-me"); }
 }
 
 /* ---------- 用户会话（登录 / 登出 / 顶栏） ---------- */
@@ -285,8 +279,11 @@ function renderQ() {
   var q = Q.items[Q.idx];
   $("q-nav").classList.remove("hidden");
   $("btn-prev").classList.toggle("hidden", Q.idx === 0);
-  $("q-body").innerHTML = '<p class="progress">第 ' + (Q.idx + 1) + " / " +
-    Q.items.length + " 题（点选选项自动进入下一题，可随时「上一题」修改）</p>" +
+  var qc = $("q-count");
+  if (qc) { qc.textContent = (Q.idx + 1) + " / " + Q.items.length; }
+  var qf = $("q-fill");
+  if (qf) { qf.style.width = Math.round((Q.idx + 1) / Q.items.length * 100) + "%"; }
+  $("q-body").innerHTML =
     prefillNoteHtml() + '<p class="q-text">' + esc(q.text) + "</p>";
   (q.options || []).forEach(function (o, i) {
     var val = (Array.isArray(o) ? o[1] : o);
@@ -736,6 +733,7 @@ function bindCardEvents(card) {
 var ME = { tab: "history" };
 function openMe() {
   S.afterAuth = null;
+  show("view-me");
   setNav("view-me");
   meTab("history");
 }
@@ -927,16 +925,14 @@ document.addEventListener("DOMContentLoaded", function () {
   chipFill();
   $("btn-login").onclick = function () { openAuth("login"); };
   $("btn-logout").onclick = doLogout;
-  var sbNav = $("sb-nav");
-  if (sbNav) {
-    document.querySelectorAll(".sbtn[data-view]").forEach(function (b) {
+  var topNav = $("topbar-nav");
+  if (topNav) {
+    document.querySelectorAll(".tnav[data-view]").forEach(function (b) {
       var v = b.getAttribute("data-view");
       b.onclick = function () {
         if (v === "me") { openMe(); }
         else {
-          document.querySelectorAll(".sbtn[data-view]").forEach(function (x) { x.classList.toggle("on", x === b); });
-          $("view-me").classList.add("hidden");
-          $("flow-root").classList.remove("hidden");
+          document.querySelectorAll(".tnav[data-view]").forEach(function (x) { x.classList.toggle("on", x === b); });
           show(LAST_MAIN || "view-input");
           if (LAST_MAIN === "view-questions") { setStep(2); }
           else if (LAST_MAIN === "view-card") { setStep(3); }

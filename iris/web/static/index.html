@@ -4,136 +4,124 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Iris 鸢尾 · 现在买合适吗？</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5' fill='%23FF9F1C'/%3E%3Ccircle cx='8' cy='8' r='2.2' fill='%23141414'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="/static/style.css?v=12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23141414'/%3E%3Crect x='2' y='2' width='12' height='2' fill='%23FF9F1C'/%3E%3Crect x='2' y='6' width='8' height='2' fill='%23F2F0EB'/%3E%3Crect x='2' y='10' width='10' height='2' fill='%23FF9F1C'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/style.css?v=13">
 </head>
 <body>
-
-<!-- 左侧侧栏工作站 -->
-<aside class="sidebar">
-  <div class="sidebar-brand">
-    <span class="badge-mark" aria-hidden="true"></span>
-    <span class="brand-name">Iris</span>
-    <span class="brand-cn">鸢尾</span>
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-name">IRIS</span>
+    <span class="brand-sub">鸢尾 · 消费时机量化</span>
   </div>
-  <div class="sidebar-tag">QUANT&nbsp;DECISION</div>
-
-  <nav class="sidebar-nav" id="sb-nav">
-    <button class="sbtn on" data-view="flow" type="button">
-      <span class="sbtn-num">01</span><span class="sbtn-txt">决策流程</span>
-    </button>
-    <button class="sbtn" data-view="me" type="button" id="sb-me">
-      <span class="sbtn-num">02</span><span class="sbtn-txt">我的数据</span>
-    </button>
+  <nav class="topbar-nav" id="topbar-nav">
+    <button class="tnav on" data-view="flow" type="button">决策流程</button>
+    <button class="tnav" data-view="me" type="button" id="tnav-me">我的数据</button>
   </nav>
-
-  <div class="sidebar-step" id="sb-steps">
-    <div class="sb-step-title">当前进度</div>
-    <ol class="sb-steps">
-      <li id="step-i" class="on"><span class="dot"></span>输入商品</li>
-      <li id="step-q"><span class="dot"></span>需求画像</li>
-      <li id="step-c"><span class="dot"></span>决策卡</li>
-    </ol>
+  <div class="topbar-right">
+    <div class="topbar-steps" id="topbar-steps">
+      <span class="tstep on" id="step-i">01 输入</span>
+      <span class="tsep">▸</span>
+      <span class="tstep" id="step-q">02 画像</span>
+      <span class="tsep">▸</span>
+      <span class="tstep" id="step-c">03 决策</span>
+    </div>
+    <span id="sb-ub-name" class="tb-user hidden"></span>
+    <button id="btn-login" class="tb-btn" type="button">登录 / 注册</button>
+    <button id="btn-logout" class="tb-btn tb-btn-ghost hidden" type="button">退出</button>
   </div>
-
-  <div class="sidebar-user" id="sb-user">
-    <span id="sb-ub-name" class="sb-name hidden"></span>
-    <button id="btn-login" type="button">登录 / 注册</button>
-    <button id="btn-logout" class="hidden" type="button">退出</button>
-  </div>
-</aside>
-
-<!-- 主画布 -->
-<main class="canvas">
-  <div class="canvas-head" id="canvas-head">
-    <h1 id="canvas-title">现在买合适吗？</h1>
-    <p id="canvas-sub">个人消费「购买时机」量化 Agent —— 贴链接 → 答画像 → 概率化决策卡</p>
-  </div>
-
-  <!-- 决策流程三块（输入 / 问卷 / 决策卡） -->
-  <div id="flow-root">
-    <section id="view-input" class="ui-panel">
-      <p class="tip">粘贴商品链接或描述（demo 库覆盖 RTX 5080 / 5070 Ti / 5070；其他品类演示闸门流程）。</p>
-      <textarea id="text" rows="2" placeholder="例如：https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G"></textarea>
-      <div class="row">
-        <button id="btn-resolve" class="btn btn-primary">解析商品</button>
-        <span class="examples">
-          <span class="ex-label">示例</span>
+</header>
+<main class="stage">
+  <section id="view-input" class="view view-input">
+    <div class="split">
+      <div class="split-left">
+        <div class="split-label">01 — 商品输入</div>
+        <h1 class="split-title">现在买<br>合适吗？</h1>
+        <p class="split-sub">粘贴商品链接或描述，Iris 读取价格历史与事件信号，给出概率化购买时机建议。</p>
+        <textarea id="text" rows="3" placeholder="粘贴链接或描述商品…&#10;例如：https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G"></textarea>
+        <div class="split-actions">
+          <button id="btn-resolve" class="btn btn-primary">解析商品 →</button>
+        </div>
+        <div class="split-chips">
+          <span class="chip-label">快捷示例</span>
           <button class="chip" type="button" data-ex="https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G">RTX 5080 链接</button>
           <button class="chip" type="button" data-ex="技嘉 RTX 5070 显卡 12G">RTX 5070 描述</button>
-          <button class="chip" type="button" data-ex="布洛芬缓释胶囊 退烧止痛药">药品（必需闸门）</button>
-        </span>
-      </div>
-      <div id="resolve-out"></div>
-    </section>
-
-    <section id="view-questions" class="ui-panel hidden">
-      <p id="q-flow" class="tip"></p>
-      <div id="q-body"></div>
-      <div id="q-nav" class="row hidden">
-        <button id="btn-prev" class="btn btn-ghost">← 上一题（可回去修改选项）</button>
-      </div>
-    </section>
-
-    <section id="view-card" class="hidden">
-      <div id="no-data" class="ui-panel hidden"></div>
-      <div id="card-root"></div>
-    </section>
-  </div>
-
-  <!-- 登录 / 注册 模态 -->
-  <div id="auth-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-    <div class="modal-backdrop" data-close="1"></div>
-    <div class="modal-card">
-      <button class="modal-close" id="btn-auth-back" type="button" aria-label="关闭">×</button>
-      <h2 id="auth-title">登录</h2>
-      <p class="tip" id="auth-sub">登录后可自动保存每次决策卡到「我的历史」，下次同品类免重填画像，还能关注商品。</p>
-      <div class="auth-form">
-        <p><label>用户名（2-20 位中文 / 字母 / 数字 / 下划线）<br>
-          <input id="auth-user" maxlength="20" autocomplete="username"></label></p>
-        <p><label>密码（至少 6 位）<br>
-          <input id="auth-pass" type="password" maxlength="64" autocomplete="current-password"></label></p>
-        <p id="auth-err" class="auth-err"></p>
-        <p class="row">
-          <button id="btn-auth-go" class="btn btn-primary">登录</button>
-          <button id="btn-auth-toggle" class="btn btn-ghost">没有账号？去注册</button>
-        </p>
-      </div>
-      <div class="auth-benefit">
-        <h4>登录后能得到</h4>
-        <ul>
-          <li><b>历史自动存档</b> — 每次决策卡完整快照，一键还原回看</li>
-          <li><b>画像免重填</b> — 同品类问卷自动预填，直接沿用出卡</li>
-          <li><b>关注商品</b> — 收藏查过的 SKU，随时回来重新出卡</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- 我的数据 -->
-  <section id="view-me" class="hidden">
-    <div class="me-canvas">
-      <aside class="me-tabs">
-        <button id="tab-history" class="tab on">决策历史</button>
-        <button id="tab-watch" class="tab">关注商品</button>
-        <button id="tab-account" class="tab">账号与数据</button>
-      </aside>
-      <div class="me-body-wrap">
-        <div class="me-head row">
-          <h2 style="margin:0">我的数据</h2>
-          <button id="btn-me-back" class="btn btn-ghost">← 返回使用</button>
+          <button class="chip" type="button" data-ex="布洛芬缓释胶囊 退烧止痛药">药品 · 必需闸门</button>
         </div>
-        <p id="me-summary" class="tip"></p>
-        <div id="me-body"></div>
+      </div>
+      <div class="split-right" id="resolve-out">
+        <div class="split-placeholder">
+          <span class="split-placeholder-mark" aria-hidden="true">▮▮▮</span>
+          <p class="split-placeholder-text">解析结果将出现在这里</p>
+          <p class="split-placeholder-hint">贴入左侧输入框后点击「解析商品」</p>
+        </div>
       </div>
     </div>
   </section>
-
-  <footer class="canvas-foot">
-    演示价序列为合成数据（source=synthetic-demo，截至 2026-09-03）。账号与数据仅保存在本机 data/users/。
+  <section id="view-questions" class="view view-questions hidden">
+    <div class="q-shell">
+      <div class="q-header">
+        <span id="q-flow" class="q-product"></span>
+        <span class="q-count" id="q-count">— / —</span>
+      </div>
+      <div class="q-progress"><div class="q-progress-fill" id="q-fill"></div></div>
+      <div id="q-body"></div>
+      <div id="q-nav" class="hidden">
+        <button id="btn-prev" class="btn btn-ghost" type="button">← 上一题</button>
+      </div>
+    </div>
+  </section>
+  <section id="view-card" class="view view-card hidden">
+    <div id="no-data" class="hidden"></div>
+    <div id="card-root" class="bento"></div>
+  </section>
+  <section id="view-me" class="view view-me hidden">
+    <div class="me-shell">
+      <div class="me-head">
+        <h2>我的数据</h2>
+        <button id="btn-me-back" class="btn btn-ghost" type="button">← 返回使用</button>
+      </div>
+      <nav class="me-tabs">
+        <button id="tab-history" class="tab on" type="button">决策历史</button>
+        <button id="tab-watch" class="tab" type="button">关注商品</button>
+        <button id="tab-account" class="tab" type="button">账号与数据</button>
+      </nav>
+      <p id="me-summary" class="me-summary"></p>
+      <div id="me-body"></div>
+    </div>
+  </section>
+  <footer class="stage-foot">
+    <span>演示价序列为合成数据（source=synthetic-demo，截至 2026-09-03）</span>
+    <span>账号与数据仅保存在本机 data/users/</span>
   </footer>
 </main>
-
-<script src="/static/app.js?v=12"></script>
+<div id="auth-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+  <div class="modal-backdrop" data-close="1"></div>
+  <div class="modal-card">
+    <button class="modal-close" id="btn-auth-back" type="button" aria-label="关闭">×</button>
+    <h2 id="auth-title">登录</h2>
+    <p class="tip" id="auth-sub">登录后可自动保存每次决策卡到「我的历史」，下次同品类免重填画像，还能关注商品。</p>
+    <div class="auth-form">
+      <p><label>用户名（2-20 位中文 / 字母 / 数字 / 下划线）<br>
+        <input id="auth-user" maxlength="20" autocomplete="username"></label></p>
+      <p><label>密码（至少 6 位）<br>
+        <input id="auth-pass" type="password" maxlength="64" autocomplete="current-password"></label></p>
+      <p id="auth-err" class="auth-err"></p>
+      <p class="row">
+        <button id="btn-auth-go" class="btn btn-primary">登录</button>
+        <button id="btn-auth-toggle" class="btn btn-ghost">没有账号？去注册</button>
+      </p>
+    </div>
+    <div class="auth-benefit">
+      <h4>登录后能得到</h4>
+      <ul>
+        <li><b>历史自动存档</b> — 每次决策卡完整快照，一键还原回看</li>
+        <li><b>画像免重填</b> — 同品类问卷自动预填，直接沿用出卡</li>
+        <li><b>关注商品</b> — 收藏查过的 SKU，随时回来重新出卡</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script src="/static/app.js?v=13"></script>
 </body>
 </html>
