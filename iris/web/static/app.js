@@ -42,22 +42,46 @@ function isAuthErr(e) {
   var m = String(e && e.message || "");
   return m.indexOf("401") >= 0 || m.indexOf("未登录") >= 0;
 }
+function updateDialNav(pane) {
+  var h = $("dial-item-history");
+  var s = $("dial-item-showcase");
+  var a = $("dial-item-auth");
+  if (h) h.classList.toggle("active", pane === "pane-history");
+  if (s) s.classList.toggle("active", pane === "pane-showcase" || pane === "pane-questions" || pane === "pane-card");
+  if (a) a.classList.toggle("active", pane === "pane-auth");
+}
+
 function show(id) {
-  ["view-input", "view-questions", "view-card", "view-me"].forEach(function (v) {
-    var el = $(v);
-    if (el) { el.classList.toggle("hidden", v !== id); }
+  var idMap = {
+    "view-input": "pane-showcase",
+    "view-questions": "pane-questions",
+    "view-card": "pane-card",
+    "view-me": "pane-history",
+    "pane-showcase": "pane-showcase",
+    "pane-history": "pane-history",
+    "pane-auth": "pane-auth",
+    "pane-questions": "pane-questions",
+    "pane-card": "pane-card"
+  };
+  var targetPane = idMap[id] || id;
+  ["pane-showcase", "pane-history", "pane-auth", "pane-questions", "pane-card"].forEach(function (p) {
+    var el = $(p);
+    if (el) { el.classList.toggle("hidden", p !== targetPane); }
   });
-  if (id !== "view-me") { LAST_MAIN = id; }
+  if (targetPane === "pane-showcase" || targetPane === "pane-questions" || targetPane === "pane-card") {
+    LAST_MAIN = targetPane;
+  }
+  updateDialNav(targetPane);
   window.scrollTo(0, 0);
 }
 function setStep(i) {
-  ["step-i", "step-q", "step-c"].forEach(function (s, k) { $(s).classList.toggle("on", k < i); });
+  ["step-i", "step-q", "step-c"].forEach(function (s, k) {
+    var el = $(s);
+    if (el) el.classList.toggle("on", k < i);
+  });
 }
 function setNav(view) {
-  var cur = view === "view-me" ? "me" : "flow";
-  document.querySelectorAll(".tnav[data-view]").forEach(function (b) {
-    b.classList.toggle("on", b.getAttribute("data-view") === cur);
-  });
+  updateDialNav(view === "view-me" ? "pane-history" : "pane-showcase");
 }
 
 /* ---------- 用户会话（登录 / 登出 / 顶栏） ---------- */
@@ -77,10 +101,19 @@ function forgetUser() {
 }
 function refreshUserBar() {
   var on = !!S.user;
-  $("sb-ub-name").textContent = S.user || "";
-  $("sb-ub-name").classList.toggle("hidden", !on);
-  $("btn-login").classList.toggle("hidden", on);
-  $("btn-logout").classList.toggle("hidden", !on);
+  var unameEl = $("sb-ub-name");
+  if (unameEl) {
+    unameEl.textContent = S.user || "";
+    unameEl.classList.toggle("hidden", !on);
+  }
+  var loggedInBox = $("auth-logged-in");
+  var loggedOutBox = $("auth-logged-out");
+  var curUserDisplay = $("current-user-display");
+  if (loggedInBox && loggedOutBox) {
+    loggedInBox.classList.toggle("hidden", !on);
+    loggedOutBox.classList.toggle("hidden", on);
+    if (curUserDisplay) curUserDisplay.textContent = S.user || "";
+  }
 }
 function authExpired() {
   forgetUser(); refreshUserBar();
@@ -642,60 +675,69 @@ function userBarHtml() {
   if (!parts.length) { return ""; }
   return "<div class='user-toolbar'>" + parts.join(" ") + status + "</div>";
 }
+function kpiQuartetHtml(card) {
+  var st = card.stats, lb = st.lookbacks || {};
+  var comp = card.decision && card.decision.decomposition;
+  var cb = st.conformal_bounds || {};
+  var mr = st.mean_reversion || {};
+
+  var strikeHtml = (comp && comp.strike_price && comp.net_pct > 0)
+    ? "<div class='kpi-tile'><div class='kpi-lbl'>SAS 击穿目标价</div><div class='kpi-val' style='color:#f59f00;'>¥" + comp.strike_price + "</div><div class='kpi-sub'>最优停止 (-" + comp.strike_drop_pct.toFixed(1) + "%)</div></div>"
+    : "<div class='kpi-tile'><div class='kpi-lbl'>SAS 状态</div><div class='kpi-val'>无击穿</div><div class='kpi-sub'>处于公允区间</div></div>";
+
+  var conformalHtml = (cb.lower_bound && cb.upper_bound)
+    ? "<div class='kpi-tile'><div class='kpi-lbl'>共形预测带</div><div class='kpi-val'>¥" + cb.lower_bound + "~" + cb.upper_bound + "</div><div class='kpi-sub'>置信覆盖 90% (±" + cb.bandwidth_pct + "%)</div></div>"
+    : "<div class='kpi-tile'><div class='kpi-lbl'>共形覆盖</div><div class='kpi-val'>--</div><div class='kpi-sub'>校准中</div></div>";
+
+  var mrHtml = (mr.is_mean_reverting && mr.equilibrium_price)
+    ? "<div class='kpi-tile'><div class='kpi-lbl'>OU 长期中枢</div><div class='kpi-val'>¥" + mr.equilibrium_price + "</div><div class='kpi-sub'>半衰期 " + mr.half_life_days + " 天 (" + (mr.current_deviation_pct > 0 ? "+" : "") + mr.current_deviation_pct + "%)</div></div>"
+    : "<div class='kpi-tile'><div class='kpi-lbl'>长期中枢</div><div class='kpi-val'>¥" + st.last_price + "</div><div class='kpi-sub'>价格平稳</div></div>";
+
+  return "<div class='kpi-quartet'>" +
+    "<div class='kpi-tile'><div class='kpi-lbl'>现价与分位</div><div class='kpi-val'>¥" + st.last_price + "</div><div class='kpi-sub'>90天分位 " + ((lb["90"] ? lb["90"].pct_position : 0) * 100).toFixed(0) + "% (1年 " + ((lb["365"] ? lb["365"].pct_position : 0) * 100).toFixed(0) + "%)</div></div>" +
+    strikeHtml +
+    conformalHtml +
+    mrHtml +
+    "</div>";
+}
+
 function renderCard(card, profile, hist, keepEditorOpen, snap) {
   var d = card.decision;
   var pl = d.plain_language || null;
   var plainHtml = (pl && pl.text)
-    ? "<div class='cond plain'><b>大白话：</b>" + esc(pl.text) + "</div>" : "";
+    ? "<div class='cond plain' style='margin-bottom:1.25rem;'><b>裁决摘要：</b>" + esc(pl.text) + "</div>" : "";
   var hints = card.behavior_hints || [];
   var hintsHtml = hints.length
-    ? "<div class='bhints'>" + hints.map(function (h) {
-        return "<div class='bhint'><b>" + esc(h.rule) + "</b>" + esc(h.text) +
-          "<span class='bhint-ref'>" + esc(h.ref) + "</span></div>";
+    ? "<div class='bhints' style='margin-bottom:1.25rem;'>" + hints.map(function (h) {
+        return "<div class='bhint'><b>" + esc(h.rule) + "</b> " + esc(h.text) + "</div>";
       }).join("") + "</div>"
     : "";
-  var p2 = d.p2 || {};
-  var why1 = "<p class='tip'>P1 是「历史考卷」：把过去翻出来看——价格处在现在这个" +
-    "水平时，未来 30 / 60 / 180 天里降价 ≥5% 各出现过多少次，就是多大概率。" +
-    "这个数越大，说明这个位置「再等等」更常见。</p>";
-  var why2 = "<p class='tip'>P2 是「按你的情况模拟」：把急不急用、用得多频繁、" +
-    "能等多久、涨价消息都当作变量做组合推演，在所有可能情况里'现在买'仍然是最" +
-    "优的概率。P1 只讲价格历史，P2 把你个人的账也算进去了。</p>";
-  var p2note = "<p class='muted'>P2 口径：概率 ≈ " + pct1(p2.probability) +
-    "，共 " + (p2.n_scenarios || "-") + " 组情景扰动（档位/期限/波动率/通胀预期/供需）</p>";
   var snapNote = snap
-    ? "<div class='cond'><b>历史快照</b>　保存于 " + esc(snap.at || "") +
-      "。以下为当时的完整结论，可随时回来查看；要带新参数重算请用上方按钮。</div>"
-    : "";// 概率详解 tab
-  var tabProb = why1 + p1Table(card) + why2 + p2note + decompTable(card) + prospectTheoryHtml(card);
-  // 条件与事件 tab
-  var tabCond = conditionsHtml(card) + eventsHtml(card) + altTable(card);
-  // 假设与依据 tab（含假设编辑器与依据链）
-  var tabAssump = snap
-    ? "<p class='tip'>点上方「用这份画像重新出卡」会回到问答流程，同品类历史答案自动预填。"
-    : editorHtml(profile);
-  var tabRefer = evidenceHtml(card);
-  var histBox = snap ? "" : "<h4>重算记录</h4><div id='hist-box'>" + historyHtml(hist) + "</div>";
+    ? "<div class='cond' style='margin-bottom:1rem;'><b>历史快照</b> · 保存于 " + esc(snap.at || "") + "</div>"
+    : "";
 
-  return "<div class='ui-panel'>" + banner(card) + plainHtml + priceProtectionHtml(card) + hintsHtml + snapNote +
-    userBarHtml() + "</div>" +
-    "<div class='ui-panel'><h3>K 线与价格统计 <span class='badge'>合成数据</span></h3>" +
-    "<div id='kline-box'></div>" + kpiRow(card) + conformalHtml(card) + meanReversionHtml(card) +
-    "<p class='muted'>周线（自绘 SVG，离线可用）｜现价 " + card.stats.last_price +
-    " 元（" + card.stats.asof + "）｜MA20 " + (card.stats.ma["20"] || "-") +
-    "｜MA60 " + (card.stats.ma["60"] || "-") + "｜90 天波动率分位 " +
-    ((card.stats.volatility.pct_position || 0) * 100).toFixed(0) + "%</p>" +
-    "<p class='hint'>想看懂每个数字怎么来的？点下方小标题逐层展开 ↓</p>" +
-    "<div class='card-tabs'>" +
-      cardTabHtml("prob", "概率详解", true) +
-      cardTabHtml("cond", "条件与事件", false) +
-      cardTabHtml("assump", "假设与依据", false) +
+  var simHtml = "<div class='simulator-box'>" +
+    "<div class='simulator-title'>参数推演模拟器 (HYPOTHESIS SIMULATOR)</div>" +
+    editorHtml(profile) +
+    "</div>";
+
+  var deepTelemetry = "<details class='telemetry-drawer'>" +
+    "<summary>+ QUANTITATIVE TELEMETRY (点击展开数理分解、K线图与全口径)</summary>" +
+    "<div style='margin-top:1rem;'>" +
+    "<div id='kline-box' style='margin-bottom:1rem;'></div>" +
+    p1Table(card) + decompTable(card) + conditionsHtml(card) + eventsHtml(card) + altTable(card) + evidenceHtml(card) +
     "</div>" +
-    "<div class='card-pane' id='cpane-prob'>" + tabProb + "</div>" +
-    "<div class='card-pane hidden' id='cpane-cond'>" + tabCond + "</div>" +
-    "<div class='card-pane hidden' id='cpane-assump'>" + tabAssump + histBox + "</div>" +
-    "</div>" +
-    "<div class='ui-panel'><h3>依据链（口径 / 样本 / 假设）</h3>" + tabRefer + "</div>";
+    "</details>";
+
+  return banner(card) +
+    kpiQuartetHtml(card) +
+    plainHtml +
+    priceProtectionHtml(card) +
+    hintsHtml +
+    snapNote +
+    userBarHtml() +
+    simHtml +
+    deepTelemetry;
 }
 function refreshWatchState() {
   if (!S.user || !S.sku_id) { return; }
@@ -1129,10 +1171,38 @@ document.addEventListener("DOMContentLoaded", function () {
     var elLdn = $("clock-ldn");
     if (elKr) elKr.textContent = fmt(seoul);
     if (elBj) elBj.textContent = fmt(beijing);
-    if (elLdn) elLdn.textContent = fmt(london);
   }
   updateClocks();
   setInterval(updateClocks, 1000);
+  /* Core-A Rotary Dial Menu (Top: History, Middle: Showcase, Bottom: Auth) */
+  var dHist = $("dial-item-history");
+  if (dHist) {
+    dHist.onclick = function () {
+      show("pane-history");
+      meTab("history");
+    };
+  }
+  var dShow = $("dial-item-showcase");
+  if (dShow) {
+    dShow.onclick = function () {
+      show("pane-showcase");
+    };
+  }
+  var dAuth = $("dial-item-auth");
+  if (dAuth) {
+    dAuth.onclick = function () {
+      show("pane-auth");
+      refreshUserBar();
+    };
+  }
+
+  var btnInLogout = $("btn-inpage-logout");
+  if (btnInLogout) {
+    btnInLogout.onclick = function () {
+      doLogout();
+      refreshUserBar();
+    };
+  }
 
   initSession();
 });

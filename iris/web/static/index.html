@@ -3,27 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IRIS · Quantitative Timing Studio</title>
+<title>IRIS · Quantitative Studio Archive</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23f3f1e2' stroke-width='1.5'/%3E%3Cellipse cx='12' cy='12' rx='10' ry='4.5' stroke='%23f3f1e2' stroke-width='1' stroke-dasharray='2 2'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23f3f1e2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="/static/style.css?v=20">
+<link rel="stylesheet" href="/static/style.css?v=30">
 </head>
 <body data-page="work">
 
-<!-- START HEADER (Core-A Studios Architectural Grid Header) -->
+<!-- Core-A Site Header -->
 <header class="grid site-header">
-  <div class="logo-col column col-3-12_lg col-2-6_md">
-    <a href="javascript:void(0)" class="brand-link no-line" id="brand-home" aria-label="Home">
-      <svg class="brand-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="logo-col column col-4-12_lg col-2-6_md">
+    <a href="javascript:void(0)" class="brand-link no-line" id="brand-home">
+      <svg class="brand-glyph" viewBox="0 0 32 32" fill="none">
         <circle cx="16" cy="16" r="14" stroke="#f3f1e2" stroke-width="1.2"/>
         <path d="M4 16C10 9 22 9 28 16C22 23 10 23 4 16Z" stroke="#f3f1e2" stroke-width="1.2"/>
         <circle cx="16" cy="16" r="4.5" fill="#f3f1e2"/>
       </svg>
       <span class="brand-wordmark">IRIS</span>
     </a>
-    <span class="brand-tagline opacity-40">STUDIO ARCHIVE</span>
   </div>
 
-  <div class="layout-col column col-3-12_lg col-2-6_md">
+  <div class="layout-col column col-4-12_lg col-2-6_md">
     <div class="layout-toggle toggle-menu">
       <button type="button" class="layout-toggle-item button toggle-button square-button list active" id="btn-toggle-list" aria-label="Reel view">
         <svg class="icon-svg" viewBox="0 0 16 16" fill="currentColor">
@@ -43,296 +42,284 @@
     </div>
   </div>
 
-  <div class="flow-col column col-3-12_lg col-2-6_md">
-    <div class="topbar-steps" id="topbar-steps">
-      <span class="tstep on" id="step-i">01 INPUT</span>
-      <span class="tsep opacity-40">/</span>
-      <span class="tstep" id="step-q">02 PROFILE</span>
-      <span class="tsep opacity-40">/</span>
-      <span class="tstep" id="step-c">03 DOSSIER</span>
-    </div>
-  </div>
-
-  <div class="actions-col column col-3-12_lg col-6-6_md">
-    <nav class="topbar-nav" id="topbar-nav">
-      <button class="button tnav on" data-view="flow" type="button" id="tnav-flow">STUDIO</button>
-      <button class="button tnav" data-view="me" type="button" id="tnav-me">ARCHIVE</button>
+  <div class="actions-col column col-4-12_lg col-2-6_md">
+    <div class="header-right-meta">
       <span id="sb-ub-name" class="tb-user hidden"></span>
-      <button id="btn-login" class="button square-button auth-trigger" type="button" title="登录 / 注册">
-        <svg class="icon-svg" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-5 6-5s6 1.7 6 5"/></svg>
-      </button>
-      <button id="btn-logout" class="button square-button hidden" type="button" title="退出">
-        <svg class="icon-svg" viewBox="0 0 16 16" fill="currentColor"><path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3M10 11l3-3-3-3M13 8H5"/></svg>
-      </button>
-      <div class="lang-badge opacity-40">ZH</div>
-    </nav>
+      <span class="opacity-40" id="step-i">01 INPUT</span>
+      <span class="opacity-40" id="step-q">02 PROFILE</span>
+      <span class="opacity-40" id="step-c">03 DOSSIER</span>
+      <span class="lang-badge opacity-40">KR / EN</span>
+    </div>
   </div>
 </header>
 
-<!-- MAIN STAGE -->
-<main class="page-wrap" id="main-stage">
-
-  <!-- ═══ 01 VIEW: INPUT & CINEMATIC SHOWCASE REEL ═══ -->
-  <section id="view-input" class="view view-input">
-    
-    <!-- Hero Editorial Text -->
-    <div class="editorial-hero">
-      <div class="hero-subhead opacity-40">
-        <span>QUANTITATIVE CONSUMPTION TIMING ENGINE</span>
-        <span class="bullet">·</span>
-        <span>ZERO THIRD-PARTY RUNTIME DEPS</span>
-      </div>
-      <h1 class="hero-headline">NOW OR NEVER</h1>
-      <p class="hero-intro opacity-50">
-        输入商品链接或描述。Iris 读取离线历史价格分位、事件脉冲窗口与无分布共形覆盖带，以期望值效用裁决最优出手时机。
-      </p>
+<!-- Core-A Rotary Dial Menu (Fixed on Left) -->
+<nav class="main-menu" id="rotary-dial">
+  <div class="logo-wrapper">
+    <svg class="dial-logo" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="18" stroke="#f3f1e2" stroke-width="1.2"/>
+      <path d="M5 20C12 11 28 11 35 20C28 29 12 29 5 20Z" stroke="#f3f1e2" stroke-width="1.2"/>
+      <circle cx="20" cy="20" r="5" fill="#f3f1e2"/>
+    </svg>
+  </div>
+  <div class="menu" id="dial-items">
+    <!-- Top (Item 1): History -->
+    <div class="menu-item button" id="dial-item-history" data-target="history">
+      <p class="text">Archive · 历史记录</p>
+      <span class="menu-mark">↗</span>
     </div>
-
-    <!-- Architectural Studio Console Deck -->
-    <div class="studio-deck curved-edges">
-      <div class="deck-header">
-        <span class="deck-title">TARGET DISPATCH CONSOLE</span>
-        <span class="deck-status opacity-40">[ STATUS: READY 0.00MS ]</span>
-      </div>
-      <div class="deck-input-row">
-        <textarea id="text" rows="2" placeholder="粘贴商品链接或描述… 例如：华硕 ROG RTX 5080 TUF 16G / Apple iPhone 15 Pro 256G / PS5 光驱版"></textarea>
-        <button id="btn-resolve" class="button btn-exec" type="button">
-          <span>ANALYZE TARGET</span>
-          <span class="arrow">→</span>
-        </button>
-      </div>
-
-      <!-- Quick Curation Chips -->
-      <div class="deck-chips">
-        <span class="chips-label opacity-40">CURATED BENCHMARKS:</span>
-        <button class="chip" type="button" data-ex="https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G">5080 TUF · 观望</button>
-        <button class="chip" type="button" data-ex="Apple iPhone 15 Pro 256G 黑色钛金属 手机">iPhone 15 Pro · 建议买</button>
-        <button class="chip" type="button" data-ex="索尼 PlayStation 5 国行光驱版 游戏主机">PS5 光驱版 · 周期中</button>
-        <button class="chip" type="button" data-ex="华硕 TUF GeForce RTX 4080 16GB GAMING 显卡">RTX 4080 · 均值收敛</button>
-        <button class="chip" type="button" data-ex="布洛芬缓释胶囊 退烧止痛药">布洛芬 · 必需闸门</button>
-      </div>
-
-      <!-- Live Resolve Result Drawer -->
-      <div class="resolve-stream" id="resolve-out"></div>
+    <!-- Middle (Item 2): Showcase (DEFAULT ACTIVE) -->
+    <div class="menu-item button active" id="dial-item-showcase" data-target="showcase">
+      <p class="text">Showcase · 展示页</p>
+      <span class="menu-mark">●</span>
     </div>
-
-    <!-- Editorial Projects Showcase (Reel / Grid Switchable) -->
-    <div class="showcase-section">
-      <div class="showcase-bar">
-        <div class="showcase-title-wrap">
-          <span class="showcase-tag opacity-40">PORTFOLIO INDEX</span>
-          <h3 class="showcase-heading">CURATED MARKET ASSETS</h3>
-        </div>
-        <div class="showcase-meta opacity-40">
-          <span>SELECT ANY ASSET TO SIMULATE TIMING DOSSIER</span>
-        </div>
-      </div>
-
-      <!-- THE CORE-A REEL / GRID CONTAINER -->
-      <div class="projects-wrap list-view" id="projects-wrap" data-view="list">
-
-        <!-- Card 1: RTX 5080 -->
-        <article class="project curved-edges" data-sku="https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G">
-          <div class="project-thumbnail__clip">
-            <div class="project-thumbnail__media card-bg-film-1">
-              <div class="visual-abstract">
-                <svg viewBox="0 0 400 240" fill="none" class="abstract-svg">
-                  <path d="M20 200 L120 180 L180 110 L260 140 L340 40 L380 60" stroke="#f59f00" stroke-width="1.8" opacity="0.6"/>
-                  <circle cx="340" cy="40" r="4" fill="#f59f00"/>
-                  <line x1="20" y1="210" x2="380" y2="210" stroke="rgba(243,241,226,0.1)" stroke-width="1"/>
-                  <text x="30" y="50" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">SAS THRESHOLD: -14.2%</text>
-                  <text x="30" y="70" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">VOLATILITY BAND: ±9.4%</text>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div class="project__overlay"></div>
-          <span class="project-badge amber">WAIT · 建议观望</span>
-          <h2 class="project-name no-margin">DON’T RUSH THE DIE</h2>
-          <h5 class="project-name no-margin">DON’T RUSH THE DIE · RTX 5080</h5>
-          <p class="project-client no-margin opacity-40">ASUS ROG · ARCHITECTURE LAUNCH</p>
-          <p class="project-year no-margin opacity-40">2026 · P1 DROP 78%</p>
-          <button type="button" class="project-card-action" aria-label="Analyze RTX 5080"></button>
-        </article>
-
-        <!-- Card 2: iPhone 15 Pro -->
-        <article class="project curved-edges" data-sku="Apple iPhone 15 Pro 256G 黑色钛金属 手机">
-          <div class="project-thumbnail__clip">
-            <div class="project-thumbnail__media card-bg-film-2">
-              <div class="visual-abstract">
-                <svg viewBox="0 0 400 240" fill="none" class="abstract-svg">
-                  <path d="M20 50 L100 80 L200 130 L280 170 L340 190 L380 195" stroke="#2ebd6e" stroke-width="1.8" opacity="0.6"/>
-                  <circle cx="380" cy="195" r="4" fill="#2ebd6e"/>
-                  <line x1="20" y1="210" x2="380" y2="210" stroke="rgba(243,241,226,0.1)" stroke-width="1"/>
-                  <text x="30" y="50" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">PERCENTILE: 12% (LOW)</text>
-                  <text x="30" y="70" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">P2 OPTIMALITY: 89%</text>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div class="project__overlay"></div>
-          <span class="project-badge green">BUY · 建议入手</span>
-          <h2 class="project-name no-margin">THE RESIDUAL VALUE</h2>
-          <h5 class="project-name no-margin">THE RESIDUAL VALUE · IPHONE 15 PRO</h5>
-          <p class="project-client no-margin opacity-40">APPLE · TITANIUM ARCHIVE</p>
-          <p class="project-year no-margin opacity-40">2024 · 90D LOWEST TIER</p>
-          <button type="button" class="project-card-action" aria-label="Analyze iPhone 15 Pro"></button>
-        </article>
-
-        <!-- Card 3: PS5 -->
-        <article class="project curved-edges" data-sku="索尼 PlayStation 5 国行光驱版 游戏主机">
-          <div class="project-thumbnail__clip">
-            <div class="project-thumbnail__media card-bg-film-3">
-              <div class="visual-abstract">
-                <svg viewBox="0 0 400 240" fill="none" class="abstract-svg">
-                  <path d="M20 120 C100 110, 200 135, 300 120 C340 115, 360 122, 380 120" stroke="#f3f1e2" stroke-width="1.6" opacity="0.4"/>
-                  <circle cx="380" cy="120" r="3" fill="#f3f1e2"/>
-                  <line x1="20" y1="210" x2="380" y2="210" stroke="rgba(243,241,226,0.1)" stroke-width="1"/>
-                  <text x="30" y="50" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">OU HALF-LIFE: 120 DAYS</text>
-                  <text x="30" y="70" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">EQUILIBRIUM: STABLE</text>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div class="project__overlay"></div>
-          <span class="project-badge bone">STEADY · 周期平稳</span>
-          <h2 class="project-name no-margin">CYCLE OF PLAY</h2>
-          <h5 class="project-name no-margin">CYCLE OF PLAY · PLAYSTATION 5</h5>
-          <p class="project-client no-margin opacity-40">SONY · CONSOLE ECOSYSTEM</p>
-          <p class="project-year no-margin opacity-40">2024 · MATURE TIER</p>
-          <button type="button" class="project-card-action" aria-label="Analyze PS5"></button>
-        </article>
-
-        <!-- Card 4: Ibuprofen Gatekeeper -->
-        <article class="project curved-edges" data-sku="布洛芬缓释胶囊 退烧止痛药">
-          <div class="project-thumbnail__clip">
-            <div class="project-thumbnail__media card-bg-film-4">
-              <div class="visual-abstract">
-                <svg viewBox="0 0 400 240" fill="none" class="abstract-svg">
-                  <rect x="150" y="80" width="100" height="40" rx="20" stroke="#f3f1e2" stroke-width="1.5" opacity="0.5"/>
-                  <line x1="200" y1="80" x2="200" y2="120" stroke="#f3f1e2" stroke-width="1.2" opacity="0.5"/>
-                  <text x="30" y="50" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">PROTOCOL: GATE_01 PASS</text>
-                  <text x="30" y="70" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">TIMING DEVIATION: ZERO</text>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div class="project__overlay"></div>
-          <span class="project-badge green">PASS · 必需闸门</span>
-          <h2 class="project-name no-margin">THE GATEKEEPER</h2>
-          <h5 class="project-name no-margin">THE GATEKEEPER · IBUPROFEN</h5>
-          <p class="project-client no-margin opacity-40">PHARMA · ESSENTIAL PASS</p>
-          <p class="project-year no-margin opacity-40">2026 · NO DISCOUNT WAIT</p>
-          <button type="button" class="project-card-action" aria-label="Analyze Ibuprofen"></button>
-        </article>
-
-        <!-- Card 5: RTX 4080 -->
-        <article class="project curved-edges" data-sku="华硕 TUF GeForce RTX 4080 16GB GAMING 显卡">
-          <div class="project-thumbnail__clip">
-            <div class="project-thumbnail__media card-bg-film-5">
-              <div class="visual-abstract">
-                <svg viewBox="0 0 400 240" fill="none" class="abstract-svg">
-                  <path d="M20 80 L140 140 L240 130 L380 160" stroke="#00d4ff" stroke-width="1.6" opacity="0.5"/>
-                  <circle cx="380" cy="160" r="3" fill="#00d4ff"/>
-                  <line x1="20" y1="210" x2="380" y2="210" stroke="rgba(243,241,226,0.1)" stroke-width="1"/>
-                  <text x="30" y="50" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">SUBSTITUTE RATIO: 1.18</text>
-                  <text x="30" y="70" fill="rgba(243,241,226,0.25)" font-family="monospace" font-size="11">HOPPER PUT PREMIUM: ¥280</text>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div class="project__overlay"></div>
-          <span class="project-badge cyan">SWITCH · 替代矩阵</span>
-          <h2 class="project-name no-margin">ALTERNATE ANCHOR</h2>
-          <h5 class="project-name no-margin">ALTERNATE ANCHOR · RTX 4080</h5>
-          <p class="project-client no-margin opacity-40">GPU BENCHMARK · PREVIOUS GEN</p>
-          <p class="project-year no-margin opacity-40">2025 · PRICE ARBITRAGE</p>
-          <button type="button" class="project-card-action" aria-label="Analyze RTX 4080"></button>
-        </article>
-
-      </div>
+    <!-- Bottom (Item 3): Login / Register -->
+    <div class="menu-item button" id="dial-item-auth" data-target="auth">
+      <p class="text">Account · 登录注册</p>
+      <span class="menu-mark">↘</span>
     </div>
-  </section>
+  </div>
+</nav>
 
-  <!-- ═══ 02 VIEW: QUESTIONNAIRE (CORE-A MEDIA LIGHTBOX STYLE) ═══ -->
-  <section id="view-questions" class="view view-questions hidden">
-    <div class="dossier-wrapper">
-      <div class="dossier-chrome">
-        <div class="dossier-left">
-          <button id="btn-back-from-q" class="button btn-back" type="button">← BACK TO STUDIO</button>
-          <span class="dossier-tag opacity-40">PROFILE CALIBRATION</span>
+<!-- Main Grid Page Wrap (12-Column Grid Matching Core-A) -->
+<div class="page-wrap h-full" id="home-page">
+  <div class="outer-content-wrap grid h-full">
+    <!-- Left Dummy Column for Dial Menu Space (4 cols) -->
+    <div class="dummy-col col-4-12_lg tablet"></div>
+
+    <!-- Right Content Column (8 cols) -->
+    <div class="content-col col-8-12_lg col-6-6_md h-full">
+
+      <!-- ══ PANE 1: SHOWCASE & REAL VIDEO REEL (DEFAULT) ══ -->
+      <section id="pane-showcase" class="content-pane active">
+        <!-- Target Dispatch Console Deck -->
+        <div class="studio-deck curved-edges">
+          <div class="deck-header">
+            <span class="deck-title">TARGET DISPATCH CONSOLE</span>
+            <span class="deck-status opacity-40">[ STATUS: READY 0.00MS ]</span>
+          </div>
+          <div class="deck-input-row">
+            <textarea id="text" rows="1" placeholder="粘贴商品链接或描述… 例如：华硕 ROG RTX 5080 TUF 16G / iPhone 15 Pro 256G / PS5 光驱版"></textarea>
+            <button id="btn-resolve" class="button btn-exec" type="button">
+              <span>ANALYZE</span>
+              <span class="arrow">→</span>
+            </button>
+          </div>
+          <div class="deck-chips">
+            <span class="chips-label opacity-40">BENCHMARKS:</span>
+            <button class="chip" type="button" data-ex="https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G">RTX 5080 · 观望</button>
+            <button class="chip" type="button" data-ex="Apple iPhone 15 Pro 256G 黑色钛金属 手机">iPhone 15 Pro · 建议买</button>
+            <button class="chip" type="button" data-ex="索尼 PlayStation 5 国行光驱版 游戏主机">PS5 · 周期平稳</button>
+            <button class="chip" type="button" data-ex="布洛芬缓释胶囊 退烧止痛药">布洛芬 · 必需闸门</button>
+            <button class="chip" type="button" data-ex="华硕 TUF GeForce RTX 4080 16GB GAMING 显卡">RTX 4080 · 均值收敛</button>
+          </div>
+          <div class="resolve-stream" id="resolve-out"></div>
         </div>
-        <div class="dossier-right">
-          <span id="q-flow" class="q-product"></span>
+
+        <!-- Video Reel / Grid Showcase -->
+        <div class="projects-wrap list-view" id="projects-wrap">
+          <!-- Card 1: RTX 5080 TUF -->
+          <div class="project curved-edges" data-sku="https://item.jd.com/10086.html 华硕 RTX 5080 TUF 显卡 16G">
+            <div class="project-thumbnail__clip">
+              <div class="project-thumbnail__media">
+                <video class="full-bleed-video" muted loop autoplay playsinline preload="auto">
+                  <source src="https://vz-1ecfdedb-667.b-cdn.net/e49f3237-e7a4-4470-a0aa-fc2fcc2048da/play_720p.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="project__overlay"></div>
+            <span class="project-badge amber">WAIT · 建议观望</span>
+            <h2 class="project-name no-margin">DON’T RUSH THE DIE</h2>
+            <h5 class="project-name no-margin">DON’T RUSH THE DIE · RTX 5080</h5>
+            <p class="project-client no-margin opacity-40">ASUS ROG · ARCHITECTURE LAUNCH</p>
+            <p class="project-year no-margin opacity-40">2026 · P1 DROP 78%</p>
+          </div>
+
+          <!-- Card 2: iPhone 15 Pro -->
+          <div class="project curved-edges" data-sku="Apple iPhone 15 Pro 256G 黑色钛金属 手机">
+            <div class="project-thumbnail__clip">
+              <div class="project-thumbnail__media">
+                <video class="full-bleed-video" muted loop autoplay playsinline preload="auto">
+                  <source src="https://vz-1ecfdedb-667.b-cdn.net/0b3d376a-269c-4d7a-aadf-3712482003bf/play_720p.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="project__overlay"></div>
+            <span class="project-badge green">BUY · 建议入手</span>
+            <h2 class="project-name no-margin">THE RESIDUAL VALUE</h2>
+            <h5 class="project-name no-margin">THE RESIDUAL VALUE · IPHONE 15 PRO</h5>
+            <p class="project-client no-margin opacity-40">APPLE · TITANIUM ARCHIVE</p>
+            <p class="project-year no-margin opacity-40">2024 · 90D LOWEST TIER</p>
+          </div>
+
+          <!-- Card 3: PS5 -->
+          <div class="project curved-edges" data-sku="索尼 PlayStation 5 国行光驱版 游戏主机">
+            <div class="project-thumbnail__clip">
+              <div class="project-thumbnail__media">
+                <video class="full-bleed-video" muted loop autoplay playsinline preload="auto">
+                  <source src="https://vz-1ecfdedb-667.b-cdn.net/8e99c1f2-3492-4a7d-a59e-dd314d07dc4c/play_720p.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="project__overlay"></div>
+            <span class="project-badge bone">STEADY · 周期平稳</span>
+            <h2 class="project-name no-margin">CYCLE OF PLAY</h2>
+            <h5 class="project-name no-margin">CYCLE OF PLAY · PLAYSTATION 5</h5>
+            <p class="project-client no-margin opacity-40">SONY · CONSOLE ECOSYSTEM</p>
+            <p class="project-year no-margin opacity-40">2024 · MATURE TIER</p>
+          </div>
+
+          <!-- Card 4: Ibuprofen Gatekeeper -->
+          <div class="project curved-edges" data-sku="布洛芬缓释胶囊 退烧止痛药">
+            <div class="project-thumbnail__clip">
+              <div class="project-thumbnail__media">
+                <video class="full-bleed-video" muted loop autoplay playsinline preload="auto">
+                  <source src="https://vz-1ecfdedb-667.b-cdn.net/c50c7c75-8479-4cfc-9b32-cf0daa20d5be/play_720p.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="project__overlay"></div>
+            <span class="project-badge green">PASS · 必需闸门</span>
+            <h2 class="project-name no-margin">THE GATEKEEPER</h2>
+            <h5 class="project-name no-margin">THE GATEKEEPER · IBUPROFEN</h5>
+            <p class="project-client no-margin opacity-40">PHARMA · ESSENTIAL PASS</p>
+            <p class="project-year no-margin opacity-40">2026 · NO DISCOUNT WAIT</p>
+          </div>
+
+          <!-- Card 5: RTX 4080 -->
+          <div class="project curved-edges" data-sku="华硕 TUF GeForce RTX 4080 16GB GAMING 显卡">
+            <div class="project-thumbnail__clip">
+              <div class="project-thumbnail__media">
+                <video class="full-bleed-video" muted loop autoplay playsinline preload="auto">
+                  <source src="https://vz-1ecfdedb-667.b-cdn.net/5a52e5b2-6d69-4511-a39b-66c333d3e599/play_720p.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="project__overlay"></div>
+            <span class="project-badge cyan">SWITCH · 替代矩阵</span>
+            <h2 class="project-name no-margin">ALTERNATE ANCHOR</h2>
+            <h5 class="project-name no-margin">ALTERNATE ANCHOR · RTX 4080</h5>
+            <p class="project-client no-margin opacity-40">GPU BENCHMARK · PREVIOUS GEN</p>
+            <p class="project-year no-margin opacity-40">2025 · PRICE ARBITRAGE</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ PANE 2: ARCHIVE / 历史记录 (TOP MENU SELECTED) ══ -->
+      <section id="pane-history" class="content-pane hidden">
+        <div class="pane-header">
+          <h2 class="pane-title">DECISION ARCHIVE</h2>
+          <span class="opacity-40">01 / LOCAL HISTORICAL DOSSIERS</span>
+        </div>
+        <div class="me-shell curved-edges">
+          <nav class="me-tabs">
+            <button id="tab-history" class="tab on" type="button">01 决策历史</button>
+            <button id="tab-watch" class="tab" type="button">02 关注商品</button>
+            <button id="tab-account" class="tab" type="button">03 档案与导出</button>
+          </nav>
+          <p id="me-summary" class="me-summary opacity-50"></p>
+          <div id="me-body"></div>
+        </div>
+      </section>
+
+      <!-- ══ PANE 3: AUTHENTICATE / 登录注册 (BOTTOM MENU SELECTED) ══ -->
+      <section id="pane-auth" class="content-pane hidden">
+        <div class="pane-header">
+          <h2 class="pane-title">LOCAL AUTHENTICATION</h2>
+          <span class="opacity-40">03 / PBKDF2 ENCRYPTED SECRETS</span>
+        </div>
+        <div class="auth-box curved-edges">
+          <div id="auth-logged-in" class="hidden">
+            <div class="user-greeting">
+              <span class="opacity-40">LOGGED IN AS:</span>
+              <h3 id="current-user-display" class="user-name">USER</h3>
+            </div>
+            <p class="opacity-60">决策卡与品类画像已在本地自动存档。可随时回溯或导出。</p>
+            <div class="row-actions">
+              <button id="btn-inpage-logout" class="button btn-ghost" type="button">LOGOUT / 退出登录</button>
+            </div>
+          </div>
+          <div id="auth-logged-out">
+            <div class="auth-switch" role="tablist">
+              <button class="auth-tab on" id="atab-login" type="button" role="tab">LOGIN / 登录</button>
+              <button class="auth-tab" id="atab-register" type="button" role="tab">REGISTER / 注册</button>
+            </div>
+            <div class="auth-form-body">
+              <p>
+                <label id="auth-user-label">USERNAME<br>
+                  <input id="auth-user" maxlength="20" autocomplete="username" placeholder="2-20 位用户名">
+                </label>
+              </p>
+              <p>
+                <label>PASSWORD<br>
+                  <input id="auth-pass" type="password" maxlength="64" autocomplete="current-password" placeholder="至少 6 位密码">
+                </label>
+              </p>
+              <p id="auth-err" class="auth-err"></p>
+              <button id="btn-auth-go" class="button btn-exec" type="button">SUBMIT →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ PANE 4: QUESTIONNAIRE (LIGHTBOX CALIBRATION) ══ -->
+      <section id="pane-questions" class="content-pane hidden">
+        <div class="dossier-chrome">
+          <button id="btn-back-from-q" class="button btn-back" type="button">← RETURN TO SHOWCASE</button>
+          <span id="q-flow" class="q-product opacity-70"></span>
           <span class="q-count" id="q-count">— / —</span>
         </div>
-      </div>
+        <div class="q-shell curved-edges">
+          <div class="q-progress-bar"><div class="q-progress-fill" id="q-fill"></div></div>
+          <div id="q-body" class="q-content-area"></div>
+          <div id="q-nav" class="q-action-bar hidden">
+            <button id="btn-prev" class="button btn-ghost" type="button">← PREVIOUS STEP</button>
+          </div>
+        </div>
+      </section>
 
-      <div class="q-shell curved-edges">
-        <div class="q-progress-bar">
-          <div class="q-progress-fill" id="q-fill"></div>
+      <!-- ══ PANE 5: DECISION DOSSIER (STREAMLINED MINIMALIST BENTO) ══ -->
+      <section id="pane-card" class="content-pane hidden">
+        <div class="dossier-chrome">
+          <button id="btn-back-from-card" class="button btn-back" type="button">← RETURN TO SHOWCASE</button>
+          <span class="engine-indicator"><span class="pulse-dot"></span> QUANT VERDICT GENERATED</span>
         </div>
-        <div id="q-body" class="q-content-area"></div>
-        <div id="q-nav" class="q-action-bar hidden">
-          <button id="btn-prev" class="button btn-ghost" type="button">← PREVIOUS STEP</button>
-        </div>
-      </div>
+        <div id="no-data" class="hidden"></div>
+        <div id="card-root" class="bento"></div>
+      </section>
+
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- ═══ 03 VIEW: DECISION DOSSIER (7-DIMENSION BENTO) ═══ -->
-  <section id="view-card" class="view view-card hidden">
-    <div class="dossier-wrapper">
-      <div class="dossier-chrome">
-        <div class="dossier-left">
-          <button id="btn-back-from-card" class="button btn-back" type="button">← BACK TO STUDIO</button>
-          <span class="dossier-tag opacity-40">DECISION CARD DOSSIER</span>
-        </div>
-        <div class="dossier-right">
-          <span class="engine-indicator"><span class="pulse-dot"></span> QUANT ACTIVE</span>
-        </div>
-      </div>
+<!-- Compatibility Views (Hidden Wrappers for legacy app.js selectors) -->
+<div id="view-input" class="hidden"></div>
+<div id="view-questions" class="hidden"></div>
+<div id="view-card" class="hidden"></div>
+<div id="view-me" class="hidden"></div>
+<button id="btn-login" class="hidden" type="button"></button>
+<button id="btn-logout" class="hidden" type="button"></button>
+<div id="auth-modal" class="hidden">
+  <div class="modal-backdrop"></div>
+  <div id="auth-card">
+    <button id="btn-auth-back" type="button"></button>
+    <div id="auth-title"></div>
+    <div id="auth-sub"></div>
+    <div id="auth-user-hint"></div>
+    <div id="auth-pass-hint"></div>
+    <div id="auth-benefit-title"></div>
+    <div id="auth-benefit-list"></div>
+  </div>
+</div>
+<button id="btn-me-back" class="hidden" type="button"></button>
 
-      <div id="no-data" class="hidden"></div>
-      <div id="card-root" class="bento"></div>
-    </div>
-  </section>
-
-  <!-- ═══ 04 VIEW: MY ARCHIVE (USER DATA) ═══ -->
-  <section id="view-me" class="view view-me hidden">
-    <div class="dossier-wrapper">
-      <div class="dossier-chrome">
-        <div class="dossier-left">
-          <button id="btn-me-back" class="button btn-back" type="button">← BACK TO STUDIO</button>
-          <span class="dossier-tag opacity-40">LOCAL ARCHIVE REPOSITORY</span>
-        </div>
-        <div class="dossier-right">
-          <span class="opacity-40">DATA STORED LOCALLY IN /DATA/USERS/</span>
-        </div>
-      </div>
-
-      <div class="me-shell curved-edges">
-        <nav class="me-tabs">
-          <button id="tab-history" class="tab on" type="button">01 DECISION HISTORY</button>
-          <button id="tab-watch" class="tab" type="button">02 WATCHED TARGETS</button>
-          <button id="tab-account" class="tab" type="button">03 CREDENTIALS &amp; EXPORT</button>
-        </nav>
-        <p id="me-summary" class="me-summary opacity-50"></p>
-        <div id="me-body"></div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- START FOOTER (Core-A Live Time & Clock System) -->
+<!-- Core-A Signature Live Time Footer -->
 <footer class="site-footer">
   <div class="footer-left">
     <span class="footer-meta">IRIS QUANT PROTOCOL</span>
     <span class="footer-meta opacity-40">SEOUL × BEIJING ARCHIVE · M8.2</span>
   </div>
-
-  <div class="live-time uppercase" data-live-time>
+  <div class="live-time uppercase">
     <div class="location sel">
       <p class="location-name">SEL</p>
       <p data-time id="clock-kr">--:--:--</p>
@@ -349,46 +336,6 @@
   </div>
 </footer>
 
-<!-- AUTH MODAL (Core-A Clean Dialog) -->
-<div id="auth-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-  <div class="modal-backdrop" data-close="1"></div>
-  <div class="modal-card curved-edges" id="auth-card">
-    <button class="modal-close button square-button" id="btn-auth-back" type="button" aria-label="Close">×</button>
-    <div class="auth-switch" role="tablist">
-      <button class="auth-tab on" id="atab-login" type="button" role="tab" aria-selected="true">LOGIN</button>
-      <button class="auth-tab" id="atab-register" type="button" role="tab" aria-selected="false">REGISTER</button>
-    </div>
-    <h2 id="auth-title" class="auth-title">WELCOME BACK</h2>
-    <p class="auth-sub opacity-50" id="auth-sub">输入本地账号密码，同步你的消费时机存档。</p>
-    <div class="auth-form">
-      <p>
-        <label id="auth-user-label">USERNAME<br>
-          <input id="auth-user" maxlength="20" autocomplete="username">
-        </label>
-        <span class="auth-hint opacity-40" id="auth-user-hint">2-20 位字符</span>
-      </p>
-      <p>
-        <label>PASSWORD<br>
-          <input id="auth-pass" type="password" maxlength="64" autocomplete="current-password">
-        </label>
-        <span class="auth-hint opacity-40" id="auth-pass-hint">至少 6 位</span>
-      </p>
-      <p id="auth-err" class="auth-err"></p>
-      <p class="row">
-        <button id="btn-auth-go" class="button btn-primary" type="button">AUTHENTICATE</button>
-      </p>
-    </div>
-    <div class="auth-benefit" id="auth-benefit">
-      <h4 id="auth-benefit-title" class="opacity-40">BENEFITS</h4>
-      <ul id="auth-benefit-list">
-        <li><b>历史自动存档</b> — 每次决策卡完整快照，一键还原回看</li>
-        <li><b>画像免重填</b> — 同品类问卷自动预填，直接沿用出卡</li>
-        <li><b>关注商品</b> — 收藏查过的 SKU，随时回来重新出卡</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<script src="/static/app.js?v=20"></script>
+<script src="/static/app.js?v=30"></script>
 </body>
 </html>
