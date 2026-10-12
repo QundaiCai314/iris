@@ -1,7 +1,7 @@
 {
  "title": "Iris 截断历史回测报告（M7.1）",
  "version": "backtest-v1",
- "generated": "2026-09-05",
+ "generated": "2026-10-12",
  "seed": 20260905,
  "reproducibility": "确定性引擎（无随机源）：输入与参数不变时输出逐字节一致；seed 为元数据/扩展位。",
  "disclaimer": [

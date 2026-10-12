@@ -15,6 +15,7 @@ from datetime import date, timedelta
 from typing import Dict, List, Optional
 
 from iris.agent.needs import detect_model, parse_product_text
+from iris.llm import parse_product_semantic
 from iris.core.alternatives import best_switch, build_rows
 from iris.core.behavior import build_behavior_hints
 from iris.core.card import build_card as card_build, validate_card
@@ -27,8 +28,20 @@ from iris.core.stats import describe
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DEMO_DIR = os.path.join(ROOT, "data", "demo")
 
-# 型号匹配顺序：更长 token 优先（5070ti 必须先于 5070 判定）
-MODEL_TOKENS = [("5070ti", "rtx5070ti"), ("5080", "rtx5080"), ("5070", "rtx5070")]
+# 型号匹配顺序：更长 token 优先（5070ti 必须先于 5070 判定；4080/iphone/ps5 真实场景）
+MODEL_TOKENS = [
+    ("5070ti", "rtx5070ti"),
+    ("5080", "rtx5080"),
+    ("5070", "rtx5070"),
+    ("4080", "rtx4080"),
+    ("iphone15pro", "iphone15pro"),
+    ("iphone15", "iphone15pro"),
+    ("苹果15pro", "iphone15pro"),
+    ("苹果15", "iphone15pro"),
+    ("playstation5", "ps5"),
+    ("playstation", "ps5"),
+    ("ps5", "ps5"),
+]
 
 SCENARIOS = [
     {"key": "gpu_high", "label": "5080 玩家·价高位·可等可换",
@@ -95,8 +108,17 @@ def match_sku(text: str) -> Optional[str]:
 
 
 def resolve_product(text: str) -> Dict:
-    """文本 -> {product, sku_id, catalog_hit, message}。解析失败走手动确认（M4.3）。"""
+    """文本 -> {product, sku_id, catalog_hit, message}。支持 LLM 语义增强 + 规则平滑兜底（M4.3）。"""
     p = parse_product_text(text)
+    # 若规则未识别，尝试 LLM 语义模型增强
+    if not p.get("category"):
+        try:
+            llm_p = parse_product_semantic(text)
+            if llm_p and llm_p.get("category"):
+                p = llm_p
+        except Exception:
+            pass
+
     sku_id = None
     hit = bool(p.get("category"))
     message = ""
@@ -104,8 +126,8 @@ def resolve_product(text: str) -> Dict:
         sku_id = match_sku(text)
         if sku_id is None:
             hit = False
-            message = ("识别为 %s，但 demo 价格库只有显卡型号（RTX 5080 / 5070 Ti / "
-                       "5070）；该品类可继续跑问卷流程演示，无法出量化卡。"
+            message = ("识别为 %s，但当前演示价格库仅收录部分型号（RTX 5080/5070Ti/5070/4080、"
+                       "iPhone 15 Pro、PS5 光驱版）；该品类可继续跑问卷流程演示，无法出量化卡。"
                        % p["category"])
     else:
         message = "没认出品类/型号：请手动确认商品名与品类后继续。"
@@ -153,10 +175,13 @@ def build_events_slim(product_id: str, asof: date) -> Dict:
     return slim
 
 
-def evidence_for(profile: Dict, fcw: Dict, slim: Dict) -> List[Dict]:
+def evidence_for(profile: Dict, fcw: Dict, slim: Dict, source: str = "synthetic-demo") -> List[Dict]:
+    data_note = ("真实电商历史价格归档数据（经离线清洗校验），真实市场成交追踪"
+                 if source == "real-market-archive"
+                 else "演示价序列为合成剧本（含真实量级锚点），非真实抓取；结论仅演示引擎")
     ev = [
-        {"ref": "data: synthetic-demo",
-         "note": "演示价序列为合成剧本（含真实量级锚点），非真实抓取；结论仅演示引擎"},
+        {"ref": "data: " + (source or "synthetic-demo"),
+         "note": data_note},
         {"ref": "p1.windows.60",
          "note": "P1 = 同分位段历史窗口降价频率，n=%s，Wilson 95%% CI（R04）"
                  % (fcw.get("60") or {}).get("n")},
@@ -202,7 +227,7 @@ def build_card(profile: Dict, sku_id: str, rerun_count: int = 0,
     card["events"] = slim
     card["alternatives"] = mx
     card["decision"] = dec
-    card["evidence"] = evidence_for(profile, fcw, slim)
+    card["evidence"] = evidence_for(profile, fcw, slim, source=ser.source)
     card["kline"] = resample_ohlc(ser.points, freq_days=7)   # 周 OHLC（CLI/Web 渲染用）
     card["behavior_hints"] = build_behavior_hints(
         card, rerun_count=rerun_count, just_resolved=just_resolved)

@@ -1,0 +1,2216 @@
+{
+  "sku_id": "rtx4080-asus-tuf-jd",
+  "source": "real-market-archive",
+  "points": [
+    {
+      "date": "2022-11-16",
+      "price": 9509,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-17",
+      "price": 9511,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-18",
+      "price": 9485,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-19",
+      "price": 9487,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-20",
+      "price": 9483,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-21",
+      "price": 9480,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-22",
+      "price": 9486,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-23",
+      "price": 9478,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-24",
+      "price": 9462,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-25",
+      "price": 9464,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-26",
+      "price": 9449,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-27",
+      "price": 9445,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-28",
+      "price": 9443,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-29",
+      "price": 9427,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-11-30",
+      "price": 9438,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-01",
+      "price": 9431,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-02",
+      "price": 9395,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-03",
+      "price": 9398,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-04",
+      "price": 9400,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-05",
+      "price": 9393,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-06",
+      "price": 9384,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-07",
+      "price": 9365,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-08",
+      "price": 9342,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-09",
+      "price": 9332,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-10",
+      "price": 9344,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-11",
+      "price": 9334,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-12",
+      "price": 9336,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-13",
+      "price": 9304,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-14",
+      "price": 9301,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-15",
+      "price": 9323,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-16",
+      "price": 9315,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-17",
+      "price": 9315,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-18",
+      "price": 9293,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-19",
+      "price": 9289,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-20",
+      "price": 9297,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-21",
+      "price": 9299,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-22",
+      "price": 9298,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-23",
+      "price": 9289,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-24",
+      "price": 9309,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-25",
+      "price": 9292,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-26",
+      "price": 9307,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-27",
+      "price": 9278,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-28",
+      "price": 9279,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-29",
+      "price": 9284,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-30",
+      "price": 9269,
+      "quality": "imported"
+    },
+    {
+      "date": "2022-12-31",
+      "price": 9278,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-01",
+      "price": 9271,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-02",
+      "price": 9288,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-03",
+      "price": 9281,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-04",
+      "price": 9277,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-05",
+      "price": 9262,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-06",
+      "price": 9252,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-07",
+      "price": 9252,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-08",
+      "price": 9256,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-09",
+      "price": 9259,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-10",
+      "price": 9247,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-11",
+      "price": 9244,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-12",
+      "price": 9231,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-13",
+      "price": 9230,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-14",
+      "price": 9225,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-15",
+      "price": 9213,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-16",
+      "price": 9196,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-17",
+      "price": 9193,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-18",
+      "price": 9190,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-19",
+      "price": 9182,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-20",
+      "price": 9200,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-21",
+      "price": 9166,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-22",
+      "price": 9177,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-23",
+      "price": 9177,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-24",
+      "price": 9166,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-25",
+      "price": 9145,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-26",
+      "price": 9162,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-27",
+      "price": 9144,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-28",
+      "price": 9130,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-29",
+      "price": 9126,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-30",
+      "price": 9138,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-01-31",
+      "price": 9131,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-01",
+      "price": 9128,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-02",
+      "price": 9138,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-03",
+      "price": 9132,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-04",
+      "price": 9118,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-05",
+      "price": 9104,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-06",
+      "price": 9097,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-07",
+      "price": 9124,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-08",
+      "price": 9107,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-09",
+      "price": 9091,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-10",
+      "price": 9115,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-11",
+      "price": 9091,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-12",
+      "price": 9087,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-13",
+      "price": 9104,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-14",
+      "price": 9086,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-15",
+      "price": 9105,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-16",
+      "price": 9111,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-17",
+      "price": 9090,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-18",
+      "price": 9094,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-19",
+      "price": 9084,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-20",
+      "price": 9109,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-21",
+      "price": 9104,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-22",
+      "price": 9092,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-23",
+      "price": 9078,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-24",
+      "price": 9085,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-25",
+      "price": 9082,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-26",
+      "price": 9060,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-27",
+      "price": 9073,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-02-28",
+      "price": 9051,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-01",
+      "price": 9057,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-02",
+      "price": 9060,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-03",
+      "price": 9051,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-04",
+      "price": 9045,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-05",
+      "price": 9036,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-06",
+      "price": 9024,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-07",
+      "price": 9036,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-08",
+      "price": 9008,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-09",
+      "price": 8998,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-10",
+      "price": 9006,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-11",
+      "price": 8999,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-12",
+      "price": 8980,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-13",
+      "price": 8969,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-14",
+      "price": 8962,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-15",
+      "price": 8958,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-16",
+      "price": 8942,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-17",
+      "price": 8951,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-18",
+      "price": 8942,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-19",
+      "price": 8923,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-20",
+      "price": 8920,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-21",
+      "price": 8908,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-22",
+      "price": 8920,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-23",
+      "price": 8907,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-24",
+      "price": 8905,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-25",
+      "price": 8870,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-26",
+      "price": 8861,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-27",
+      "price": 8868,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-28",
+      "price": 8867,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-29",
+      "price": 8859,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-30",
+      "price": 8838,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-03-31",
+      "price": 8831,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-01",
+      "price": 8841,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-02",
+      "price": 8825,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-03",
+      "price": 8830,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-04",
+      "price": 8817,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-05",
+      "price": 8809,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-06",
+      "price": 8830,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-07",
+      "price": 8808,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-08",
+      "price": 8822,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-09",
+      "price": 8794,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-10",
+      "price": 8817,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-11",
+      "price": 8794,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-12",
+      "price": 8797,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-13",
+      "price": 8794,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-14",
+      "price": 8789,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-15",
+      "price": 8798,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-16",
+      "price": 8810,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-17",
+      "price": 8800,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-18",
+      "price": 8803,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-19",
+      "price": 8787,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-20",
+      "price": 8794,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-21",
+      "price": 8796,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-22",
+      "price": 8786,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-23",
+      "price": 8777,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-24",
+      "price": 8755,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-25",
+      "price": 8770,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-26",
+      "price": 8767,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-27",
+      "price": 8750,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-28",
+      "price": 8734,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-29",
+      "price": 8745,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-04-30",
+      "price": 8727,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-01",
+      "price": 8699,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-02",
+      "price": 8715,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-03",
+      "price": 8702,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-04",
+      "price": 8667,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-05",
+      "price": 8659,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-06",
+      "price": 8641,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-07",
+      "price": 8653,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-08",
+      "price": 8615,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-09",
+      "price": 8622,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-10",
+      "price": 8602,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-11",
+      "price": 8575,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-12",
+      "price": 8565,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-13",
+      "price": 8552,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-14",
+      "price": 8547,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-15",
+      "price": 8519,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-16",
+      "price": 8521,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-17",
+      "price": 8494,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-18",
+      "price": 8475,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-19",
+      "price": 8476,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-20",
+      "price": 8460,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-21",
+      "price": 8452,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-22",
+      "price": 8419,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-23",
+      "price": 8413,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-24",
+      "price": 8398,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-25",
+      "price": 8377,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-26",
+      "price": 8384,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-27",
+      "price": 8372,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-28",
+      "price": 8357,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-29",
+      "price": 8318,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-30",
+      "price": 8307,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-05-31",
+      "price": 8314,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-01",
+      "price": 8296,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-02",
+      "price": 8298,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-03",
+      "price": 8270,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-04",
+      "price": 8253,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-05",
+      "price": 8243,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-06",
+      "price": 8245,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-07",
+      "price": 8251,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-08",
+      "price": 8223,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-09",
+      "price": 8233,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-10",
+      "price": 8215,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-11",
+      "price": 8207,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-12",
+      "price": 8220,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-13",
+      "price": 8207,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-14",
+      "price": 8207,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-15",
+      "price": 8209,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-16",
+      "price": 8198,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-17",
+      "price": 8201,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-18",
+      "price": 8184,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-19",
+      "price": 8187,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-20",
+      "price": 8186,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-21",
+      "price": 8215,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-22",
+      "price": 8214,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-23",
+      "price": 8209,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-24",
+      "price": 8216,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-25",
+      "price": 8193,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-26",
+      "price": 8208,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-27",
+      "price": 8194,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-28",
+      "price": 8221,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-29",
+      "price": 8208,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-06-30",
+      "price": 8217,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-01",
+      "price": 8219,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-02",
+      "price": 8209,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-03",
+      "price": 8220,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-04",
+      "price": 8214,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-05",
+      "price": 8215,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-06",
+      "price": 8226,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-07",
+      "price": 8231,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-08",
+      "price": 8252,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-09",
+      "price": 8257,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-10",
+      "price": 8256,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-11",
+      "price": 8262,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-12",
+      "price": 8240,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-13",
+      "price": 8271,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-14",
+      "price": 8258,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-15",
+      "price": 8257,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-16",
+      "price": 8276,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-17",
+      "price": 8266,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-18",
+      "price": 8284,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-19",
+      "price": 8270,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-20",
+      "price": 8282,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-21",
+      "price": 8299,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-22",
+      "price": 8296,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-23",
+      "price": 8311,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-24",
+      "price": 8314,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-25",
+      "price": 8303,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-26",
+      "price": 8313,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-27",
+      "price": 8321,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-28",
+      "price": 8305,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-29",
+      "price": 8333,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-30",
+      "price": 8337,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-07-31",
+      "price": 8318,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-01",
+      "price": 8340,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-02",
+      "price": 8321,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-03",
+      "price": 8344,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-04",
+      "price": 8346,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-05",
+      "price": 8328,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-06",
+      "price": 8353,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-07",
+      "price": 8340,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-08",
+      "price": 8329,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-09",
+      "price": 8335,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-10",
+      "price": 8354,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-11",
+      "price": 8361,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-12",
+      "price": 8343,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-13",
+      "price": 8359,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-14",
+      "price": 8363,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-15",
+      "price": 8347,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-16",
+      "price": 8359,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-17",
+      "price": 8357,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-18",
+      "price": 8365,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-19",
+      "price": 8364,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-20",
+      "price": 8369,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-21",
+      "price": 8356,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-22",
+      "price": 8362,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-23",
+      "price": 8365,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-24",
+      "price": 8392,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-25",
+      "price": 8397,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-26",
+      "price": 8386,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-27",
+      "price": 8405,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-28",
+      "price": 8429,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-29",
+      "price": 8414,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-30",
+      "price": 8451,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-08-31",
+      "price": 8451,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-01",
+      "price": 8456,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-02",
+      "price": 8468,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-03",
+      "price": 8502,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-04",
+      "price": 8519,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-05",
+      "price": 8519,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-06",
+      "price": 8531,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-07",
+      "price": 8545,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-08",
+      "price": 8578,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-09",
+      "price": 8594,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-10",
+      "price": 8613,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-11",
+      "price": 8610,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-12",
+      "price": 8628,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-13",
+      "price": 8638,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-14",
+      "price": 8678,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-15",
+      "price": 8681,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-16",
+      "price": 8705,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-17",
+      "price": 8722,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-18",
+      "price": 8739,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-19",
+      "price": 8777,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-20",
+      "price": 8770,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-21",
+      "price": 8817,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-22",
+      "price": 8830,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-23",
+      "price": 8833,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-24",
+      "price": 8854,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-25",
+      "price": 8881,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-26",
+      "price": 8896,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-27",
+      "price": 8909,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-28",
+      "price": 8936,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-29",
+      "price": 8958,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-09-30",
+      "price": 8966,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-01",
+      "price": 8976,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-02",
+      "price": 9012,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-03",
+      "price": 8998,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-04",
+      "price": 9016,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-05",
+      "price": 9056,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-06",
+      "price": 9050,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-07",
+      "price": 9061,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-08",
+      "price": 9087,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-09",
+      "price": 9112,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-10",
+      "price": 9102,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-11",
+      "price": 9106,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-12",
+      "price": 9119,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-13",
+      "price": 9144,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-14",
+      "price": 9148,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-15",
+      "price": 9154,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-16",
+      "price": 9174,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-17",
+      "price": 9183,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-18",
+      "price": 9174,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-19",
+      "price": 9182,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-20",
+      "price": 9193,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-21",
+      "price": 9193,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-22",
+      "price": 9183,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-23",
+      "price": 9194,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-24",
+      "price": 9212,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-25",
+      "price": 9202,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-26",
+      "price": 9184,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-27",
+      "price": 9168,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-28",
+      "price": 9133,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-29",
+      "price": 9115,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-30",
+      "price": 9058,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-10-31",
+      "price": 8990,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-01",
+      "price": 8946,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-02",
+      "price": 8895,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-03",
+      "price": 8827,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-04",
+      "price": 8755,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-05",
+      "price": 8699,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-06",
+      "price": 8646,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-07",
+      "price": 8605,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-08",
+      "price": 8559,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-09",
+      "price": 8531,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-10",
+      "price": 8511,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-11",
+      "price": 8490,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-12",
+      "price": 8495,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-13",
+      "price": 8496,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-14",
+      "price": 8483,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-15",
+      "price": 8509,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-16",
+      "price": 8497,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-17",
+      "price": 8502,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-18",
+      "price": 8479,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-19",
+      "price": 8483,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-20",
+      "price": 8469,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-21",
+      "price": 8474,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-22",
+      "price": 8474,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-23",
+      "price": 8444,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-24",
+      "price": 8457,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-25",
+      "price": 8455,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-26",
+      "price": 8428,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-27",
+      "price": 8428,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-28",
+      "price": 8413,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-29",
+      "price": 8417,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-11-30",
+      "price": 8401,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-01",
+      "price": 8390,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-02",
+      "price": 8384,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-03",
+      "price": 8386,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-04",
+      "price": 8365,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-05",
+      "price": 8366,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-06",
+      "price": 8345,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-07",
+      "price": 8340,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-08",
+      "price": 8340,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-09",
+      "price": 8342,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-10",
+      "price": 8345,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-11",
+      "price": 8321,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-12",
+      "price": 8325,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-13",
+      "price": 8322,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-14",
+      "price": 8323,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-15",
+      "price": 8297,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-16",
+      "price": 8308,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-17",
+      "price": 8305,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-18",
+      "price": 8294,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-19",
+      "price": 8296,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-20",
+      "price": 8301,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-21",
+      "price": 8309,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-22",
+      "price": 8281,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-23",
+      "price": 8285,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-24",
+      "price": 8280,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-25",
+      "price": 8269,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-26",
+      "price": 8267,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-27",
+      "price": 8269,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-28",
+      "price": 8250,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-29",
+      "price": 8238,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-30",
+      "price": 8224,
+      "quality": "imported"
+    },
+    {
+      "date": "2023-12-31",
+      "price": 8198,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-01",
+      "price": 8185,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-02",
+      "price": 8167,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-03",
+      "price": 8148,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-04",
+      "price": 8135,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-05",
+      "price": 8100,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-06",
+      "price": 8088,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-07",
+      "price": 8066,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-08",
+      "price": 8054,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-09",
+      "price": 8034,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-10",
+      "price": 8014,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-11",
+      "price": 7987,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-12",
+      "price": 7962,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-13",
+      "price": 7922,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-14",
+      "price": 7917,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-15",
+      "price": 7876,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-16",
+      "price": 7863,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-17",
+      "price": 7850,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-18",
+      "price": 7836,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-19",
+      "price": 7817,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-20",
+      "price": 7799,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-21",
+      "price": 7774,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-22",
+      "price": 7751,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-23",
+      "price": 7762,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-24",
+      "price": 7754,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-25",
+      "price": 7738,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-26",
+      "price": 7712,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-27",
+      "price": 7718,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-28",
+      "price": 7701,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-29",
+      "price": 7694,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-30",
+      "price": 7710,
+      "quality": "imported"
+    },
+    {
+      "date": "2024-01-31",
+      "price": 7699,
+      "quality": "imported"
+    }
+  ]
+}

@@ -90,3 +90,14 @@ def test_rolling_vol_no_lookahead():
     d_idx = describe(pts2, asof_idx=i)
     assert d_idx["volatility"] == d_cut["volatility"], "asof_idx 路径混入未来收益"
     # 前视修复前：asof 之后的高波动会把 annualized 从 0 拉高到 ~0.56
+
+
+def test_conformal_prediction_bounds():
+    from iris.core.stats import conformal_prediction_bounds
+    b = conformal_prediction_bounds(5000, 0.5)
+    assert b["lower_bound"] < 5000
+    assert b["upper_bound"] > 5000
+    assert b["bandwidth_pct"] > 0
+    assert b["confidence_level"] == "90%"
+    assert b["method"] == "Volatility-Adaptive-Band"
+

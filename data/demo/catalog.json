@@ -1,165 +1,234 @@
 {
- "products": [
-  {
-   "product_id": "rtx5080",
-   "name": "RTX 5080 16G",
-   "category": "显卡",
-   "launch_date": "2025-01-30",
-   "lifecycle_family": "gpu",
-   "status": "active"
-  },
-  {
-   "product_id": "rtx5070ti",
-   "name": "RTX 5070 Ti 16G",
-   "category": "显卡",
-   "launch_date": "2025-02-20",
-   "lifecycle_family": "gpu",
-   "status": "active"
-  },
-  {
-   "product_id": "rtx5070",
-   "name": "RTX 5070 12G",
-   "category": "显卡",
-   "launch_date": "2025-03-05",
-   "lifecycle_family": "gpu",
-   "status": "active"
-  }
- ],
- "skus": [
-  {
-   "sku_id": "rtx5080-asus-tuf-mid",
-   "product_id": "rtx5080",
-   "brand": "asus",
-   "tier": "mid",
-   "channel": "jd",
-   "attributes": {
-    "vram_gb": 16,
-    "tdp_w": 320,
-    "cooling": "3fan",
-    "warranty_years": 3,
-    "benchmark": 100.0
-   },
-   "launch_price": 8599
-  },
-  {
-   "sku_id": "rtx5080-msi-ventus-entry",
-   "product_id": "rtx5080",
-   "brand": "msi",
-   "tier": "entry",
-   "channel": "jd",
-   "attributes": {
-    "vram_gb": 16,
-    "tdp_w": 320,
-    "cooling": "2fan",
-    "warranty_years": 3,
-    "benchmark": 96.0
-   },
-   "launch_price": 8299
-  },
-  {
-   "sku_id": "rtx5080-colorful-igame-high",
-   "product_id": "rtx5080",
-   "brand": "colorful",
-   "tier": "high",
-   "channel": "jd",
-   "attributes": {
-    "vram_gb": 16,
-    "tdp_w": 320,
-    "cooling": "3fan",
-    "warranty_years": 3,
-    "benchmark": 103.0
-   },
-   "launch_price": 8999
-  },
-  {
-   "sku_id": "rtx5070ti-msi-mid",
-   "product_id": "rtx5070ti",
-   "brand": "msi",
-   "tier": "mid",
-   "channel": "jd",
-   "attributes": {
-    "vram_gb": 16,
-    "tdp_w": 300,
-    "cooling": "3fan",
-    "warranty_years": 3,
-    "benchmark": 85.0
-   },
-   "launch_price": 6499
-  },
-  {
-   "sku_id": "rtx5070ti-gigabyte-entry",
-   "product_id": "rtx5070ti",
-   "brand": "gigabyte",
-   "tier": "entry",
-   "channel": "jd",
-   "attributes": {
-    "vram_gb": 16,
-    "tdp_w": 300,
-    "cooling": "2fan",
-    "warranty_years": 3,
-    "benchmark": 84.0
-   },
-   "launch_price": 6299
-  },
-  {
-   "sku_id": "rtx5070-gigabyte-mid",
-   "product_id": "rtx5070",
-   "brand": "gigabyte",
-   "tier": "mid",
-   "channel": "jd",
-   "attributes": {
-    "vram_gb": 12,
-    "tdp_w": 250,
-    "cooling": "3fan",
-    "warranty_years": 3,
-    "benchmark": 70.0
-   },
-   "launch_price": 4299
-  },
-  {
-   "sku_id": "rtx5070-msi-entry",
-   "product_id": "rtx5070",
-   "brand": "msi",
-   "tier": "entry",
-   "channel": "jd",
-   "attributes": {
-    "vram_gb": 12,
-    "tdp_w": 250,
-    "cooling": "2fan",
-    "warranty_years": 3,
-    "benchmark": 68.0
-   },
-   "launch_price": 4199
-  },
-  {
-   "sku_id": "rtx5080-msi-ventus-entry-pdd",
-   "product_id": "rtx5080",
-   "brand": "msi",
-   "tier": "entry",
-   "channel": "pdd",
-   "attributes": {
-    "vram_gb": 16,
-    "tdp_w": 320,
-    "cooling": "2fan",
-    "warranty_years": 3,
-    "benchmark": 96.0
-   },
-   "launch_price": 7950
-  },
-  {
-   "sku_id": "rtx5070-gigabyte-mid-pdd",
-   "product_id": "rtx5070",
-   "brand": "gigabyte",
-   "tier": "mid",
-   "channel": "pdd",
-   "attributes": {
-    "vram_gb": 12,
-    "tdp_w": 250,
-    "cooling": "3fan",
-    "warranty_years": 3,
-    "benchmark": 70.0
-   },
-   "launch_price": 4120
-  }
- ]
+  "products": [
+    {
+      "product_id": "rtx5080",
+      "name": "RTX 5080 16G",
+      "category": "显卡",
+      "launch_date": "2025-01-30",
+      "lifecycle_family": "gpu",
+      "status": "active"
+    },
+    {
+      "product_id": "rtx5070ti",
+      "name": "RTX 5070 Ti 16G",
+      "category": "显卡",
+      "launch_date": "2025-02-20",
+      "lifecycle_family": "gpu",
+      "status": "active"
+    },
+    {
+      "product_id": "rtx5070",
+      "name": "RTX 5070 12G",
+      "category": "显卡",
+      "launch_date": "2025-03-05",
+      "lifecycle_family": "gpu",
+      "status": "active"
+    },
+    {
+      "product_id": "iphone15pro",
+      "name": "iPhone 15 Pro 256G",
+      "category": "手机",
+      "launch_date": "2023-09-22",
+      "lifecycle_family": "phone",
+      "status": "active"
+    },
+    {
+      "product_id": "rtx4080",
+      "name": "RTX 4080 16G",
+      "category": "显卡",
+      "launch_date": "2022-11-16",
+      "lifecycle_family": "gpu",
+      "status": "active"
+    },
+    {
+      "product_id": "ps5",
+      "name": "PlayStation 5 光驱版",
+      "category": "游戏机",
+      "launch_date": "2021-06-01",
+      "lifecycle_family": "console",
+      "status": "active"
+    }
+  ],
+  "skus": [
+    {
+      "sku_id": "rtx5080-asus-tuf-mid",
+      "product_id": "rtx5080",
+      "brand": "asus",
+      "tier": "mid",
+      "channel": "jd",
+      "attributes": {
+        "vram_gb": 16,
+        "tdp_w": 320,
+        "cooling": "3fan",
+        "warranty_years": 3,
+        "benchmark": 100.0
+      },
+      "launch_price": 8599
+    },
+    {
+      "sku_id": "rtx5080-msi-ventus-entry",
+      "product_id": "rtx5080",
+      "brand": "msi",
+      "tier": "entry",
+      "channel": "jd",
+      "attributes": {
+        "vram_gb": 16,
+        "tdp_w": 320,
+        "cooling": "2fan",
+        "warranty_years": 3,
+        "benchmark": 96.0
+      },
+      "launch_price": 8299
+    },
+    {
+      "sku_id": "rtx5080-colorful-igame-high",
+      "product_id": "rtx5080",
+      "brand": "colorful",
+      "tier": "high",
+      "channel": "jd",
+      "attributes": {
+        "vram_gb": 16,
+        "tdp_w": 320,
+        "cooling": "3fan",
+        "warranty_years": 3,
+        "benchmark": 103.0
+      },
+      "launch_price": 8999
+    },
+    {
+      "sku_id": "rtx5070ti-msi-mid",
+      "product_id": "rtx5070ti",
+      "brand": "msi",
+      "tier": "mid",
+      "channel": "jd",
+      "attributes": {
+        "vram_gb": 16,
+        "tdp_w": 300,
+        "cooling": "3fan",
+        "warranty_years": 3,
+        "benchmark": 85.0
+      },
+      "launch_price": 6499
+    },
+    {
+      "sku_id": "rtx5070ti-gigabyte-entry",
+      "product_id": "rtx5070ti",
+      "brand": "gigabyte",
+      "tier": "entry",
+      "channel": "jd",
+      "attributes": {
+        "vram_gb": 16,
+        "tdp_w": 300,
+        "cooling": "2fan",
+        "warranty_years": 3,
+        "benchmark": 84.0
+      },
+      "launch_price": 6299
+    },
+    {
+      "sku_id": "rtx5070-gigabyte-mid",
+      "product_id": "rtx5070",
+      "brand": "gigabyte",
+      "tier": "mid",
+      "channel": "jd",
+      "attributes": {
+        "vram_gb": 12,
+        "tdp_w": 250,
+        "cooling": "3fan",
+        "warranty_years": 3,
+        "benchmark": 70.0
+      },
+      "launch_price": 4299
+    },
+    {
+      "sku_id": "rtx5070-msi-entry",
+      "product_id": "rtx5070",
+      "brand": "msi",
+      "tier": "entry",
+      "channel": "jd",
+      "attributes": {
+        "vram_gb": 12,
+        "tdp_w": 250,
+        "cooling": "2fan",
+        "warranty_years": 3,
+        "benchmark": 68.0
+      },
+      "launch_price": 4199
+    },
+    {
+      "sku_id": "rtx5080-msi-ventus-entry-pdd",
+      "product_id": "rtx5080",
+      "brand": "msi",
+      "tier": "entry",
+      "channel": "pdd",
+      "attributes": {
+        "vram_gb": 16,
+        "tdp_w": 320,
+        "cooling": "2fan",
+        "warranty_years": 3,
+        "benchmark": 96.0
+      },
+      "launch_price": 7950
+    },
+    {
+      "sku_id": "rtx5070-gigabyte-mid-pdd",
+      "product_id": "rtx5070",
+      "brand": "gigabyte",
+      "tier": "mid",
+      "channel": "pdd",
+      "attributes": {
+        "vram_gb": 12,
+        "tdp_w": 250,
+        "cooling": "3fan",
+        "warranty_years": 3,
+        "benchmark": 70.0
+      },
+      "launch_price": 4120
+    },
+    {
+      "sku_id": "iphone15pro-256g-jd",
+      "product_id": "iphone15pro",
+      "brand": "apple",
+      "tier": "mid",
+      "channel": "jd",
+      "attributes": {
+        "benchmark": 100.0,
+        "warranty_years": 1,
+        "vram_gb": 8,
+        "tdp_w": 20,
+        "cooling": "passive"
+      },
+      "launch_price": 8999
+    },
+    {
+      "sku_id": "rtx4080-asus-tuf-jd",
+      "product_id": "rtx4080",
+      "brand": "asus",
+      "tier": "mid",
+      "channel": "jd",
+      "attributes": {
+        "benchmark": 85.0,
+        "warranty_years": 3,
+        "vram_gb": 16,
+        "tdp_w": 320,
+        "cooling": "3fan"
+      },
+      "launch_price": 9499
+    },
+    {
+      "sku_id": "ps5-disc-drive-jd",
+      "product_id": "ps5",
+      "brand": "sony",
+      "tier": "mid",
+      "channel": "jd",
+      "attributes": {
+        "benchmark": 100.0,
+        "warranty_years": 1,
+        "vram_gb": 16,
+        "tdp_w": 200,
+        "cooling": "fan"
+      },
+      "launch_price": 3899
+    }
+  ]
 }

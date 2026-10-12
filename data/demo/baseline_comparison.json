@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "title": "Iris 与对照基线策略回测实验报告",
+    "date": "2026-09-06",
+    "sample_points": 213,
+    "skus_tested": 9,
+    "disclaimer": "回测基于截断历史样本外评估，不构成未来确定性保证。"
+  },
+  "strategies": {
+    "iris": {
+      "strategy": "Iris 量化决策引擎",
+      "total_decisions": 213,
+      "wait_count": 75,
+      "buy_count": 138,
+      "overall_net_benefit_pct": 2.05,
+      "wait_metrics": {
+        "n": 75,
+        "ratio": 0.3521,
+        "hit_rate": 0.5333,
+        "avg_saving_pct": 5.8219,
+        "median_saving_pct": 5.6049,
+        "positive_saving_rate": 0.8667,
+        "worst_loss_pct": 0.7181
+      },
+      "buy_metrics": {
+        "n": 138,
+        "ratio": 0.6479,
+        "regret_rate": 0.4565,
+        "avg_foregone_pct": 4.8495
+      }
+    },
+    "naive_buy": {
+      "strategy": "基线 1: 即刻买 (Naive-Buy)",
+      "total_decisions": 213,
+      "wait_count": 0,
+      "buy_count": 213,
+      "overall_net_benefit_pct": 0.0,
+      "wait_metrics": null,
+      "buy_metrics": {
+        "n": 213,
+        "ratio": 1.0,
+        "regret_rate": 0.4836,
+        "avg_foregone_pct": 5.2077
+      }
+    },
+    "naive_wait": {
+      "strategy": "基线 2: 机械等 (Naive-Wait)",
+      "total_decisions": 213,
+      "wait_count": 213,
+      "buy_count": 0,
+      "overall_net_benefit_pct": 4.8259,
+      "wait_metrics": {
+        "n": 213,
+        "ratio": 1.0,
+        "hit_rate": 0.4836,
+        "avg_saving_pct": 4.8259,
+        "median_saving_pct": 4.0709,
+        "positive_saving_rate": 0.8498,
+        "worst_loss_pct": 7.8583
+      },
+      "buy_metrics": null
+    },
+    "percentile": {
+      "strategy": "基线 3: 分位经验法 (Heuristic-Pctl)",
+      "total_decisions": 213,
+      "wait_count": 135,
+      "buy_count": 78,
+      "overall_net_benefit_pct": 3.3675,
+      "wait_metrics": {
+        "n": 135,
+        "ratio": 0.6338,
+        "hit_rate": 0.4963,
+        "avg_saving_pct": 5.3131,
+        "median_saving_pct": 4.6658,
+        "positive_saving_rate": 0.8815,
+        "worst_loss_pct": 0.7181
+      },
+      "buy_metrics": {
+        "n": 78,
+        "ratio": 0.3662,
+        "regret_rate": 0.4615,
+        "avg_foregone_pct": 4.9603
+      }
+    }
+  }
+}

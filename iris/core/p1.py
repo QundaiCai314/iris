@@ -14,7 +14,7 @@ from datetime import date, timedelta
 from typing import Dict, List, Optional
 
 from iris.core.models import PricePoint
-from iris.core.stats import _calendar_window, _d, percentile_position
+from iris.core.stats import _calendar_window, _d, percentile_position, percentile_value
 
 WILSON_Z = 1.96
 
@@ -30,19 +30,31 @@ def wilson_ci(hits: int, n: int, z: float = WILSON_Z) -> tuple:
     return (max(0.0, centre - half), min(1.0, centre + half))
 
 
-def _future_low(points: List[PricePoint], j: int, window_days: int,
-                cap_idx: Optional[int] = None) -> Optional[int]:
-    """j 日之后 window_days 天内最低价（不含 j 当日）。cap_idx 防前视：只看到 asof。"""
+def _future_low_and_days(points: List[PricePoint], j: int, window_days: int,
+                         cap_idx: Optional[int] = None,
+                         threshold: Optional[float] = None) -> tuple:
+    """j 日之后 window_days 天内最低价与首次跌破天数。"""
     d0 = _d(points[j])
     end = len(points) if cap_idx is None else min(len(points), cap_idx + 1)
     lo_price = None
+    days_to_drop = None
     for k in range(j + 1, end):
         p = points[k]
         d = _d(p)
-        if (d - d0).days > window_days:
+        delta_days = (d - d0).days
+        if delta_days > window_days:
             break
         lo_price = p.price if lo_price is None else min(lo_price, p.price)
-    return lo_price
+        if threshold is not None and days_to_drop is None and p.price <= threshold:
+            days_to_drop = delta_days
+    return lo_price, days_to_drop
+
+
+def _future_low(points: List[PricePoint], j: int, window_days: int,
+                cap_idx: Optional[int] = None) -> Optional[int]:
+    """j 日之后 window_days 天内最低价（兼容旧签名）。"""
+    lo, _ = _future_low_and_days(points, j, window_days, cap_idx=cap_idx)
+    return lo
 
 
 def p1_forecast(points: List[PricePoint], asof_idx: int = -1,
@@ -64,6 +76,7 @@ def p1_forecast(points: List[PricePoint], asof_idx: int = -1,
 
     hits, lows, n_cand = 0, [], 0
     cand_dates = []
+    durations_to_drop: List[int] = []
     lo_date = asof - timedelta(days=min_history_days)
     threshold = last * (1 - drop)
     for j in range(asof_idx):
@@ -79,7 +92,7 @@ def p1_forecast(points: List[PricePoint], asof_idx: int = -1,
             continue
         if min(buckets - 1, int(pos * buckets)) != cur_bucket:
             continue
-        fut = _future_low(points, j, window_days, cap_idx=asof_idx)
+        fut, day_drop = _future_low_and_days(points, j, window_days, cap_idx=asof_idx, threshold=threshold)
         if fut is None:
             continue
         n_cand += 1
@@ -87,6 +100,8 @@ def p1_forecast(points: List[PricePoint], asof_idx: int = -1,
         lows.append(fut)
         if fut <= threshold:
             hits += 1
+            if day_drop is not None:
+                durations_to_drop.append(day_drop)
 
     n = len(lows)
     res: Dict = {
@@ -111,6 +126,20 @@ def p1_forecast(points: List[PricePoint], asof_idx: int = -1,
                        if len(cand_dates) > 1 and (max(cand_dates) - min(cand_dates)).days < 90 else "ok"),
         },
     }
+
+    if durations_to_drop:
+        s_dur = sorted(durations_to_drop)
+        med_d = percentile_value(s_dur, 0.5)
+        q25_d = percentile_value(s_dur, 0.25)
+        q75_d = percentile_value(s_dur, 0.75)
+        res["survival_analysis"] = {
+            "median_days_to_drop": int(round(med_d)) if med_d is not None else None,
+            "iqr_days": [int(round(q25_d)), int(round(q75_d))] if q25_d is not None and q75_d is not None else None,
+            "n_drop_events": len(durations_to_drop),
+            "citation": "Empirical Drop Duration (命中降价窗口的持续时间统计；注：未处理未降价窗口右删失)",
+        }
+    else:
+        res["survival_analysis"] = None
 
     # 等待策略统计（M5 决策引擎 G/R 数据输入；口径：等满 window_days 天、以窗内最低价成交，
     # 最低价低于现价记节省 saving，高于现价记损失 loss；均为全部候选窗口的无条件均值 pct）

@@ -40,3 +40,28 @@ def test_scenarios_sku_exist():
         assert s["sku"] in d["skus"]
         assert s["profile"]["category"] == "显卡"
         assert s["profile"]["purpose"]
+
+
+def test_resolve_real_products():
+    r1 = pipeline.resolve_product("Apple iPhone 15 Pro 256G 黑色钛金属 手机")
+    assert r1["product"]["category"] == "手机"
+    assert r1["sku_id"] == "iphone15pro-256g-jd"
+    assert r1["catalog_hit"] is True
+
+    r2 = pipeline.resolve_product("华硕 TUF GeForce RTX 4080 16GB GAMING 显卡")
+    assert r2["product"]["category"] == "显卡"
+    assert r2["sku_id"] == "rtx4080-asus-tuf-jd"
+    assert r2["catalog_hit"] is True
+
+    r3 = pipeline.resolve_product("索尼 PlayStation 5 国行光驱版 游戏主机")
+    assert r3["product"]["category"] == "游戏机"
+    assert r3["sku_id"] == "ps5-disc-drive-jd"
+    assert r3["catalog_hit"] is True
+
+
+def test_build_card_real_products():
+    c = pipeline.build_card({"name": "iPhone 15 Pro", "category": "手机", "purpose": "日常通讯", "wait_tier": "mid"},
+                            "iphone15pro-256g-jd")
+    assert c["meta"]["sku_id"] == "iphone15pro-256g-jd"
+    assert c["decision"]["recommendation"] in ("buy", "wait", "switch")
+    assert any("real-market-archive" in ev["ref"] for ev in c["evidence"])

@@ -151,3 +151,26 @@ def test_events_load(tmp_path):
     assert len(evs) == 1
     assert isinstance(evs[0], EventItem)
     assert evs[0].confidence == "reported"   # 默认值
+
+
+def test_parse_price_csv_and_save(tmp_path):
+    from iris.core.prices import parse_price_csv, save_series_json
+    csv_raw = """# Custom price history
+date,price
+2025-01-01,9999
+2025-01-03,9800
+2025-01-02,9850
+"""
+    ser = parse_price_csv(csv_raw, sku_id="custom-sku-01")
+    assert ser.sku_id == "custom-sku-01"
+    assert len(ser.points) == 3
+    # 自动排序
+    assert [p.date for p in ser.points] == ["2025-01-01", "2025-01-02", "2025-01-03"]
+    assert [p.price for p in ser.points] == [9999, 9850, 9800]
+
+    out_file = os.path.join(tmp_path, "custom.json")
+    save_series_json(ser, out_file)
+    assert os.path.exists(out_file)
+    loaded = load_series_file(out_file, "custom-sku-01")
+    assert len(loaded.points) == 3
+

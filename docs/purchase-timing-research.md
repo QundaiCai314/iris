@@ -40,6 +40,19 @@ Rajendran & Tellis（1994，Journal of Marketing 58(1)《Contextual and Temporal
 
 ### 1.6 必需品与可选品：第一道闸门
 必需品（药、御寒品）需求弹性低：效用损失曲线陡，等待期权价值趋近 0 → 直接建议买，只做渠道比价；可选品（显卡、游戏机）弹性高 → 走完整时机引擎。品类闸门放在问答最前，避免把简单问题复杂化。
+
+### 1.7 均值回归与偏离半衰期（Ornstein-Uhlenbeck / Vasicek 1977）
+耐用品价格在生产成本、渠道竞争与生命周期演进中呈现显著均值回归特征。通过离散 OLS 拟合自回归差分方程 $\Delta P_t = \alpha + \beta P_{t-1}$，解出均衡中枢 $\mu = -\alpha / \beta$ 与半衰期 $t_{1/2} = \ln(2) / [-\ln(1+\beta)]$。
+- 对产品的意义：量化当前市价偏离长期均衡的幅度（溢价或折价），并提供“偏离在多少天内衰减一半”的客观尺度，避免在非理性冲高期接盘。
+
+### 1.8 累积前景理论与损失厌恶（Tversky & Kahneman 1992）
+传统预期效用假定消费者是风险中性的线性期望计算器，但行为金融学证实人具有强烈的损失厌恶（$\lambda = 2.25$），且对极端概率存在非线性扭曲（$w(p)$ 加权函数）。
+- 对产品的意义：同步输出“客观数学期望金额”与“前景理论心理确定性等价值（CE）”。当客观期望为正而主观等价值转负时，主动诊断出用户的“损失厌恶焦虑”，指导风险厌恶型买家何时遵循心理效用提前锁定商品。
+
+### 1.9 降价持续期与生存分析（Kaplan-Meier / Hazard Rate）
+消费者关心“降不降”，更关心“平均还要等多久”。将价格跌破阈值视为事件（Event），利用非参数生存分析计算持续期分布 $T \sim F(t)$。
+- 对产品的意义：输出“跌破 5% 阈值的中位等待天数与 IQR 区间”。若中位等待时长显著超过用户的可用期限（如 deadline=30 天而降价中位数需 45 天），引擎自动发出“等不起”预警。
+
 ## 2. 量化方法层：能算、能验、能解释
 
 ### 2.1 价格序列与 K 线
@@ -103,3 +116,12 @@ Rajendran & Tellis（1994，Journal of Marketing 58(1)《Contextual and Temporal
 6. 耐用品购买最优停止模型（Melnikov 模型，见 econstor MTDP0510 综述引用）；单商品盯价的最优停止建模（Wisconsin 产业组织博士论文，asset.library.wisc.edu 1711.dl/FTZQXBRXSA5XA87）。
 7. 概率校准工程：Brier Score、可靠性图、Isotonic Regression（预测评估通用方法）。
 8. 通胀预期与耐用品消费系列研究（Coibion / Gorodnichenko 团队，与第 4 条同源）。
+9. Kahneman, D., & Tversky, A. (1979). Prospect Theory: An Analysis of Decision under Risk. Econometrica, 47(2), 263-291.
+10. Tversky, A., & Kahneman, D. (1992). Advances in Prospect Theory: Cumulative Representation of Uncertainty. Journal of Risk and Uncertainty, 5(4), 297-323.
+11. Vasicek, O. (1977). An equilibrium characterization of the term structure. Journal of Financial Economics, 5(2), 177-188.
+12. Kaplan, E. L., & Meier, P. (1958). Nonparametric estimation from incomplete observations. Journal of the American Statistical Association, 53(282), 457-481.
+13. Agrawal, R., Ieong, S. & Velu, R. (2011). Timing when to buy. In Proceedings of the 20th ACM International Conference on Information and Knowledge Management (CIKM '11), 1785-1794.（微软研究院耐用品购买时机序贯决策经典文献）
+14. Gibbs, I., & Candès, E. (2021). Adaptive conformal inference for time series. Advances in Neural Information Processing Systems (NeurIPS 2021), 34, 16624-16635.
+15. Gowrisankaran, G. & Rysman, M. (2012). Dynamics of Consumer Demand for New Durable Goods. Journal of Political Economy, 120(6), 1173-1219.（耐用品动态需求与消费者异质性决策模型）
+16. Hardie, B. G., Johnson, E. J. & Fader, P. S. (1993). Modeling Loss Aversion and Reference Dependence Effects on Brand Choice. Marketing Science, 12(4), 378-394.（消费者参考依赖与损失厌恶实证）
+

@@ -91,6 +91,11 @@ class CardSaveBody(BaseModel):
     session_id: str = ""
 
 
+class ImportPriceBody(BaseModel):
+    sku_id: str = ""
+    csv_text: str = ""
+
+
 def _answer_fn(answers: Dict):
     def fn(q):
         return answers.get(q["id"]) or "none"
@@ -127,7 +132,29 @@ def index():
 
 @app.get("/api/health")
 def health():
-    return {"ok": True, "time": datetime.now().isoformat(timespec="seconds")}
+    return {"ok": True, "time": datetime.now().isoformat(timespec="seconds"), "version": "0.3.0"}
+
+
+@app.get("/api/baselines")
+def get_baselines():
+    p = os.path.join(ROOT, "data", "demo", "baseline_comparison.json")
+    if os.path.exists(p):
+        with open(p, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"message": "基线对比报告尚未生成，请运行 scripts/backtest_baselines.py"}
+
+
+@app.post("/api/import_price")
+def import_price(b: ImportPriceBody):
+    if not b.sku_id or not b.csv_text:
+        raise HTTPException(400, "sku_id 与 csv_text 不得为空")
+    from iris.core.prices import parse_price_csv, save_series_json
+    ser = parse_price_csv(b.csv_text, sku_id=b.sku_id, source="user_custom")
+    if len(ser.points) < 5:
+        raise HTTPException(400, f"有效价格点数过少 ({len(ser.points)})，请提供至少 5 行合规数据")
+    out_dir = os.path.join(ROOT, "data", "custom_prices")
+    save_series_json(ser, os.path.join(out_dir, f"{b.sku_id}.json"))
+    return {"ok": True, "sku_id": b.sku_id, "points": len(ser.points)}
 
 
 @app.get("/api/catalog")
@@ -249,8 +276,9 @@ def kline(sku_id: str, weeks: int = 0):
     if weeks > 0:
         ohlc = ohlc[-weeks:]
     sku = d["skus"][sku_id]
-    title = "%s %s %s · 周线（合成演示数据）" % (sku.brand.upper(),
-                                             sku.product_id.upper(), sku.tier)
+    src_label = "真实市场归档" if getattr(ser, "source", "") == "real-market-archive" else "合成演示数据"
+    title = "%s %s %s · 周线（%s）" % (sku.brand.upper(),
+                                     sku.product_id.upper(), sku.tier, src_label)
     svg = kline_svg(title, ohlc, None)
     return Response(content=svg, media_type="image/svg+xml; charset=utf-8")
 

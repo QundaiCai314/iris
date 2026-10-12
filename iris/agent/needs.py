@@ -43,7 +43,13 @@ CATEGORY_RULES: Dict[str, dict] = {
 }
 
 NECESSARY_EXTRA = ["必需", "急用", "医生", "医院", "处方"]
-MODEL_RE = re.compile(r"(?:rtx|gtx|rx|ryzen|core i|酷睿)\s?[0-9]{2,5}[^\u4e00-\u9fff]{0,6}", re.I)
+MODEL_RE = re.compile(
+    r"(?:(?:rtx|gtx|rx|ryzen|core i|酷睿)\s?[0-9]{2,5}"
+    r"|iphone\s?[0-9]{1,2}(?:\s*(?:pro\s*max|pro|plus|mini))?"
+    r"|playstation\s*[45]|ps[45]"
+    r")[^\u4e00-\u9fff]{0,10}",
+    re.I
+)
 
 
 def detect_category(text: str) -> Optional[str]:

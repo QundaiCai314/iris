@@ -14,6 +14,13 @@ import argparse
 import os
 import sys
 
+if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from iris.agent.needs import build_questions, run_questionnaire
@@ -70,6 +77,18 @@ def render(card) -> None:
     for w in card["kline"][-8:]:
         print("    %s  O %-6d H %-6d L %-6d C %-6d" %
               (w["date"], w["open"], w["high"], w["low"], w["close"]))
+    if st.get("conformal_bounds"):
+        cb = st["conformal_bounds"]
+        print("  共形预测区间 (ACI 无分布假设置信带 %s)   [ref: stats.conformal_bounds]:"
+              % cb.get("confidence_level", "90%"))
+        print("    价格波动带 : [%d, %d] 元 (动态带宽 ±%.1f%%，%s)"
+              % (cb["lower_bound"], cb["upper_bound"], cb["bandwidth_pct"], cb.get("method", "")))
+    mr = st.get("mean_reversion")
+    if mr and mr.get("is_mean_reverting"):
+        print("  均值回归半衰期 (OU / Vasicek 计量模型)   [ref: stats.mean_reversion]:")
+        print("    长期均衡中枢: ¥%d | 当前偏离: %+d 元 (%+.1f%%) | 半衰期: %.1f 天\n    状态评级    : %s"
+              % (mr["equilibrium_price"], mr["current_deviation_yuan"], mr["current_deviation_pct"],
+                 mr["half_life_days"], mr["regime_desc"]))
     print(line)
 
     # 结论速览：裁决 + P2 + 大白话（与 Web Banner 同源口径）
@@ -84,6 +103,12 @@ def render(card) -> None:
     pl = d.get("plain_language")
     if pl:
         print("大白话[%s]：%s" % (pl.get("verdict", ""), pl.get("text", "")))
+    pp = d.get("price_protection")
+    if pp:
+        print("30天保价公允期权 (Hopper 模型 / 回望看跌期权)   [ref: decision.price_protection]:")
+        print("  公允期权价值: ¥%d (期望下行 %.2f%%) | 30天降价概率: %.0f%%"
+              % (pp["fair_premium_yuan"], pp["expected_drop_pct"], pp["drop_probability"] * 100))
+        print("  价保套利建议: %s" % pp["arbitrage_advice"])
     print(line)
 
     # P1 客观频率：未来 30/60/180 天降价 ≥5% 的历史概率（口径 R04）
@@ -102,6 +127,11 @@ def render(card) -> None:
         print("  等待策略(60d 同分位 %d 窗口)：平均可省 %.2f%% / 涨价风险损失 %.2f%%"
               "   [ref: p1.60.wait_stats]" % (ws["n_windows"],
                                               ws["saving_pct"], ws["loss_pct"]))
+    sa = (p1.get("60") or {}).get("survival_analysis")
+    if sa and sa.get("median_days_to_drop"):
+        iqr_str = ("[%d, %d] 天" % (sa["iqr_days"][0], sa["iqr_days"][1])) if sa.get("iqr_days") else "--"
+        print("  降价生存期(Kaplan-Meier，n=%d)：中位等待 %d 天 | 50%% 事件集中窗 %s   [ref: p1.survival_analysis]"
+              % (sa["n_drop_events"], sa["median_days_to_drop"], iqr_str))
     print(line)
 
     # 完整账本（技术细节）：决策分解 + 换购候选 + 条件句
@@ -119,8 +149,17 @@ def render(card) -> None:
         print("    net 净期望    : %8.0f 元 (%5.2f%%)  -> %s"
               % (comp["net_yuan"], comp["net_pct"],
                  "倾向等" if comp["net_pct"] > 0 else "倾向买"))
+        if comp.get("strike_price"):
+            print("    目标击穿价    : %8.0f 元 (需跌 %5.2f%% 达净期望=0临界点)   [ref: SAS最优停止/击穿阈值]"
+                  % (comp["strike_price"], comp.get("strike_drop_pct", 0)))
         print("    U 参数：月损失率 %.2f%%（强度x享乐x贴现档）  [ref: R05 §3]"
               % comp["params"]["usage_loss_monthly_pct"])
+        cpt = comp.get("prospect_theory")
+        if cpt:
+            print("  前景理论主观效用 (损失厌恶 lambda=2.25)   [ref: decision.prospect_theory]:")
+            print("    客观期望: %+d 元 | 心理等价值 (CE): %+d 元 | 损失厌恶心理折价: ¥%d"
+                  % (cpt["objective_expected_yuan"], cpt["certainty_equivalent_yuan"], cpt["loss_aversion_wedge_yuan"]))
+            print("    行为指导: %s" % cpt["behavior_advice"])
     if d.get("switch_to"):
         s = d["switch_to"]
         print("  换购候选：%s  现价 %d 元，省 ¥%d（%.1f%%）性能 %.0f%%"

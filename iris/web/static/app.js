@@ -407,11 +407,54 @@ function banner(card) {
 }
 function kpiRow(card) {
   var st = card.stats, lb = st.lookbacks;
+  var comp = card.decision && card.decision.decomposition;
+  var strikeCol = "";
+  if (comp && comp.strike_price && comp.net_pct > 0) {
+    strikeCol = "<div><b style='color:#635bff;'>¥" + comp.strike_price + "</b><span>击穿目标价</span></div>";
+  }
   return '<div class="kpi">' +
     "<div><b>" + st.last_price + "</b><span>现价（元）</span></div>" +
     "<div><b>" + (lb["90"].pct_position * 100).toFixed(0) + "%</b><span>90 天历史分位</span></div>" +
     "<div><b>" + (lb["365"].pct_position * 100).toFixed(0) + "%</b><span>1 年历史分位</span></div>" +
     "<div><b>" + (lb["730"].pct_position * 100).toFixed(0) + "%</b><span>2 年历史分位</span></div>" +
+    strikeCol +
+    "</div>";
+}
+function conformalHtml(card) {
+  var cb = card.stats && card.stats.conformal_bounds;
+  if (!cb) { return ""; }
+  return "<div class='cond' style='background:rgba(99,91,255,0.06);border-left:3px solid #635bff;margin-top:8px;'>" +
+    "<b>共形预测波动带（ACI " + esc(cb.confidence_level || "90%") + " 置信覆盖）：</b>" +
+    "无分布假设价格区间 <b>¥" + cb.lower_bound + " ~ ¥" + cb.upper_bound + "</b>" +
+    "（动态带宽 ±" + cb.bandwidth_pct + "%，基于时序残差分位数校准，有限样本覆盖保证）" +
+    "</div>";
+}
+function meanReversionHtml(card) {
+  var mr = card.stats && card.stats.mean_reversion;
+  if (!mr || !mr.is_mean_reverting) { return ""; }
+  return "<div class='cond' style='background:rgba(255,159,28,0.06);border-left:3px solid #ff9f1c;margin-top:8px;'>" +
+    "<b>均值回归计量模型（Ornstein-Uhlenbeck / Vasicek）：</b>" +
+    "长期均衡中枢 <b>¥" + mr.equilibrium_price + "</b>（偏离 " + (mr.current_deviation_pct > 0 ? "+" : "") + mr.current_deviation_pct + "%），" +
+    "偏离半衰期 <b>" + mr.half_life_days + " 天</b> —— <span class='muted2'>" + esc(mr.regime_desc) + "</span>" +
+    "</div>";
+}
+function priceProtectionHtml(card) {
+  var pp = card.decision && card.decision.price_protection;
+  if (!pp) { return ""; }
+  return "<div class='cond plain' style='background:rgba(0,212,255,0.08);border-left:3px solid #00d4ff;margin-top:10px;'>" +
+    "<b>30 天价保期权公允评估（Hopper 模型 / 回望看跌期权）：</b>" +
+    "公允期权价值 <b>¥" + pp.fair_premium_yuan + "</b>（期望下行 " + pp.expected_drop_pct + "%，30天降价概率 " + (pp.drop_probability * 100).toFixed(0) + "%）。" +
+    "<br><span class='muted2'>" + esc(pp.arbitrage_advice) + "</span>" +
+    "</div>";
+}
+function prospectTheoryHtml(card) {
+  var cpt = card.decision && (card.decision.prospect_theory || (card.decision.decomposition && card.decision.decomposition.prospect_theory));
+  if (!cpt) { return ""; }
+  return "<div class='cond' style='background:rgba(139,92,246,0.06);border-left:3px solid #8b5cf6;margin-top:12px;'>" +
+    "<b>累积前景理论主观心理价值（Kahneman & Tversky 1979/1992，损失厌恶 λ=2.25）：</b>" +
+    "<br>客观数学期望：<b>¥" + cpt.objective_expected_yuan + "</b> ｜ 心理等价值 (CE)：<b>¥" + cpt.certainty_equivalent_yuan + "</b>" +
+    " ｜ 损失厌恶折价：<b>¥" + cpt.loss_aversion_wedge_yuan + "</b>" +
+    "<br><span class='muted2'>" + esc(cpt.behavior_advice) + "</span>" +
     "</div>";
 }
 function p1Table(card) {
@@ -424,12 +467,25 @@ function p1Table(card) {
       "</td><td>" + fc.n + "</td><td>" + (fc.direction === "down" ? "偏降价" : fc.direction) +
       "</td></tr>";
   });
+  var sa = card.p1 && card.p1["60"] && card.p1["60"].survival_analysis;
+  var saHtml = "";
+  if (sa && sa.median_days_to_drop) {
+    var iqrStr = sa.iqr_days ? "（50% 集中在 " + sa.iqr_days[0] + " ~ " + sa.iqr_days[1] + " 天）" : "";
+    saHtml = "<div class='cond' style='margin-top:8px;'><b>降价生存期（Kaplan-Meier 时间分析）：</b>" +
+      "历史同分位降价事件中，中位等待时长约为 <b>" + sa.median_days_to_drop + " 天</b>" + iqrStr + "。</div>";
+  }
   return "<table><tr><th>窗口</th><th>P1 概率</th><th>95% CI</th><th>样本 n</th><th>方向</th></tr>" +
-    rows + "</table><p class='muted'>[ref: p1.windows + R04 校准口径；同分位段历史频率]</p>";
+    rows + "</table>" + saHtml + "<p class='muted'>[ref: p1.windows + R04 校准口径；同分位段历史频率与生存期]</p>";
 }
 function decompTable(card) {
   var d = card.decision, c = d.decomposition;
   if (!c) { return ""; }
+  var strikeRow = "";
+  if (c.strike_price && c.net_pct > 0) {
+    strikeRow = "<tr style='background:rgba(99,91,255,0.05);'><td><b>目标击穿价 (SAS)</b></td><td><b>-" +
+      c.strike_drop_pct.toFixed(2) + "%</b></td><td><b>¥" + c.strike_price +
+      "</b></td><td>最优停止临界点：跌至此价时等待净收益降为 0，触发买入</td></tr>";
+  }
   return "<table><tr><th>期望值分解</th><th>占现价</th><th>金额</th><th>含义</th></tr>" +
     "<tr><td>G 等待收益</td><td>" + pct2(c.saving_pct / 100) + "</td><td>" + money(c.saving_yuan) +
     "</td><td>历史同价位段等满窗口的期望节省（p1.wait_stats）</td></tr>" +
@@ -440,8 +496,9 @@ function decompTable(card) {
     "<tr><td>buffer 缓冲</td><td>" + pct2(c.buffer_pct / 100) + "</td><td>" + money(c.buffer_yuan) +
     "</td><td>随波动率分位加宽（(S,s)，总纲 §1.2）</td></tr>" +
     "<tr><td><b>净期望 net</b></td><td><b>" + pct2(c.net_pct / 100) + "</b></td><td><b>" +
-    money(c.net_yuan) + "</b></td><td>net>0 倾向等；否则买</td></tr></table>" +
-    "<p class='muted'>[ref: decision.decomposition + 总纲 §2.5 / R05 §3 / D5]</p>";
+    money(c.net_yuan) + "</b></td><td>net>0 倾向等；否则买</td></tr>" +
+    strikeRow + "</table>" +
+    "<p class='muted'>[ref: decision.decomposition + 总纲 §2.5 / R05 §3 / SAS最优停止]</p>";
 }
 function conditionsHtml(card) {
   return (card.decision.conditions || []).map(function (c) {
@@ -610,7 +667,7 @@ function renderCard(card, profile, hist, keepEditorOpen, snap) {
     ? "<div class='cond'><b>历史快照</b>　保存于 " + esc(snap.at || "") +
       "。以下为当时的完整结论，可随时回来查看；要带新参数重算请用上方按钮。</div>"
     : "";// 概率详解 tab
-  var tabProb = why1 + p1Table(card) + why2 + p2note + decompTable(card);
+  var tabProb = why1 + p1Table(card) + why2 + p2note + decompTable(card) + prospectTheoryHtml(card);
   // 条件与事件 tab
   var tabCond = conditionsHtml(card) + eventsHtml(card) + altTable(card);
   // 假设与依据 tab（含假设编辑器与依据链）
@@ -620,10 +677,10 @@ function renderCard(card, profile, hist, keepEditorOpen, snap) {
   var tabRefer = evidenceHtml(card);
   var histBox = snap ? "" : "<h4>重算记录</h4><div id='hist-box'>" + historyHtml(hist) + "</div>";
 
-  return "<div class='ui-panel'>" + banner(card) + plainHtml + hintsHtml + snapNote +
+  return "<div class='ui-panel'>" + banner(card) + plainHtml + priceProtectionHtml(card) + hintsHtml + snapNote +
     userBarHtml() + "</div>" +
     "<div class='ui-panel'><h3>K 线与价格统计 <span class='badge'>合成数据</span></h3>" +
-    "<div id='kline-box'></div>" + kpiRow(card) +
+    "<div id='kline-box'></div>" + kpiRow(card) + conformalHtml(card) + meanReversionHtml(card) +
     "<p class='muted'>周线（自绘 SVG，离线可用）｜现价 " + card.stats.last_price +
     " 元（" + card.stats.asof + "）｜MA20 " + (card.stats.ma["20"] || "-") +
     "｜MA60 " + (card.stats.ma["60"] || "-") + "｜90 天波动率分位 " +

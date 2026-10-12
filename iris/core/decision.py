@@ -103,6 +103,19 @@ def decompose(profile: Dict, p1fc: Dict, vol_pct: Optional[float],
     supply_pct = A_SUPPLY_PCT if supply_on else 0.0
     r_pct = loss_pct + supply_pct
     net_pct = saving_pct - u_pct - r_pct - buffer_pct
+    strike_price = int(round(price * (1.0 - net_pct / 100.0))) if net_pct > 0 else int(round(price))
+    strike_drop_pct = round(net_pct, 2) if net_pct > 0 else 0.0
+
+    from iris.core.econometrics import cumulative_prospect_theory_valuation
+    p_save = float(p1fc.get("probability", 0.5) if p1fc.get("probability") is not None else 0.5)
+    p_loss = max(0.05, min(0.95, 1.0 - p_save))
+    cpt = cumulative_prospect_theory_valuation(
+        saving_yuan=_money(saving_pct, price),
+        loss_yuan=_money(r_pct, price),
+        p_save=p_save,
+        p_loss=p_loss,
+    )
+
     return {
         "wait_days": wait_days,
         "n_windows": n_win,
@@ -119,12 +132,40 @@ def decompose(profile: Dict, p1fc: Dict, vol_pct: Optional[float],
         "buffer_yuan": _money(buffer_pct, price),       # 风险厌恶缓冲（随波动率加宽）
         "net_pct": round(net_pct, 4),
         "net_yuan": _money(net_pct, price),             # 净等待期望（>0 倾向等）
+        "strike_price": strike_price,                   # 目标击穿价（行权临界点）
+        "strike_drop_pct": strike_drop_pct,
+        "prospect_theory": cpt,                         # 累积前景理论主观心理价值
         "params": {
             "usage_loss_monthly_pct": round(usage_loss_monthly_pct(profile), 4),
             "vol_pct_position": round(v, 4),
             "supply_hot": supply_on,
             "assumption": ASSUMPTION_REF,
         },
+    }
+
+
+def compute_price_protection_option(price: float, fc_windows: Dict) -> Dict:
+    """电商 30 天价保预期退差估值（基于窗口最低价分布的理想退差测算）。
+    预期退差 = 30 天窗口内跌破现价的无条件期望金额 E[max(Price - Min_Future_Price, 0)]。
+    """
+    p30 = (fc_windows or {}).get("30") or {}
+    ws = p30.get("wait_stats") or {}
+    drop_pct = float(ws.get("saving_pct", 0.0) or 0.0)
+    drop_yuan = round(drop_pct * price / 100.0, 2)
+    hit_rate = float(p30.get("probability", 0.0) or 0.0)
+
+    advice = (
+        "30 天内历史同分位降价期望参考值为 ¥%d（跌幅约 %.1f%%）。"
+        "若电商渠道支持 30 天价保且流程便捷，在符合平台申请资格的前提下，"
+        "可作为兼顾即刻使用与对冲降价的预期退差参考。"
+        % (int(round(drop_yuan)), drop_pct)
+    )
+    return {
+        "window_days": 30,
+        "expected_drop_pct": round(drop_pct, 2),
+        "fair_premium_yuan": int(round(drop_yuan)),
+        "drop_probability": round(hit_rate, 4),
+        "arbitrage_advice": advice,
     }
 
 
@@ -286,7 +327,8 @@ def _check_copy(texts: List[str]) -> None:
 
 
 def build_conditions(profile: Dict, dec: Dict, p2: Dict,
-                     upcoming: Optional[List[Dict]] = None) -> List[Dict]:
+                     upcoming: Optional[List[Dict]] = None,
+                     fc_windows: Optional[Dict] = None) -> List[Dict]:
     """条件句：「若……则……」由参数自动生成；期限/预算改动即变（M5.4 验收）。"""
     conds: List[Dict] = []
     rec = dec["recommendation"]
@@ -337,8 +379,30 @@ def build_conditions(profile: Dict, dec: Dict, p2: Dict,
                              "历史上更容易买到更便宜，别急着下单；价格回落到 "
                              "%.0f 元（跌 %s%%）以下可重跑本卡复核。"
                              % (A_WARM_PCT, comp.get("price", 0),
-                                comp.get("price", 0) * 0.95, 5)),
+                                 comp.get("price", 0) * 0.95, 5)),
                     "ref": "总纲 §2.5 / A6b"})
+            if rec == "wait" and comp.get("strike_price") and comp.get("net_pct", 0) > 0:
+                sp = comp.get("strike_price")
+                sd = comp.get("strike_drop_pct", 0.0)
+                conds.append({
+                    "scenario": "strike_target",
+                    "text": ("目标击穿线：现价 %d 元，当价格回落至 %d 元（跌 %.1f%%）"
+                             "以下时，等待期权净收益降为 0，即达到最优买入触发点。"
+                             % (comp.get("price", 0), sp, sd)),
+                    "ref": "最优停止方程反解 (net <= 0) / 限价触发"})
+            if (rec == "wait" or comp.get("net_pct", 0) > 0) and fc_windows:
+                wd_str = str(comp.get("wait_days", 60))
+                fc_cur = fc_windows.get(wd_str) or fc_windows.get("60") or {}
+                sa = fc_cur.get("survival_analysis")
+                if sa and sa.get("median_days_to_drop"):
+                    m_d = sa["median_days_to_drop"]
+                    iqr = sa.get("iqr_days")
+                    iqr_str = f"（50% 降价集中在 {iqr[0]}~{iqr[1]} 天）" if iqr else ""
+                    conds.append({
+                        "scenario": "survival_duration",
+                        "text": f"降价生存期：历史同分位降价事件中，中位等待时长约为 {m_d} 天{iqr_str}；若此等待期超出您的实际可用期限，切勿盲目拖延。",
+                        "ref": "Kaplan-Meier 降价持续期分析",
+                    })
     if dec.get("supply_hot") and comp:
         conds.append({
             "scenario": "supply",
@@ -388,6 +452,8 @@ def build_conditions(profile: Dict, dec: Dict, p2: Dict,
                       "ref": "总纲 §2.6 样本纪律"})
     _check_copy([c["text"] for c in conds])
     return conds
+
+
 def plain_language(profile: Dict, dec: Dict, p2: Dict,
                    fc_windows: Dict) -> Dict:
     """M7.2 通俗结论：把裁决翻成一句零术语的大白话（Web 首屏 Banner 同源）。
@@ -449,6 +515,9 @@ def plain_language(profile: Dict, dec: Dict, p2: Dict,
                     "概率只有 %d%%。" % p2_prob)
         else:
             why += "历史样本还不多，结论先当参考，别急着下单。"
+        if comp.get("strike_price") and comp.get("net_pct", 0) > 0:
+            why += ("目标击穿价为 %d 元（跌 %.1f%% 即达买入线）；"
+                    % (comp["strike_price"], comp["strike_drop_pct"]))
         if profile.get("deadline", "none") in ("none", "within_90"):
             tail = "你并不急着用：先按兵不动，过一阵子再来问一次，让数字替你做决定。"
         else:
@@ -466,7 +535,6 @@ def plain_language(profile: Dict, dec: Dict, p2: Dict,
     return {"verdict": "现在买", "text": head + tail}
 
 
-
 def build_decision(profile: Dict, fc_windows: Dict, vol_pct: Optional[float],
                    best_alt: Optional[Dict] = None,
                    upcoming: Optional[List[Dict]] = None) -> Dict:
@@ -474,9 +542,12 @@ def build_decision(profile: Dict, fc_windows: Dict, vol_pct: Optional[float],
     supply_on = supply_hot(profile)
     dec = decide(profile, fc_windows, vol_pct, best_alt=best_alt, supply_on=supply_on)
     p2 = p2_probability(profile, fc_windows, vol_pct, supply_on=supply_on)
-    conds = build_conditions(profile, dec, p2, upcoming)
+    conds = build_conditions(profile, dec, p2, upcoming, fc_windows=fc_windows)
     pl = plain_language(profile, dec, p2, fc_windows)
     _check_copy([pl["verdict"], pl["text"]])
+    decomp = dec.get("decomposition") or {}
+    price_val = float(decomp.get("price", 0) or 0)
+    prot = compute_price_protection_option(price_val, fc_windows)
     return {"recommendation": dec["recommendation"],
             "traffic_light": dec["traffic_light"],
             "mode": dec.get("mode"), "window_days": dec.get("window_days"),
@@ -484,4 +555,6 @@ def build_decision(profile: Dict, fc_windows: Dict, vol_pct: Optional[float],
             "note": dec.get("note", ""), "plain_language": pl,
             "decomposition": dec.get("decomposition"),
             "p2": p2, "conditions": conds, "switch_to": dec.get("switch_to"),
+            "price_protection": prot,
+            "prospect_theory": decomp.get("prospect_theory"),
             "params_note": ASSUMPTION_REF}

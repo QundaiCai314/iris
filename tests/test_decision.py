@@ -226,3 +226,28 @@ def test_plain_language_present_for_each_rec():
         for banned in BANNED_WORDS:
             assert banned not in pl["verdict"], banned
             assert banned not in pl["text"], "%s in %s" % (banned, pl["text"])
+
+
+def test_strike_price_and_sas_optimal_stopping():
+    from iris.core.decision import decompose
+    p = _profile(usage_intensity="rarely", hedonic="utilitarian", wait_tier="high")
+    fc = _fcs(s60=12.0, l60=0.0)["60"]
+    fc["last_price"] = 10000
+    comp = decompose(p, fc, vol_pct=0.5)
+    assert comp["net_pct"] > 0
+    assert comp["strike_price"] < 10000
+    assert comp["strike_drop_pct"] > 0
+    # 验证击穿价下的净收益降为接近 0
+    assert abs(comp["strike_price"] - int(round(10000 * (1 - comp["net_pct"] / 100)))) <= 1
+
+
+def test_price_protection_option_valuation():
+    from iris.core.decision import compute_price_protection_option
+    fcs = _fcs(s30=8.0, l30=0.0)
+    fcs["30"]["probability"] = 0.5
+    opt = compute_price_protection_option(5000.0, fcs)
+    assert opt["window_days"] == 30
+    assert opt["fair_premium_yuan"] > 0
+    assert opt["drop_probability"] == 0.5
+    assert "价保" in opt["arbitrage_advice"]
+

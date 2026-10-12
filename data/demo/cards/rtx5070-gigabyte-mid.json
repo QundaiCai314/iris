@@ -48,7 +48,26 @@
    "annualized": 0.1372,
    "pct_position": 0.5248618784530387
   },
-  "trend": -0.0074
+  "trend": -0.0074,
+  "conformal_bounds": {
+   "confidence_level": "90%",
+   "lower_bound": 2969,
+   "upper_bound": 3650,
+   "bandwidth_pct": 11.3,
+   "method": "Adaptive-Conformal-Quantile",
+   "note": "无分布假设有限样本覆盖保证（对标 NeurIPS/ICML 时间序列共形推断前沿）"
+  },
+  "mean_reversion": {
+   "is_mean_reverting": true,
+   "half_life_days": 26.5,
+   "equilibrium_price": 3355,
+   "current_deviation_yuan": -8,
+   "current_deviation_pct": -0.25,
+   "speed_kappa": 0.0262,
+   "regime": "fair",
+   "regime_desc": "处于合理中枢区（现价接近均衡线 ¥3355）",
+   "citation": "Ornstein-Uhlenbeck / Vasicek (1977) Econometric Mean-Reversion"
+  }
  },
  "p1": {
   "30": {
@@ -70,6 +89,15 @@
     "last_date": "2026-05-06",
     "span_days": 422,
     "note": "ok"
+   },
+   "survival_analysis": {
+    "median_days_to_drop": 14,
+    "iqr_days": [
+     3,
+     24
+    ],
+    "n_drop_events": 44,
+    "citation": "Kaplan-Meier Empirical Survival Duration"
    },
    "wait_stats": {
     "n_windows": 353,
@@ -106,6 +134,15 @@
     "span_days": 422,
     "note": "ok"
    },
+   "survival_analysis": {
+    "median_days_to_drop": 32,
+    "iqr_days": [
+     15,
+     44
+    ],
+    "n_drop_events": 94,
+    "citation": "Kaplan-Meier Empirical Survival Duration"
+   },
    "wait_stats": {
     "n_windows": 353,
     "saving_pct": 2.3097,
@@ -140,6 +177,15 @@
     "last_date": "2026-05-06",
     "span_days": 422,
     "note": "ok"
+   },
+   "survival_analysis": {
+    "median_days_to_drop": 86,
+    "iqr_days": [
+     45,
+     144
+    ],
+    "n_drop_events": 290,
+    "citation": "Kaplan-Meier Empirical Survival Duration"
    },
    "wait_stats": {
     "n_windows": 353,
@@ -429,6 +475,10 @@
   "n_windows": 353,
   "confidence": "sufficient",
   "note": "",
+  "plain_language": {
+   "verdict": "现在买",
+   "text": "综合你的使用情况模拟后，'现在买'仍然是最优的概率约 100%——等待省下的钱抵不过等待期里你用不到的损失，现在买更划算。"
+  },
   "decomposition": {
    "wait_days": 60,
    "n_windows": 353,
@@ -445,6 +495,19 @@
    "buffer_yuan": 68.6,
    "net_pct": -3.6122,
    "net_yuan": -120.9,
+   "strike_price": 3347,
+   "strike_drop_pct": 0.0,
+   "prospect_theory": {
+    "objective_expected_yuan": -36,
+    "prospect_value": -49.21,
+    "certainty_equivalent_yuan": -33,
+    "loss_aversion_wedge_yuan": -3,
+    "loss_aversion_ratio": 2.25,
+    "weighted_prob_gain": 0.3,
+    "weighted_prob_loss": 0.6134,
+    "behavior_advice": "客观期望与心理效用均为负（心理等价值 ¥-33）。等待既不划算又承受心理焦虑，强烈建议现在直接购买。",
+    "citation": "Kahneman & Tversky (1979) / Cumulative Prospect Theory (1992)"
+   },
    "params": {
     "usage_loss_monthly_pct": 0.8,
     "vol_pct_position": 0.5249,
@@ -497,6 +560,24 @@
    }
   ],
   "switch_to": null,
+  "price_protection": {
+   "window_days": 30,
+   "expected_drop_pct": 1.1,
+   "fair_premium_yuan": 37,
+   "drop_probability": 0.1246,
+   "arbitrage_advice": "30 天内降价期望值为 ¥37（跌幅 1.1%）。若电商平台提供 30 天免费价保，或付费价保费率低于 ¥37，建议直接下单并勾选价保锁定现货，享受自动退差对冲波动！"
+  },
+  "prospect_theory": {
+   "objective_expected_yuan": -36,
+   "prospect_value": -49.21,
+   "certainty_equivalent_yuan": -33,
+   "loss_aversion_wedge_yuan": -3,
+   "loss_aversion_ratio": 2.25,
+   "weighted_prob_gain": 0.3,
+   "weighted_prob_loss": 0.6134,
+   "behavior_advice": "客观期望与心理效用均为负（心理等价值 ¥-33）。等待既不划算又承受心理焦虑，强烈建议现在直接购买。",
+   "citation": "Kahneman & Tversky (1979) / Cumulative Prospect Theory (1992)"
+  },
   "params_note": "假设 A1-A7（方向有出处：R05 §2.3/§3、总纲 §1.3；数值待 B05 标定，展示时可调）"
  },
  "evidence": [
@@ -532,5 +613,640 @@
    "ref": "总纲 §2.5 + §1.2",
    "note": "裁决 = G - U - R - buffer；buffer 随波动率分位加宽（(S,s)）"
   }
- ]
+ ],
+ "kline": [
+  {
+   "date": "2025-03-05",
+   "open": 4282,
+   "high": 4295,
+   "low": 4266,
+   "close": 4266,
+   "n": 7
+  },
+  {
+   "date": "2025-03-12",
+   "open": 4255,
+   "high": 4255,
+   "low": 4213,
+   "close": 4249,
+   "n": 7
+  },
+  {
+   "date": "2025-03-19",
+   "open": 4260,
+   "high": 4277,
+   "low": 4250,
+   "close": 4252,
+   "n": 7
+  },
+  {
+   "date": "2025-03-26",
+   "open": 4238,
+   "high": 4238,
+   "low": 4195,
+   "close": 4235,
+   "n": 7
+  },
+  {
+   "date": "2025-04-02",
+   "open": 4216,
+   "high": 4218,
+   "low": 4167,
+   "close": 4171,
+   "n": 7
+  },
+  {
+   "date": "2025-04-09",
+   "open": 4169,
+   "high": 4169,
+   "low": 4142,
+   "close": 4142,
+   "n": 7
+  },
+  {
+   "date": "2025-04-16",
+   "open": 4131,
+   "high": 4155,
+   "low": 4121,
+   "close": 4144,
+   "n": 7
+  },
+  {
+   "date": "2025-04-23",
+   "open": 4131,
+   "high": 4131,
+   "low": 4055,
+   "close": 4055,
+   "n": 7
+  },
+  {
+   "date": "2025-04-30",
+   "open": 4055,
+   "high": 4055,
+   "low": 3988,
+   "close": 3988,
+   "n": 7
+  },
+  {
+   "date": "2025-05-07",
+   "open": 3989,
+   "high": 3995,
+   "low": 3956,
+   "close": 3982,
+   "n": 7
+  },
+  {
+   "date": "2025-05-14",
+   "open": 4004,
+   "high": 4004,
+   "low": 3795,
+   "close": 3795,
+   "n": 7
+  },
+  {
+   "date": "2025-05-21",
+   "open": 3776,
+   "high": 3782,
+   "low": 3753,
+   "close": 3775,
+   "n": 7
+  },
+  {
+   "date": "2025-05-28",
+   "open": 3763,
+   "high": 3763,
+   "low": 3656,
+   "close": 3656,
+   "n": 7
+  },
+  {
+   "date": "2025-06-04",
+   "open": 3628,
+   "high": 3628,
+   "low": 3516,
+   "close": 3519,
+   "n": 7
+  },
+  {
+   "date": "2025-06-11",
+   "open": 3515,
+   "high": 3515,
+   "low": 3415,
+   "close": 3415,
+   "n": 7
+  },
+  {
+   "date": "2025-06-18",
+   "open": 3416,
+   "high": 3873,
+   "low": 3416,
+   "close": 3873,
+   "n": 7
+  },
+  {
+   "date": "2025-06-25",
+   "open": 3870,
+   "high": 3874,
+   "low": 3832,
+   "close": 3848,
+   "n": 7
+  },
+  {
+   "date": "2025-07-02",
+   "open": 3835,
+   "high": 3835,
+   "low": 3824,
+   "close": 3825,
+   "n": 7
+  },
+  {
+   "date": "2025-07-09",
+   "open": 3824,
+   "high": 3834,
+   "low": 3809,
+   "close": 3828,
+   "n": 7
+  },
+  {
+   "date": "2025-07-16",
+   "open": 3815,
+   "high": 3815,
+   "low": 3755,
+   "close": 3759,
+   "n": 7
+  },
+  {
+   "date": "2025-07-23",
+   "open": 3752,
+   "high": 3752,
+   "low": 3713,
+   "close": 3734,
+   "n": 7
+  },
+  {
+   "date": "2025-07-30",
+   "open": 3718,
+   "high": 3718,
+   "low": 3664,
+   "close": 3664,
+   "n": 7
+  },
+  {
+   "date": "2025-08-06",
+   "open": 3674,
+   "high": 3674,
+   "low": 3620,
+   "close": 3620,
+   "n": 7
+  },
+  {
+   "date": "2025-08-13",
+   "open": 3604,
+   "high": 3621,
+   "low": 3594,
+   "close": 3618,
+   "n": 7
+  },
+  {
+   "date": "2025-08-20",
+   "open": 3627,
+   "high": 3627,
+   "low": 3595,
+   "close": 3595,
+   "n": 7
+  },
+  {
+   "date": "2025-08-27",
+   "open": 3606,
+   "high": 3645,
+   "low": 3603,
+   "close": 3616,
+   "n": 7
+  },
+  {
+   "date": "2025-09-03",
+   "open": 3596,
+   "high": 3621,
+   "low": 3596,
+   "close": 3606,
+   "n": 7
+  },
+  {
+   "date": "2025-09-10",
+   "open": 3585,
+   "high": 3608,
+   "low": 3574,
+   "close": 3579,
+   "n": 7
+  },
+  {
+   "date": "2025-09-17",
+   "open": 3591,
+   "high": 3591,
+   "low": 3559,
+   "close": 3559,
+   "n": 7
+  },
+  {
+   "date": "2025-09-24",
+   "open": 3562,
+   "high": 3562,
+   "low": 3522,
+   "close": 3522,
+   "n": 7
+  },
+  {
+   "date": "2025-10-01",
+   "open": 3514,
+   "high": 3562,
+   "low": 3508,
+   "close": 3562,
+   "n": 7
+  },
+  {
+   "date": "2025-10-08",
+   "open": 3575,
+   "high": 3576,
+   "low": 3549,
+   "close": 3553,
+   "n": 7
+  },
+  {
+   "date": "2025-10-15",
+   "open": 3380,
+   "high": 3380,
+   "low": 3291,
+   "close": 3291,
+   "n": 7
+  },
+  {
+   "date": "2025-10-22",
+   "open": 3281,
+   "high": 3281,
+   "low": 3225,
+   "close": 3225,
+   "n": 7
+  },
+  {
+   "date": "2025-10-29",
+   "open": 3207,
+   "high": 3207,
+   "low": 3127,
+   "close": 3127,
+   "n": 7
+  },
+  {
+   "date": "2025-11-05",
+   "open": 3142,
+   "high": 3142,
+   "low": 3087,
+   "close": 3093,
+   "n": 7
+  },
+  {
+   "date": "2025-11-12",
+   "open": 3375,
+   "high": 3571,
+   "low": 3375,
+   "close": 3556,
+   "n": 7
+  },
+  {
+   "date": "2025-11-19",
+   "open": 3563,
+   "high": 3569,
+   "low": 3524,
+   "close": 3524,
+   "n": 7
+  },
+  {
+   "date": "2025-11-26",
+   "open": 3507,
+   "high": 3510,
+   "low": 3489,
+   "close": 3500,
+   "n": 7
+  },
+  {
+   "date": "2025-12-03",
+   "open": 3510,
+   "high": 3510,
+   "low": 3469,
+   "close": 3494,
+   "n": 7
+  },
+  {
+   "date": "2025-12-10",
+   "open": 3509,
+   "high": 3509,
+   "low": 3486,
+   "close": 3501,
+   "n": 7
+  },
+  {
+   "date": "2025-12-17",
+   "open": 3506,
+   "high": 3516,
+   "low": 3481,
+   "close": 3500,
+   "n": 7
+  },
+  {
+   "date": "2025-12-24",
+   "open": 3492,
+   "high": 3492,
+   "low": 3446,
+   "close": 3446,
+   "n": 7
+  },
+  {
+   "date": "2025-12-31",
+   "open": 3452,
+   "high": 3475,
+   "low": 3421,
+   "close": 3475,
+   "n": 7
+  },
+  {
+   "date": "2026-01-07",
+   "open": 3475,
+   "high": 3511,
+   "low": 3475,
+   "close": 3505,
+   "n": 7
+  },
+  {
+   "date": "2026-01-14",
+   "open": 3496,
+   "high": 3518,
+   "low": 3492,
+   "close": 3513,
+   "n": 7
+  },
+  {
+   "date": "2026-01-21",
+   "open": 3521,
+   "high": 3541,
+   "low": 3485,
+   "close": 3485,
+   "n": 7
+  },
+  {
+   "date": "2026-01-28",
+   "open": 3478,
+   "high": 3508,
+   "low": 3471,
+   "close": 3485,
+   "n": 7
+  },
+  {
+   "date": "2026-02-04",
+   "open": 3499,
+   "high": 3532,
+   "low": 3497,
+   "close": 3497,
+   "n": 7
+  },
+  {
+   "date": "2026-02-11",
+   "open": 3464,
+   "high": 3479,
+   "low": 3464,
+   "close": 3477,
+   "n": 7
+  },
+  {
+   "date": "2026-02-18",
+   "open": 3465,
+   "high": 3467,
+   "low": 3452,
+   "close": 3454,
+   "n": 7
+  },
+  {
+   "date": "2026-02-25",
+   "open": 3458,
+   "high": 3482,
+   "low": 3458,
+   "close": 3475,
+   "n": 7
+  },
+  {
+   "date": "2026-03-04",
+   "open": 3464,
+   "high": 3464,
+   "low": 3442,
+   "close": 3452,
+   "n": 7
+  },
+  {
+   "date": "2026-03-11",
+   "open": 3426,
+   "high": 3465,
+   "low": 3413,
+   "close": 3465,
+   "n": 7
+  },
+  {
+   "date": "2026-03-18",
+   "open": 3447,
+   "high": 3452,
+   "low": 3430,
+   "close": 3449,
+   "n": 7
+  },
+  {
+   "date": "2026-03-25",
+   "open": 3428,
+   "high": 3438,
+   "low": 3427,
+   "close": 3432,
+   "n": 7
+  },
+  {
+   "date": "2026-04-01",
+   "open": 3439,
+   "high": 3496,
+   "low": 3439,
+   "close": 3480,
+   "n": 7
+  },
+  {
+   "date": "2026-04-08",
+   "open": 3495,
+   "high": 3495,
+   "low": 3462,
+   "close": 3489,
+   "n": 7
+  },
+  {
+   "date": "2026-04-15",
+   "open": 3495,
+   "high": 3495,
+   "low": 3428,
+   "close": 3428,
+   "n": 7
+  },
+  {
+   "date": "2026-04-22",
+   "open": 3407,
+   "high": 3454,
+   "low": 3403,
+   "close": 3454,
+   "n": 7
+  },
+  {
+   "date": "2026-04-29",
+   "open": 3448,
+   "high": 3468,
+   "low": 3444,
+   "close": 3446,
+   "n": 7
+  },
+  {
+   "date": "2026-05-06",
+   "open": 3452,
+   "high": 3470,
+   "low": 3431,
+   "close": 3470,
+   "n": 7
+  },
+  {
+   "date": "2026-05-13",
+   "open": 3475,
+   "high": 3493,
+   "low": 3475,
+   "close": 3484,
+   "n": 7
+  },
+  {
+   "date": "2026-05-20",
+   "open": 3351,
+   "high": 3351,
+   "low": 3276,
+   "close": 3276,
+   "n": 7
+  },
+  {
+   "date": "2026-05-27",
+   "open": 3264,
+   "high": 3264,
+   "low": 3171,
+   "close": 3177,
+   "n": 7
+  },
+  {
+   "date": "2026-06-03",
+   "open": 3148,
+   "high": 3148,
+   "low": 3107,
+   "close": 3124,
+   "n": 7
+  },
+  {
+   "date": "2026-06-10",
+   "open": 3106,
+   "high": 3112,
+   "low": 3046,
+   "close": 3046,
+   "n": 7
+  },
+  {
+   "date": "2026-06-17",
+   "open": 3028,
+   "high": 3377,
+   "low": 3027,
+   "close": 3377,
+   "n": 7
+  },
+  {
+   "date": "2026-06-24",
+   "open": 3372,
+   "high": 3373,
+   "low": 3343,
+   "close": 3365,
+   "n": 7
+  },
+  {
+   "date": "2026-07-01",
+   "open": 3388,
+   "high": 3394,
+   "low": 3359,
+   "close": 3394,
+   "n": 7
+  },
+  {
+   "date": "2026-07-08",
+   "open": 3402,
+   "high": 3422,
+   "low": 3390,
+   "close": 3422,
+   "n": 7
+  },
+  {
+   "date": "2026-07-15",
+   "open": 3401,
+   "high": 3430,
+   "low": 3396,
+   "close": 3430,
+   "n": 7
+  },
+  {
+   "date": "2026-07-22",
+   "open": 3420,
+   "high": 3423,
+   "low": 3397,
+   "close": 3397,
+   "n": 7
+  },
+  {
+   "date": "2026-07-29",
+   "open": 3396,
+   "high": 3428,
+   "low": 3390,
+   "close": 3428,
+   "n": 7
+  },
+  {
+   "date": "2026-08-05",
+   "open": 3410,
+   "high": 3419,
+   "low": 3394,
+   "close": 3419,
+   "n": 7
+  },
+  {
+   "date": "2026-08-12",
+   "open": 3431,
+   "high": 3443,
+   "low": 3396,
+   "close": 3396,
+   "n": 7
+  },
+  {
+   "date": "2026-08-19",
+   "open": 3374,
+   "high": 3374,
+   "low": 3341,
+   "close": 3371,
+   "n": 7
+  },
+  {
+   "date": "2026-08-26",
+   "open": 3356,
+   "high": 3373,
+   "low": 3349,
+   "close": 3349,
+   "n": 7
+  },
+  {
+   "date": "2026-09-02",
+   "open": 3353,
+   "high": 3353,
+   "low": 3347,
+   "close": 3347,
+   "n": 2
+  }
+ ],
+ "behavior_hints": []
 }

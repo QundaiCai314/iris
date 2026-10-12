@@ -177,3 +177,40 @@ def resample_ohlc(points: List[PricePoint], freq_days: int = 7) -> List[Dict]:
                     "high": bucket["high"], "low": bucket["low"], "close": bucket["close"],
                     "n": bucket["n"]})
     return out
+
+
+def parse_price_csv(csv_text: str, sku_id: str, source: str = "user_import") -> PriceSeries:
+    """解析 CSV 文本（date,price 格式）为 PriceSeries；支持自定时间序列导入。"""
+    lines = [ln.strip() for ln in csv_text.strip().splitlines() if ln.strip()]
+    pts_dict: Dict[str, int] = {}
+    for ln in lines:
+        if ln.startswith("#") or ln.lower().startswith("date"):
+            continue
+        parts = [p.strip() for p in ln.split(",")]
+        if len(parts) < 2:
+            continue
+        d_str, p_str = parts[0], parts[1]
+        try:
+            _parse_date(d_str)
+            p_val = int(round(float(p_str)))
+            if p_val > 0:
+                pts_dict[d_str] = p_val
+        except (ValueError, TypeError):
+            continue
+
+    sorted_dates = sorted(pts_dict.keys())
+    pts = [PricePoint(date=d, price=pts_dict[d], quality="imported") for d in sorted_dates]
+    return PriceSeries(sku_id=sku_id, source=source, points=pts)
+
+
+def save_series_json(series: PriceSeries, out_path: str) -> None:
+    """将 PriceSeries 序列化为规范 JSON。"""
+    doc = {
+        "sku_id": series.sku_id,
+        "source": series.source,
+        "points": [{"date": p.date, "price": p.price, "quality": p.quality} for p in series.points],
+    }
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(doc, f, ensure_ascii=False, indent=2)
+

@@ -1,5 +1,6 @@
 {
   "providers": {
+    "stepfun":  { "base_url": "https://api.stepfun.com/step_plan/v1",      "api_key_env": "IRIS_STEPFUN_API_KEY",  "timeout_s": 30 },
     "openai":   { "base_url": "https://api.openai.com/v1",              "api_key_env": "IRIS_OPENAI_API_KEY",   "timeout_s": 90 },
     "zhipu":    { "base_url": "https://open.bigmodel.cn/api/paas/v4",    "api_key_env": "IRIS_ZHIPU_API_KEY",    "timeout_s": 90 },
     "deepseek": { "base_url": "https://api.deepseek.com/v1",             "api_key_env": "IRIS_DEEPSEEK_API_KEY", "timeout_s": 90 }

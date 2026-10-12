@@ -48,7 +48,26 @@
    "annualized": 0.1424,
    "pct_position": 0.5788561525129983
   },
-  "trend": -0.0037
+  "trend": -0.0037,
+  "conformal_bounds": {
+   "confidence_level": "90%",
+   "lower_bound": 7946,
+   "upper_bound": 9886,
+   "bandwidth_pct": 11.9,
+   "method": "Adaptive-Conformal-Quantile",
+   "note": "无分布假设有限样本覆盖保证（对标 NeurIPS/ICML 时间序列共形推断前沿）"
+  },
+  "mean_reversion": {
+   "is_mean_reverting": true,
+   "half_life_days": 17.6,
+   "equilibrium_price": 9085,
+   "current_deviation_yuan": -61,
+   "current_deviation_pct": -0.67,
+   "speed_kappa": 0.0394,
+   "regime": "fair",
+   "regime_desc": "处于合理中枢区（现价接近均衡线 ¥9085）",
+   "citation": "Ornstein-Uhlenbeck / Vasicek (1977) Econometric Mean-Reversion"
+  }
  },
  "p1": {
   "30": {
@@ -70,6 +89,15 @@
     "last_date": "2025-11-28",
     "span_days": 297,
     "note": "ok"
+   },
+   "survival_analysis": {
+    "median_days_to_drop": 1,
+    "iqr_days": [
+     1,
+     1
+    ],
+    "n_drop_events": 35,
+    "citation": "Kaplan-Meier Empirical Survival Duration"
    },
    "wait_stats": {
     "n_windows": 35,
@@ -106,6 +134,15 @@
     "span_days": 297,
     "note": "ok"
    },
+   "survival_analysis": {
+    "median_days_to_drop": 1,
+    "iqr_days": [
+     1,
+     1
+    ],
+    "n_drop_events": 35,
+    "citation": "Kaplan-Meier Empirical Survival Duration"
+   },
    "wait_stats": {
     "n_windows": 35,
     "saving_pct": 19.2854,
@@ -140,6 +177,15 @@
     "last_date": "2025-11-28",
     "span_days": 297,
     "note": "ok"
+   },
+   "survival_analysis": {
+    "median_days_to_drop": 1,
+    "iqr_days": [
+     1,
+     1
+    ],
+    "n_drop_events": 35,
+    "citation": "Kaplan-Meier Empirical Survival Duration"
    },
    "wait_stats": {
     "n_windows": 35,
@@ -468,6 +514,10 @@
   "n_windows": 35,
   "confidence": "sufficient",
   "note": "",
+  "plain_language": {
+   "verdict": "换成它",
+   "text": "换个买法更划算：GIGABYTE RTX5070TI entry 现价 5034 元，比你现在看的省 ¥3990（约 44.2%），性能约为你原目标的 84%，满足你的用途——值不值由你判断。"
+  },
   "decomposition": {
    "wait_days": 60,
    "n_windows": 35,
@@ -484,6 +534,19 @@
    "buffer_yuan": 194.71,
    "net_pct": 8.5587,
    "net_yuan": 772.34,
+   "strike_price": 8252,
+   "strike_drop_pct": 8.56,
+   "prospect_theory": {
+    "objective_expected_yuan": 1736,
+    "prospect_value": 697.63,
+    "certainty_equivalent_yuan": 1704,
+    "loss_aversion_wedge_yuan": 32,
+    "loss_aversion_ratio": 2.25,
+    "weighted_prob_gain": 1.0,
+    "weighted_prob_loss": 0.1114,
+    "behavior_advice": "在考虑 2.25 倍损失厌恶后，等待的心理确定性等价值为 +¥1704（客观期望值 +¥1736）。潜在降价收益足以克服涨价焦虑，理性心理支持继续等待。",
+    "citation": "Kahneman & Tversky (1979) / Cumulative Prospect Theory (1992)"
+   },
    "params": {
     "usage_loss_monthly_pct": 3.84,
     "vol_pct_position": 0.5789,
@@ -531,6 +594,11 @@
     "ref": "p1.wait_stats + 假设 A1-A7（方向有出处：R05 §2.3/§3、总纲 §1.3；数值待 B05 标定，展示时可调）"
    },
    {
+    "scenario": "survival_duration",
+    "text": "降价生存期：历史同分位降价事件中，中位等待时长约为 1 天（50% 降价集中在 1~1 天）；若此等待期超出您的实际可用期限，切勿盲目拖延。",
+    "ref": "Kaplan-Meier 降价持续期分析"
+   },
+   {
     "scenario": "supply",
     "text": "若最近缺货/涨价消息多：供需紧张期间「等」要承受再涨风险（已计入 R 的供需附加），急用就别拖。",
     "ref": "总纲 §1.3 / A3"
@@ -566,6 +634,24 @@
    "need_bench_ratio": 0.75,
    "note": "跨型号降档替代：按性能分对齐——每元性能为目标 150.6%",
    "rule": "A5 门槛：节省 >= 8% 且满足用途最低性能比 0.75"
+  },
+  "price_protection": {
+   "window_days": 30,
+   "expected_drop_pct": 18.28,
+   "fair_premium_yuan": 1649,
+   "drop_probability": 1.0,
+   "arbitrage_advice": "30 天内降价期望值为 ¥1649（跌幅 18.3%）。若电商平台提供 30 天免费价保，或付费价保费率低于 ¥1649，建议直接下单并勾选价保锁定现货，享受自动退差对冲波动！"
+  },
+  "prospect_theory": {
+   "objective_expected_yuan": 1736,
+   "prospect_value": 697.63,
+   "certainty_equivalent_yuan": 1704,
+   "loss_aversion_wedge_yuan": 32,
+   "loss_aversion_ratio": 2.25,
+   "weighted_prob_gain": 1.0,
+   "weighted_prob_loss": 0.1114,
+   "behavior_advice": "在考虑 2.25 倍损失厌恶后，等待的心理确定性等价值为 +¥1704（客观期望值 +¥1736）。潜在降价收益足以克服涨价焦虑，理性心理支持继续等待。",
+   "citation": "Kahneman & Tversky (1979) / Cumulative Prospect Theory (1992)"
   },
   "params_note": "假设 A1-A7（方向有出处：R05 §2.3/§3、总纲 §1.3；数值待 B05 标定，展示时可调）"
  },
@@ -606,5 +692,680 @@
    "ref": "总纲 §2.5 + §1.2",
    "note": "裁决 = G - U - R - buffer；buffer 随波动率分位加宽（(S,s)）"
   }
- ]
+ ],
+ "kline": [
+  {
+   "date": "2025-01-30",
+   "open": 8621,
+   "high": 8651,
+   "low": 8589,
+   "close": 8651,
+   "n": 7
+  },
+  {
+   "date": "2025-02-06",
+   "open": 8633,
+   "high": 8633,
+   "low": 8483,
+   "close": 8486,
+   "n": 7
+  },
+  {
+   "date": "2025-02-13",
+   "open": 8472,
+   "high": 8472,
+   "low": 8416,
+   "close": 8416,
+   "n": 7
+  },
+  {
+   "date": "2025-02-20",
+   "open": 8381,
+   "high": 8390,
+   "low": 8160,
+   "close": 8160,
+   "n": 7
+  },
+  {
+   "date": "2025-02-27",
+   "open": 8218,
+   "high": 8357,
+   "low": 8217,
+   "close": 8357,
+   "n": 7
+  },
+  {
+   "date": "2025-03-06",
+   "open": 8360,
+   "high": 8370,
+   "low": 8240,
+   "close": 8243,
+   "n": 7
+  },
+  {
+   "date": "2025-03-13",
+   "open": 8224,
+   "high": 8293,
+   "low": 8224,
+   "close": 8228,
+   "n": 7
+  },
+  {
+   "date": "2025-03-20",
+   "open": 8216,
+   "high": 8232,
+   "low": 8148,
+   "close": 8178,
+   "n": 7
+  },
+  {
+   "date": "2025-03-27",
+   "open": 8166,
+   "high": 8175,
+   "low": 8139,
+   "close": 8164,
+   "n": 7
+  },
+  {
+   "date": "2025-04-03",
+   "open": 8129,
+   "high": 8142,
+   "low": 7963,
+   "close": 7963,
+   "n": 7
+  },
+  {
+   "date": "2025-04-10",
+   "open": 7997,
+   "high": 8036,
+   "low": 7975,
+   "close": 7977,
+   "n": 7
+  },
+  {
+   "date": "2025-04-17",
+   "open": 7950,
+   "high": 7954,
+   "low": 7887,
+   "close": 7887,
+   "n": 7
+  },
+  {
+   "date": "2025-04-24",
+   "open": 7890,
+   "high": 7953,
+   "low": 7882,
+   "close": 7953,
+   "n": 7
+  },
+  {
+   "date": "2025-05-01",
+   "open": 7968,
+   "high": 7968,
+   "low": 7898,
+   "close": 7898,
+   "n": 7
+  },
+  {
+   "date": "2025-05-08",
+   "open": 7884,
+   "high": 7931,
+   "low": 7846,
+   "close": 7846,
+   "n": 7
+  },
+  {
+   "date": "2025-05-15",
+   "open": 7821,
+   "high": 7821,
+   "low": 7434,
+   "close": 7455,
+   "n": 7
+  },
+  {
+   "date": "2025-05-22",
+   "open": 7404,
+   "high": 7404,
+   "low": 7265,
+   "close": 7265,
+   "n": 7
+  },
+  {
+   "date": "2025-05-29",
+   "open": 7204,
+   "high": 7204,
+   "low": 6962,
+   "close": 6962,
+   "n": 7
+  },
+  {
+   "date": "2025-06-05",
+   "open": 6966,
+   "high": 6966,
+   "low": 6862,
+   "close": 6878,
+   "n": 7
+  },
+  {
+   "date": "2025-06-12",
+   "open": 6853,
+   "high": 6873,
+   "low": 6712,
+   "close": 6718,
+   "n": 7
+  },
+  {
+   "date": "2025-06-19",
+   "open": 7245,
+   "high": 7490,
+   "low": 7245,
+   "close": 7396,
+   "n": 7
+  },
+  {
+   "date": "2025-06-26",
+   "open": 7416,
+   "high": 7416,
+   "low": 7340,
+   "close": 7376,
+   "n": 7
+  },
+  {
+   "date": "2025-07-03",
+   "open": 7347,
+   "high": 7413,
+   "low": 7322,
+   "close": 7322,
+   "n": 7
+  },
+  {
+   "date": "2025-07-10",
+   "open": 7347,
+   "high": 7347,
+   "low": 7261,
+   "close": 7262,
+   "n": 7
+  },
+  {
+   "date": "2025-07-17",
+   "open": 7245,
+   "high": 7245,
+   "low": 7160,
+   "close": 7211,
+   "n": 7
+  },
+  {
+   "date": "2025-07-24",
+   "open": 7228,
+   "high": 7228,
+   "low": 7144,
+   "close": 7144,
+   "n": 7
+  },
+  {
+   "date": "2025-07-31",
+   "open": 7117,
+   "high": 7171,
+   "low": 7079,
+   "close": 7171,
+   "n": 7
+  },
+  {
+   "date": "2025-08-07",
+   "open": 7207,
+   "high": 7208,
+   "low": 7135,
+   "close": 7135,
+   "n": 7
+  },
+  {
+   "date": "2025-08-14",
+   "open": 7140,
+   "high": 7158,
+   "low": 7078,
+   "close": 7097,
+   "n": 7
+  },
+  {
+   "date": "2025-08-21",
+   "open": 7072,
+   "high": 7086,
+   "low": 7039,
+   "close": 7050,
+   "n": 7
+  },
+  {
+   "date": "2025-08-28",
+   "open": 7063,
+   "high": 7125,
+   "low": 7053,
+   "close": 7073,
+   "n": 7
+  },
+  {
+   "date": "2025-09-04",
+   "open": 7104,
+   "high": 7206,
+   "low": 7098,
+   "close": 7206,
+   "n": 7
+  },
+  {
+   "date": "2025-09-11",
+   "open": 7206,
+   "high": 7312,
+   "low": 7206,
+   "close": 7312,
+   "n": 7
+  },
+  {
+   "date": "2025-09-18",
+   "open": 7365,
+   "high": 7422,
+   "low": 7365,
+   "close": 7367,
+   "n": 7
+  },
+  {
+   "date": "2025-09-25",
+   "open": 7352,
+   "high": 7453,
+   "low": 7352,
+   "close": 7453,
+   "n": 7
+  },
+  {
+   "date": "2025-10-02",
+   "open": 7534,
+   "high": 7549,
+   "low": 7457,
+   "close": 7495,
+   "n": 7
+  },
+  {
+   "date": "2025-10-09",
+   "open": 7519,
+   "high": 7592,
+   "low": 7214,
+   "close": 7214,
+   "n": 7
+  },
+  {
+   "date": "2025-10-16",
+   "open": 7241,
+   "high": 7241,
+   "low": 7099,
+   "close": 7099,
+   "n": 7
+  },
+  {
+   "date": "2025-10-23",
+   "open": 7090,
+   "high": 7110,
+   "low": 7033,
+   "close": 7045,
+   "n": 7
+  },
+  {
+   "date": "2025-10-30",
+   "open": 6974,
+   "high": 7013,
+   "low": 6916,
+   "close": 6926,
+   "n": 7
+  },
+  {
+   "date": "2025-11-06",
+   "open": 6911,
+   "high": 7337,
+   "low": 6724,
+   "close": 7337,
+   "n": 7
+  },
+  {
+   "date": "2025-11-13",
+   "open": 7493,
+   "high": 7874,
+   "low": 7493,
+   "close": 7874,
+   "n": 7
+  },
+  {
+   "date": "2025-11-20",
+   "open": 7877,
+   "high": 7928,
+   "low": 7877,
+   "close": 7928,
+   "n": 7
+  },
+  {
+   "date": "2025-11-27",
+   "open": 7925,
+   "high": 8047,
+   "low": 7925,
+   "close": 8040,
+   "n": 7
+  },
+  {
+   "date": "2025-12-04",
+   "open": 8067,
+   "high": 8099,
+   "low": 8046,
+   "close": 8091,
+   "n": 7
+  },
+  {
+   "date": "2025-12-11",
+   "open": 8115,
+   "high": 8189,
+   "low": 8077,
+   "close": 8189,
+   "n": 7
+  },
+  {
+   "date": "2025-12-18",
+   "open": 8172,
+   "high": 8222,
+   "low": 8163,
+   "close": 8195,
+   "n": 7
+  },
+  {
+   "date": "2025-12-25",
+   "open": 8227,
+   "high": 8261,
+   "low": 8200,
+   "close": 8225,
+   "n": 7
+  },
+  {
+   "date": "2026-01-01",
+   "open": 8184,
+   "high": 8242,
+   "low": 8182,
+   "close": 8242,
+   "n": 7
+  },
+  {
+   "date": "2026-01-08",
+   "open": 8276,
+   "high": 8282,
+   "low": 8229,
+   "close": 8282,
+   "n": 7
+  },
+  {
+   "date": "2026-01-15",
+   "open": 8247,
+   "high": 8312,
+   "low": 8186,
+   "close": 8312,
+   "n": 7
+  },
+  {
+   "date": "2026-01-22",
+   "open": 8369,
+   "high": 8390,
+   "low": 8319,
+   "close": 8390,
+   "n": 7
+  },
+  {
+   "date": "2026-01-29",
+   "open": 8397,
+   "high": 8500,
+   "low": 8379,
+   "close": 8500,
+   "n": 7
+  },
+  {
+   "date": "2026-02-05",
+   "open": 8521,
+   "high": 8614,
+   "low": 8479,
+   "close": 8614,
+   "n": 7
+  },
+  {
+   "date": "2026-02-12",
+   "open": 8645,
+   "high": 8740,
+   "low": 8644,
+   "close": 8718,
+   "n": 7
+  },
+  {
+   "date": "2026-02-19",
+   "open": 8721,
+   "high": 8726,
+   "low": 8659,
+   "close": 8696,
+   "n": 7
+  },
+  {
+   "date": "2026-02-26",
+   "open": 8649,
+   "high": 8853,
+   "low": 8649,
+   "close": 8853,
+   "n": 7
+  },
+  {
+   "date": "2026-03-05",
+   "open": 8829,
+   "high": 8931,
+   "low": 8829,
+   "close": 8913,
+   "n": 7
+  },
+  {
+   "date": "2026-03-12",
+   "open": 8932,
+   "high": 9054,
+   "low": 8906,
+   "close": 8999,
+   "n": 7
+  },
+  {
+   "date": "2026-03-19",
+   "open": 9002,
+   "high": 9181,
+   "low": 9002,
+   "close": 9181,
+   "n": 7
+  },
+  {
+   "date": "2026-03-26",
+   "open": 9191,
+   "high": 9191,
+   "low": 9074,
+   "close": 9137,
+   "n": 7
+  },
+  {
+   "date": "2026-04-02",
+   "open": 9137,
+   "high": 9137,
+   "low": 9083,
+   "close": 9093,
+   "n": 7
+  },
+  {
+   "date": "2026-04-09",
+   "open": 9109,
+   "high": 9163,
+   "low": 9103,
+   "close": 9163,
+   "n": 7
+  },
+  {
+   "date": "2026-04-16",
+   "open": 9216,
+   "high": 9313,
+   "low": 9216,
+   "close": 9313,
+   "n": 7
+  },
+  {
+   "date": "2026-04-23",
+   "open": 9319,
+   "high": 9398,
+   "low": 9312,
+   "close": 9377,
+   "n": 7
+  },
+  {
+   "date": "2026-04-30",
+   "open": 9417,
+   "high": 9417,
+   "low": 9372,
+   "close": 9372,
+   "n": 7
+  },
+  {
+   "date": "2026-05-07",
+   "open": 9384,
+   "high": 9417,
+   "low": 9360,
+   "close": 9417,
+   "n": 7
+  },
+  {
+   "date": "2026-05-14",
+   "open": 9412,
+   "high": 9490,
+   "low": 9057,
+   "close": 9057,
+   "n": 7
+  },
+  {
+   "date": "2026-05-21",
+   "open": 9027,
+   "high": 9027,
+   "low": 8805,
+   "close": 8823,
+   "n": 7
+  },
+  {
+   "date": "2026-05-28",
+   "open": 8789,
+   "high": 8813,
+   "low": 8664,
+   "close": 8664,
+   "n": 7
+  },
+  {
+   "date": "2026-06-04",
+   "open": 8639,
+   "high": 8639,
+   "low": 8516,
+   "close": 8516,
+   "n": 7
+  },
+  {
+   "date": "2026-06-11",
+   "open": 8510,
+   "high": 8510,
+   "low": 8309,
+   "close": 8309,
+   "n": 7
+  },
+  {
+   "date": "2026-06-18",
+   "open": 8347,
+   "high": 9312,
+   "low": 8347,
+   "close": 9312,
+   "n": 7
+  },
+  {
+   "date": "2026-06-25",
+   "open": 9316,
+   "high": 9321,
+   "low": 9206,
+   "close": 9206,
+   "n": 7
+  },
+  {
+   "date": "2026-07-02",
+   "open": 9193,
+   "high": 9193,
+   "low": 9054,
+   "close": 9082,
+   "n": 7
+  },
+  {
+   "date": "2026-07-09",
+   "open": 9068,
+   "high": 9225,
+   "low": 9068,
+   "close": 9155,
+   "n": 7
+  },
+  {
+   "date": "2026-07-16",
+   "open": 9124,
+   "high": 9144,
+   "low": 9053,
+   "close": 9077,
+   "n": 7
+  },
+  {
+   "date": "2026-07-23",
+   "open": 9051,
+   "high": 9067,
+   "low": 8970,
+   "close": 8970,
+   "n": 7
+  },
+  {
+   "date": "2026-07-30",
+   "open": 8994,
+   "high": 9090,
+   "low": 8994,
+   "close": 9067,
+   "n": 7
+  },
+  {
+   "date": "2026-08-06",
+   "open": 9063,
+   "high": 9063,
+   "low": 9000,
+   "close": 9040,
+   "n": 7
+  },
+  {
+   "date": "2026-08-13",
+   "open": 9012,
+   "high": 9051,
+   "low": 9012,
+   "close": 9028,
+   "n": 7
+  },
+  {
+   "date": "2026-08-20",
+   "open": 9033,
+   "high": 9067,
+   "low": 8979,
+   "close": 9067,
+   "n": 7
+  },
+  {
+   "date": "2026-08-27",
+   "open": 9097,
+   "high": 9097,
+   "low": 8942,
+   "close": 8959,
+   "n": 7
+  },
+  {
+   "date": "2026-09-03",
+   "open": 9024,
+   "high": 9024,
+   "low": 9024,
+   "close": 9024,
+   "n": 1
+  }
+ ],
+ "behavior_hints": []
 }
