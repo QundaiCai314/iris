@@ -251,3 +251,34 @@ def test_price_protection_option_valuation():
     assert opt["drop_probability"] == 0.5
     assert "价保" in opt["arbitrage_advice"]
 
+
+def test_tradein_subsidy_arbitrage():
+    from iris.core.decision import compute_tradein_subsidy
+    # 1 级能效 20%，封顶 2000
+    s1 = compute_tradein_subsidy("显卡", 8000.0, efficiency_tier=1)
+    assert s1["eligible"] is True
+    assert s1["actual_subsidy_yuan"] == 1600
+    assert s1["effective_rate_pct"] == 20.0
+    assert not s1["is_capped"]
+
+    # 超过 10000 触发封顶
+    s2 = compute_tradein_subsidy("显卡", 15000.0, efficiency_tier=1)
+    assert s2["eligible"] is True
+    assert s2["actual_subsidy_yuan"] == 2000
+    assert s2["is_capped"] is True
+    assert s2["effective_rate_pct"] < 20.0
+
+
+def test_price_protection_cross_channel_arbitrage():
+    from iris.core.decision import compute_price_protection_option
+    fcs = _fcs(s30=10.0, l30=0.0)
+    fcs["30"]["probability"] = 0.6  # 预期退差 = 5000 * 0.1 * 0.6 = 300 元
+    alt = {"sku_id": "alt_pdd", "price": 4900.0}  # 价差 100 元，净套利 300 - 100 = 200 > 50
+    opt = compute_price_protection_option(5000.0, fcs, best_alt=alt)
+    assert "channel_arbitrage" in opt
+    ca = opt["channel_arbitrage"]
+    assert ca["channel_spread_yuan"] == 100.0
+    assert ca["net_arbitrage_yuan"] == 200.0
+    assert "自营" in ca["verdict"]
+
+

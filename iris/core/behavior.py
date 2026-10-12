@@ -43,11 +43,13 @@ def _week_rally(kline: Optional[List[Dict]]) -> bool:
 
 
 def build_behavior_hints(card: Dict, rerun_count: int = 0,
-                         just_resolved: bool = False) -> List[Dict]:
+                         just_resolved: bool = False,
+                         profile: Optional[Dict] = None) -> List[Dict]:
     """从已构建的决策卡提取行为提示（确定性、无副作用、文案过红线扫描）。
 
     rerun_count: /api/recompute 在本会话内的累计次数（0 = 首次出卡）。
     just_resolved: True = 用户刚走完问卷拿到首张卡（用于 fresh_card）。
+    profile: 可选用户画像（若传入或 card["profile"] 存在，可激活行为去偏误助推）。
     """
     hints: List[Dict] = []
     dec = card.get("decision") or {}
@@ -69,9 +71,9 @@ def build_behavior_hints(card: Dict, rerun_count: int = 0,
         hints.append({
             "rule": "high_percentile_rally",
             "text": ("最近几周价格在反弹、且现价已处于近 90 天 %.0f%% 分位——反弹"
-                     "容易让人怕「越等越贵」。这张卡看的是 %d 天窗口的平均规律，"
-                     "不是明天的涨跌；分位越高说明当前位置历史上越偏贵。"
-                     % (pos90 * 100, (dec.get("window_days") or 60))),
+             "容易让人怕「越等越贵」。这张卡看的是 %d 天窗口的平均规律，"
+             "不是明天的涨跌；分位越高说明当前位置历史上越偏贵。"
+             % (pos90 * 100, (dec.get("window_days") or 60))),
             "ref": "stats.lookbacks.90 + 周线"})
 
     if rerun_count >= RERUN_ANXIETY_MIN:
@@ -88,6 +90,42 @@ def build_behavior_hints(card: Dict, rerun_count: int = 0,
             "text": ("刚答完问卷就下单容易冲动：问卷答案已经存档，建议隔天回来"
                      "再看一次这张卡——结论没变再买也不迟。"),
             "ref": "D3 不制造焦虑（降温提示）"})
+
+    # Skill: lifecycle-obsolescence-guard（耐用品换代背刺高危预警）
+    lc = card.get("lifecycle") or {}
+    if lc:
+        bri = lc.get("bri", 0.0)
+        days_to_next = lc.get("days_to_next_gen", 999)
+        hurdle_met = lc.get("hurdle_met", False)
+        hurdle_pct = lc.get("hurdle_threshold_pct", 30.0)
+        drawdown = lc.get("current_drawdown_pct", 0.0)
+        if (bri >= 0.65 or days_to_next <= 60) and not hurdle_met:
+            hints.append({
+                "rule": "backstab_risk_alert",
+                "text": ("【换代背刺预警】该型号上市已达代际末期（距下一代发布预计不足 %d 天），"
+                         "现价降幅（%.1f%%）尚未达到该品类清仓补偿门槛（需降 %.0f%%）；"
+                         "降价不足以补偿失去下代新特性的效用损失，若非急用建议等待下一代。"
+                         % (days_to_next, drawdown, hurdle_pct)),
+                "ref": "耐用品生命周期与背刺风险指数 (BRI)"
+            })
+
+    # Skill: behavioral-debiasing-nudges（单次使用成本助推，防范冲动闲置）
+    prof = profile or card.get("profile") or {}
+    intensity = prof.get("usage_intensity")
+    if intensity in ("rarely", "low"):
+        price_val = float(stats.get("last_price") or (dec.get("decomposition") or {}).get("price") or 0.0)
+        if price_val > 0:
+            weekly_h = 2.0 if intensity == "rarely" else 5.0
+            total_deprec = price_val * 0.40
+            total_hours = 2.0 * 52.0 * weekly_h
+            cph = total_deprec / total_hours if total_hours > 0 else 0.0
+            hints.append({
+                "rule": "cost_per_use_nudge",
+                "text": ("【单次使用成本助推】按当前使用频次折算，2 年内单小时真实使用折旧成本"
+                         "约达 %.1f 元/小时；对于低频使用场景，高单价硬件存在闲置折旧风险，"
+                         "建议客观评估实际开机频次，防范冲动消费。" % cph),
+                "ref": "行为经济学去偏误（单次使用成本助推）"
+            })
 
     _check_copy([h["text"] for h in hints])
     return hints

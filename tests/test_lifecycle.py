@@ -39,3 +39,14 @@ def test_expect_price_proxy_label():
     assert r["proxy"] is True
     assert 0 < r["expect_price"] < 8000
     assert "months_since_launch" in r and abs(r["months_since_launch"] - 2.0) < 0.2
+
+
+def test_analyze_backstab_risk():
+    from iris.core.lifecycle import analyze_backstab_risk
+    # GPU 24 个月换代（730天），上市 690 天，距下代 40 天，跌幅 10%（未达 35% 清仓门槛）
+    res = analyze_backstab_risk("gpu", "2024-01-01", 7200.0, 8000.0, asof_str="2025-11-21")
+    assert res["days_to_next_gen"] <= 60
+    assert res["bri"] >= 0.65
+    assert res["risk_level"] == "high"
+    assert res["hurdle_met"] is False
+

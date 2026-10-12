@@ -147,9 +147,55 @@ def decompose(profile: Dict, p1fc: Dict, vol_pct: Optional[float],
     }
 
 
-def compute_price_protection_option(price: float, fc_windows: Dict) -> Dict:
-    """电商 30 天价保预期退差估值（基于窗口最低价分布的理想退差测算）。
+def compute_tradein_subsidy(category: str, price: float, efficiency_tier: int = 1) -> Dict:
+    """国家消费品以旧换新（两新行动）补贴与边际套利核算。
+    中央超长期特别国债支持：
+    - 1 级能效/水效：补贴 20%，上限 2,000 元；
+    - 2 级能效/数码品类：补贴 15%，上限 1,500 元。
+    """
+    cat_lower = (category or "").lower()
+    is_eligible = any(k in cat_lower for k in ("显卡", "手机", "电脑", "笔电", "笔记本", "家电", "主机", "gpu", "phone", "laptop", "console", "home"))
+    if not is_eligible:
+        return {
+            "eligible": False,
+            "category": category,
+            "actual_subsidy_yuan": 0,
+            "effective_rate_pct": 0.0,
+            "note": "当前品类暂未纳入国家以旧换新特别国债补贴大类",
+        }
+
+    pct = 0.20 if efficiency_tier == 1 else 0.15
+    cap = 2000.0 if efficiency_tier == 1 else 1500.0
+    theo = price * pct
+    actual = min(theo, cap)
+    effective_rate = (actual / price * 100.0) if price > 0 else 0.0
+    is_capped = theo > cap
+
+    note = (
+        "按 %d 级能效/数码标准享受国家以旧换新补贴：立减约 ¥%d（有效补贴率 %.1f%%）。"
+        % (efficiency_tier, int(round(actual)), effective_rate)
+    )
+    if is_capped:
+        note += "（已达国家最高 ¥%d 补贴封顶，边际补贴效率稀释）" % int(cap)
+
+    return {
+        "eligible": True,
+        "category": category,
+        "efficiency_tier": efficiency_tier,
+        "nominal_rate_pct": round(pct * 100.0, 1),
+        "actual_subsidy_yuan": int(round(actual)),
+        "effective_rate_pct": round(effective_rate, 1),
+        "is_capped": is_capped,
+        "cap_yuan": int(cap),
+        "note": note,
+    }
+
+
+def compute_price_protection_option(price: float, fc_windows: Dict,
+                                   best_alt: Optional[Dict] = None) -> Dict:
+    """电商 30 天价保预期退差估值（看跌期权公允定价）与跨渠道套利博弈。
     预期退差 = 30 天窗口内跌破现价的无条件期望金额 E[max(Price - Min_Future_Price, 0)]。
+    若存在跨渠道替代品（如自营带价保 vs 平台直降），比较期权公允退差期望与渠道价差。
     """
     p30 = (fc_windows or {}).get("30") or {}
     ws = p30.get("wait_stats") or {}
@@ -157,19 +203,44 @@ def compute_price_protection_option(price: float, fc_windows: Dict) -> Dict:
     drop_yuan = round(drop_pct * price / 100.0, 2)
     hit_rate = float(p30.get("probability", 0.0) or 0.0)
 
+    # 理论看跌期权期望退差：现价 * 降幅 * 概率
+    expected_refund = round(price * (drop_pct / 100.0) * hit_rate, 2)
+
+    channel_arbitrage = None
+    if best_alt and best_alt.get("price"):
+        alt_price = float(best_alt["price"])
+        spread = round(price - alt_price, 2)
+        net_arb = round(expected_refund - spread, 2)
+        if net_arb > 50.0:
+            arb_verdict = "优选带价保自营渠道（退差期权期望覆盖溢价）"
+        elif net_arb < -50.0:
+            arb_verdict = "优选直降渠道（价差优势显著超过退差期望）"
+        else:
+            arb_verdict = "两渠道势均力敌（可依售后与流程偏好选择）"
+
+        channel_arbitrage = {
+            "alt_sku_id": best_alt.get("sku_id"),
+            "channel_spread_yuan": spread,
+            "net_arbitrage_yuan": net_arb,
+            "verdict": arb_verdict,
+        }
+
     advice = (
         "30 天内历史同分位降价期望参考值为 ¥%d（跌幅约 %.1f%%）。"
         "若电商渠道支持 30 天价保且流程便捷，在符合平台申请资格的前提下，"
         "可作为兼顾即刻使用与对冲降价的预期退差参考。"
         % (int(round(drop_yuan)), drop_pct)
     )
-    return {
+    res = {
         "window_days": 30,
         "expected_drop_pct": round(drop_pct, 2),
         "fair_premium_yuan": int(round(drop_yuan)),
         "drop_probability": round(hit_rate, 4),
         "arbitrage_advice": advice,
     }
+    if channel_arbitrage:
+        res["channel_arbitrage"] = channel_arbitrage
+    return res
 
 
 def _confidence(p1fc: Dict) -> str:
@@ -448,6 +519,16 @@ def build_conditions(profile: Dict, dec: Dict, p2: Dict,
                         switch.get("price", 0), int(switch.get("saving_abs", 0)),
                         switch.get("saving_pct", 0), switch.get("bench_ratio", 1.0) * 100)),
             "ref": "R03 §3（A5 门槛 %s%%）" % A_SWITCH_MIN_PCT})
+    tradein = dec.get("tradein_subsidy")
+    if tradein and tradein.get("eligible") and tradein.get("actual_subsidy_yuan", 0) > 0:
+        conds.append({
+            "scenario": "tradein_subsidy",
+            "text": ("若申请以旧换新与国补：该型号符合国家超长期特别国债补贴范围，"
+                     "测算可享财政立减约 ¥%d（有效补贴率 %.1f%%）；"
+                     "若手头有旧机置换，建议对比平台一键以旧换新与二手自售净现金流。"
+                     % (tradein["actual_subsidy_yuan"], tradein["effective_rate_pct"])),
+            "ref": "国务院两新行动方案（超长期特别国债以旧换新支持）"
+        })
     if p2.get("confidence") == "low":
         conds.append({"scenario": "low_sample",
                       "text": "样本提示：该价位段匹配的历史窗口不足 30 个，以上数字是"
@@ -544,13 +625,16 @@ def build_decision(profile: Dict, fc_windows: Dict, vol_pct: Optional[float],
     """M5 汇总入口：decide + P2 + 条件句 + plain_language 通俗层 -> decision 字段。"""
     supply_on = supply_hot(profile)
     dec = decide(profile, fc_windows, vol_pct, best_alt=best_alt, supply_on=supply_on)
+    decomp = dec.get("decomposition") or {}
+    price_val = float(decomp.get("price", 0) or 0)
+    category = profile.get("category", "")
+    tradein = compute_tradein_subsidy(category, price_val)
+    dec["tradein_subsidy"] = tradein
     p2 = p2_probability(profile, fc_windows, vol_pct, supply_on=supply_on)
     conds = build_conditions(profile, dec, p2, upcoming, fc_windows=fc_windows)
     pl = plain_language(profile, dec, p2, fc_windows)
     _check_copy([pl["verdict"], pl["text"]])
-    decomp = dec.get("decomposition") or {}
-    price_val = float(decomp.get("price", 0) or 0)
-    prot = compute_price_protection_option(price_val, fc_windows)
+    prot = compute_price_protection_option(price_val, fc_windows, best_alt=best_alt)
     return {"recommendation": dec["recommendation"],
             "traffic_light": dec["traffic_light"],
             "mode": dec.get("mode"), "window_days": dec.get("window_days"),
@@ -559,5 +643,6 @@ def build_decision(profile: Dict, fc_windows: Dict, vol_pct: Optional[float],
             "decomposition": dec.get("decomposition"),
             "p2": p2, "conditions": conds, "switch_to": dec.get("switch_to"),
             "price_protection": prot,
+            "tradein_subsidy": tradein,
             "prospect_theory": decomp.get("prospect_theory"),
             "params_note": ASSUMPTION_REF}

@@ -82,3 +82,34 @@ def test_high_percentile_threshold():
     fake["stats"]["lookbacks"]["90"] = dict(
         card["stats"]["lookbacks"]["90"], pct_position=HIGH_POS_THRESHOLD - 0.05)
     assert "high_percentile_rally" not in _rules(fake)
+
+
+def test_backstab_risk_alert_trigger():
+    """Skill: lifecycle-obsolescence-guard 换代背刺预警触发测试。"""
+    card = pipeline.build_card(dict(pipeline.SCENARIOS[0]["profile"]),
+                               "rtx5080-asus-tuf-mid")
+    fake = dict(card)
+    fake["lifecycle"] = {
+        "bri": 0.75,
+        "days_to_next_gen": 45,
+        "hurdle_met": False,
+        "hurdle_threshold_pct": 35.0,
+        "current_drawdown_pct": 12.0,
+    }
+    rules = _rules(fake)
+    assert "backstab_risk_alert" in rules
+    for h in build_behavior_hints(fake):
+        for w in BANNED_WORDS:
+            assert w not in h["text"]
+
+
+def test_cost_per_use_nudge_trigger():
+    """Skill: behavioral-debiasing-nudges 单次使用成本助推测试。"""
+    card = pipeline.build_card(dict(pipeline.SCENARIOS[0]["profile"]),
+                               "rtx5080-asus-tuf-mid")
+    rules = _rules(card, profile={"usage_intensity": "rarely"})
+    assert "cost_per_use_nudge" in rules
+    for h in build_behavior_hints(card, profile={"usage_intensity": "rarely"}):
+        for w in BANNED_WORDS:
+            assert w not in h["text"]
+

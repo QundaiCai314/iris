@@ -21,6 +21,7 @@ from iris.core.behavior import build_behavior_hints
 from iris.core.card import build_card as card_build, validate_card
 from iris.core.decision import build_decision
 from iris.core.events import build_event_study
+from iris.core.lifecycle import analyze_backstab_risk
 from iris.core.p1 import forecast_windows
 from iris.core.prices import load_all, load_events, resample_ohlc
 from iris.core.stats import describe
@@ -219,6 +220,12 @@ def evidence_for(profile: Dict, fcw: Dict, slim: Dict, source: str = "synthetic-
             ev.append({"ref": "[Tier-2 条件量化估计] events.%s" % t,
                        "note": "事件研究 %s：horizon60 mean=%s%% n=%s（R01；n<30 仅参考）"
                        % (t, h.get("mean_pct"), h.get("n"))})
+    ev.append({"ref": "[Tier-1 政策·可核验] 国务院“两新”消费品以旧换新补贴目录",
+               "note": "符合中央超长期特别国债支持范围：1级能效 20%（上限 2000 元），2级能效/数码 15%（上限 1500 元）"})
+    ev.append({"ref": "[Tier-2 生命周期模型] 耐用品代际迭代与背刺风险指数 (BRI)",
+               "note": "根据上市历时与代际周期推算下一代窗口及清仓安全垫门槛"})
+    ev.append({"ref": "[Tier-2 金融衍生品定价] 30 天电商价保平价看跌期权公允价值",
+               "note": "将价格保护建模为回望看跌期权，测算理论预期退差并对比跨渠道价差博弈"})
     ev.append({"ref": "[Tier-2 属性矩阵] R03 §2-4",
                "note": "替代矩阵属性近邻配对；品牌/售后/生态不可观测项标注「值不值由你判断」"})
     ev.append({"ref": "[Tier-3 外部假定·用户可调] R05 §3 + 假设 A1-A7",
@@ -235,6 +242,7 @@ def build_card(profile: Dict, sku_id: str, rerun_count: int = 0,
     if sku_id not in d["skus"]:
         raise ValueError("SKU 不在 demo 库: %s" % sku_id)
     sku = d["skus"][sku_id]
+    prod = d["products"].get(sku.product_id)
     ser = d["series"][sku_id]
     stats = describe(ser.points)
     fcw = forecast_windows(ser.points)
@@ -250,13 +258,24 @@ def build_card(profile: Dict, sku_id: str, rerun_count: int = 0,
                          upcoming=slim.get("upcoming"))
     card = card_build(sku.product_id, sku_id, stats["asof"], stats, fcw,
                       engine_version="0.3.0")
+    bri_info = None
+    if prod:
+        bri_info = analyze_backstab_risk(
+            category=prod.category or prod.lifecycle_family,
+            launch_date_str=prod.launch_date,
+            current_price=stats["last_price"],
+            launch_price=sku.launch_price or stats["last_price"],
+            asof_str=stats["asof"],
+        )
     card["events"] = slim
     card["alternatives"] = mx
     card["decision"] = dec
+    card["lifecycle"] = bri_info
+    card["profile"] = profile
     card["evidence"] = evidence_for(profile, fcw, slim, source=ser.source)
     card["kline"] = resample_ohlc(ser.points, freq_days=7)   # 周 OHLC（CLI/Web 渲染用）
     card["behavior_hints"] = build_behavior_hints(
-        card, rerun_count=rerun_count, just_resolved=just_resolved)
+        card, rerun_count=rerun_count, just_resolved=just_resolved, profile=profile)
     errs = validate_card(card)
     if errs:
         raise ValueError("决策卡校验失败: %s" % errs)
