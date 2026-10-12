@@ -30,7 +30,7 @@
 
 ## 运行
 - **一键极速体验（评委推荐）**：双击根目录 `start_web.bat`（或运行 `powershell -File start_web.ps1`，预置评委账号 `reviewer` / 密码 `iris2026`）
-- 全量测试（极速秒级）：`python scripts\run_tests.py`（125 tests 全量通过，耗时 ~12 秒）或 `python -m pytest tests -q`
+- 全量测试（极速秒级）：`python scripts\run_tests.py`（130 tests 全量通过，0 失败）或 `python -m pytest tests -q`
 - Web（M6 演示）：`python scripts\serve_web.py` → http://127.0.0.1:8123（API 冒烟：`python scripts\smoke_web_api.py`）
 - CLI 决策卡：`python scripts\render_card_cli.py`（`--scenario gpu_high|gpu_low|gpu_pdd`；`--interactive` 粘贴文本）
 - 基线对照回测：`python scripts\backtest_baselines.py` → 对照报告 `data/demo/baseline_comparison.json`

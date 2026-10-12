@@ -621,6 +621,22 @@ nav.main-menu {
   inset: 0;
   z-index: 10;
   background-color: #111;
+  background-size: cover;
+}
+.project:nth-child(1) .project-thumbnail__media {
+  background: radial-gradient(circle at 65% 35%, rgba(245, 159, 0, 0.18) 0%, rgba(20, 18, 15, 0.95) 75%);
+}
+.project:nth-child(2) .project-thumbnail__media {
+  background: radial-gradient(circle at 65% 35%, rgba(34, 197, 94, 0.18) 0%, rgba(15, 20, 16, 0.95) 75%);
+}
+.project:nth-child(3) .project-thumbnail__media {
+  background: radial-gradient(circle at 65% 35%, rgba(99, 91, 255, 0.18) 0%, rgba(18, 16, 22, 0.95) 75%);
+}
+.project:nth-child(4) .project-thumbnail__media {
+  background: radial-gradient(circle at 65% 35%, rgba(0, 212, 255, 0.18) 0%, rgba(14, 20, 22, 0.95) 75%);
+}
+.project:nth-child(5) .project-thumbnail__media {
+  background: radial-gradient(circle at 65% 35%, rgba(243, 241, 226, 0.14) 0%, rgba(20, 20, 20, 0.95) 75%);
 }
 .full-bleed-video {
   object-fit: cover;
