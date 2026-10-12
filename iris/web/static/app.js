@@ -1047,5 +1047,92 @@ document.addEventListener("DOMContentLoaded", function () {
   $("tab-history").onclick = function () { meTab("history"); };
   $("tab-watch").onclick = function () { meTab("watch"); };
   $("tab-account").onclick = function () { meTab("account"); };
+
+  /* Core-A Layout Toggle (List / Grid) */
+  var btnList = $("btn-toggle-list");
+  var btnGrid = $("btn-toggle-grid");
+  var projWrap = $("projects-wrap");
+  if (btnList && btnGrid && projWrap) {
+    btnList.onclick = function () {
+      btnList.classList.add("active");
+      btnGrid.classList.remove("active");
+      projWrap.classList.add("list-view");
+      projWrap.classList.remove("grid-view");
+      projWrap.setAttribute("data-view", "list");
+    };
+    btnGrid.onclick = function () {
+      btnGrid.classList.add("active");
+      btnList.classList.remove("active");
+      projWrap.classList.add("grid-view");
+      projWrap.classList.remove("list-view");
+      projWrap.setAttribute("data-view", "grid");
+    };
+    projWrap.addEventListener("wheel", function (e) {
+      if (projWrap.classList.contains("list-view") && Math.abs(e.deltaY) > 0) {
+        e.preventDefault();
+        projWrap.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+  }
+
+  /* Core-A Project Showcase Cards Click */
+  document.querySelectorAll(".project[data-sku]").forEach(function (card) {
+    card.onclick = function () {
+      var sku = card.getAttribute("data-sku");
+      if (sku) {
+        $("text").value = sku;
+        resolveText(sku);
+      }
+    };
+  });
+
+  /* View Back Buttons */
+  var bq = $("btn-back-from-q");
+  if (bq) {
+    bq.onclick = function () {
+      show("view-input");
+      setStep(1);
+      setNav("view-input");
+    };
+  }
+  var bc = $("btn-back-from-card");
+  if (bc) {
+    bc.onclick = function () {
+      show("view-input");
+      setStep(1);
+      setNav("view-input");
+    };
+  }
+  var bh = $("brand-home");
+  if (bh) {
+    bh.onclick = function () {
+      show("view-input");
+      setStep(1);
+      setNav("view-input");
+    };
+  }
+
+  /* Core-A Live Ticking Footer Clocks (SEL / BJS / LDN) */
+  function updateClocks() {
+    var now = new Date();
+    var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    var seoul = new Date(utc + (3600000 * 9));
+    var beijing = new Date(utc + (3600000 * 8));
+    var london = new Date(utc);
+
+    function pad2(n) { return (n < 10 ? "0" : "") + n; }
+    function fmt(d) {
+      return pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds());
+    }
+    var elKr = $("clock-kr");
+    var elBj = $("clock-bj");
+    var elLdn = $("clock-ldn");
+    if (elKr) elKr.textContent = fmt(seoul);
+    if (elBj) elBj.textContent = fmt(beijing);
+    if (elLdn) elLdn.textContent = fmt(london);
+  }
+  updateClocks();
+  setInterval(updateClocks, 1000);
+
   initSession();
 });
