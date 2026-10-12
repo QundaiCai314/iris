@@ -89,14 +89,16 @@ P2最优概率：{int((dec.get('p2', {}).get('probability') or 0)*100)}%
 原大白话结论：{pl.get('text')}
 净等待期望：{decomp.get('net_pct')}%
 
-请用客观、通俗、专业的量化金融语气，为用户写一段 80-120 字的购买时机决策解读。
-严格禁令：绝不可出现保证、稳赚、必涨、必跌、绝对等承诺词！只讲概率与权衡。"""
+【执行规范】：
+1. 防迎合规范（Anti-Sycophancy）：严禁奉承讨好用户（禁说'您说得对'、'完全支持'），必须保持独立量化裁判立场，包含机会成本与反事实对冲；
+2. 金融事实与宏观政策（Financial Grounding）：结合中国提振消费与以旧换新政策导向，客观分析；
+3. 严格红线：严禁出现承诺词与绝对保证词。请用客观专业的语气写 80-120 字的决策解读。"""
 
     messages = [
-        {"role": "system", "content": "你是一位客观严谨的个人金融消费时机顾问。"},
+        {"role": "system", "content": "你是一位客观严谨的量化消费决策顾问，严守防迎合与金融事实核查红线。"},
         {"role": "user", "content": prompt},
     ]
-    res = gw.complete(messages, route_name="reasoning", temperature=0.3, max_tokens=200)
+    res = gw.complete(messages, route_name="reasoning", temperature=0.3, max_tokens=250)
     if not res or not res.get("content"):
         return None
 

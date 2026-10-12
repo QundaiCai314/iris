@@ -252,6 +252,13 @@ def recompute(b: RecomputeBody):
     sess["profile"] = profile
     card = pipeline.build_card(profile, sess["sku_id"],
                                rerun_count=len(sess["history"]))
+    conflict_alert = pipeline.detect_profile_conflicts(sess["base_profile"], overrides)
+    if conflict_alert:
+        card.setdefault("behavior_hints", []).append({
+            "rule": "preference_conflict_alert",
+            "text": conflict_alert,
+            "ref": "context-anchoring"
+        })
     d = card["decision"]
     comp = d.get("decomposition") or {}
     sess["history"].append({
@@ -263,7 +270,8 @@ def recompute(b: RecomputeBody):
         "net_pct": comp.get("net_pct"),
     })
     return {"card": card, "profile": profile,
-            "history": list(sess["history"])}
+            "history": list(sess["history"]),
+            "conflict_alert": conflict_alert}
 
 
 @app.get("/api/kline")

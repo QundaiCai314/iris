@@ -175,29 +175,55 @@ def build_events_slim(product_id: str, asof: date) -> Dict:
     return slim
 
 
+def detect_profile_conflicts(old_profile: Dict, new_overrides: Dict) -> Optional[str]:
+    """上下文偏好冲突检测（Skill 3: context-anchoring 核心落地）。
+    当用户修改关键槽位（如期限、预算、等待意愿）与此前画像存在实质性冲突时，生成确权警示。
+    """
+    conflicts = []
+    if "deadline" in new_overrides and old_profile.get("deadline") != new_overrides["deadline"]:
+        old_d = old_profile.get("deadline", "none")
+        new_d = new_overrides["deadline"]
+        if (old_d in ("none", "within_90") and new_d in ("now", "within_30")) or (old_d == "now" and new_d == "none"):
+            conflicts.append(f"最晚期限由 '{old_d}' 变更为 '{new_d}'（将直接逆转等待效用 U）")
+    if "wait_tier" in new_overrides and old_profile.get("wait_tier") != new_overrides["wait_tier"]:
+        old_w = old_profile.get("wait_tier", "mid")
+        new_w = new_overrides["wait_tier"]
+        if (old_w == "high" and new_w == "low") or (old_w == "low" and new_w == "high"):
+            conflicts.append(f"等待折扣耐心由 '{old_w}' 变更为 '{new_w}'（折现率偏好发生跳跃）")
+    if "budget_tier" in new_overrides and old_profile.get("budget_tier") != new_overrides["budget_tier"]:
+        old_b = old_profile.get("budget_tier", "mid")
+        new_b = new_overrides["budget_tier"]
+        if (old_b == "low" and new_b in ("high", "flexible")) or (old_b in ("high", "flexible") and new_b == "low"):
+            conflicts.append(f"预算承受档位由 '{old_b}' 变更为 '{new_b}'（价格敏感度发生逆转）")
+
+    if not conflicts:
+        return None
+    return "【偏好冲突确权】感知到您当前的条件变更：" + "；".join(conflicts) + "。系统已自动据此重算，请确认是否同步锁定为新基准画像。"
+
+
 def evidence_for(profile: Dict, fcw: Dict, slim: Dict, source: str = "synthetic-demo") -> List[Dict]:
     data_note = ("真实电商历史价格归档数据（经离线清洗校验），真实市场成交追踪"
                  if source == "real-market-archive"
                  else "演示价序列为合成剧本（含真实量级锚点），非真实抓取；结论仅演示引擎")
     ev = [
-        {"ref": "data: " + (source or "synthetic-demo"),
+        {"ref": "[Tier-1 事实·可核验] data: " + (source or "synthetic-demo"),
          "note": data_note},
-        {"ref": "p1.windows.60",
+        {"ref": "[Tier-2 条件量化估计] p1.windows.60",
          "note": "P1 = 同分位段历史窗口降价频率，n=%s，Wilson 95%% CI（R04）"
                  % (fcw.get("60") or {}).get("n")},
-        {"ref": "stats.lookbacks.365/730", "note": "时间参考锚：现价近 1/2 年分位（总纲 §1.4）"},
+        {"ref": "[Tier-1 事实·可核验] stats.lookbacks.365/730", "note": "时间参考锚：现价近 1/2 年分位（总纲 §1.4）"},
     ]
-    for t in ("promo", "supply", "launch"):
+    for t in ("promo", "supply", "launch", "policy"):
         h = ((slim.get(t) or {}).get("horizons") or {}).get("60") or {}
         if h:
-            ev.append({"ref": "events.%s" % t,
+            ev.append({"ref": "[Tier-2 条件量化估计] events.%s" % t,
                        "note": "事件研究 %s：horizon60 mean=%s%% n=%s（R01；n<30 仅参考）"
                        % (t, h.get("mean_pct"), h.get("n"))})
-    ev.append({"ref": "R03 §2-4",
+    ev.append({"ref": "[Tier-2 属性矩阵] R03 §2-4",
                "note": "替代矩阵属性近邻配对；品牌/售后/生态不可观测项标注「值不值由你判断」"})
-    ev.append({"ref": "R05 §3 + 假设 A1-A7",
+    ev.append({"ref": "[Tier-3 外部假定·用户可调] R05 §3 + 假设 A1-A7",
                "note": "U 参数方向有出处（享乐品等待成本更高、贴现档位映射），数值待 B05 标定，展示可调"})
-    ev.append({"ref": "总纲 §2.5 + §1.2",
+    ev.append({"ref": "[Tier-2 量化裁决] 总纲 §2.5 + §1.2",
                "note": "裁决 = G - U - R - buffer；buffer 随波动率分位加宽（(S,s)）"})
     return ev
 
