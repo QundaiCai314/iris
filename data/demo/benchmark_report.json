@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "title": "Iris 决策引擎运行效率与资源开销实测报告",
+    "timestamp": "2026-10-12 23:31:12",
+    "environment": {
+      "os": "Windows-11-10.0.26200-SP0",
+      "python_version": "3.13.9",
+      "processor": "Intel64 Family 6 Model 151 Stepping 5, GenuineIntel",
+      "machine": "AMD64"
+    },
+    "benchmark_config": {
+      "n_runs_decide": 1000,
+      "n_runs_build_card": 100,
+      "warmup_runs": 20
+    }
+  },
+  "latency_metrics": {
+    "single_decide_latency_ms": {
+      "min": 0.086,
+      "mean": 0.192,
+      "median_p50": 0.113,
+      "p95": 0.212,
+      "p99": 2.327,
+      "throughput_qps": 5200
+    },
+    "end_to_end_card_latency_ms": {
+      "median_p50": 1748.388,
+      "mean": 1797.567
+    }
+  },
+  "resource_and_cost": {
+    "memory_peak_mb": 2.26,
+    "memory_current_mb": 2.0,
+    "api_cost_per_decision": {
+      "default_mode": "纯标准库自研量化引擎（0 次 LLM API 调用，0 Token，费用 ¥0.00）",
+      "llm_semantic_mode": "仅在模糊语义识别时调用，单次约 800 Tokens（按主流 API 计约 ¥0.0016）"
+    }
+  }
+}

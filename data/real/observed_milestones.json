@@ -1,0 +1,57 @@
+[
+  {
+    "sku_id": "iphone15pro-256g-jd",
+    "product_name": "Apple iPhone 15 Pro 256G 原色/黑色钛金属",
+    "channel": "京东自营 / 苹果官方授权",
+    "specification": "256GB 国行公开版",
+    "observation_type": "公开零售价格关键节点 (Discrete Price Anchors)",
+    "milestones": [
+      {"date": "2023-09-22", "price": 8999, "event": "官方首发上市建议零售价 (MSRP)", "promo_condition": "无优惠"},
+      {"date": "2023-10-20", "price": 8799, "event": "双十一预热立减券", "promo_condition": "平台大促优惠券"},
+      {"date": "2023-11-11", "price": 8298, "event": "双十一大促爆发期", "promo_condition": "满减+百亿补贴"},
+      {"date": "2023-12-12", "price": 8249, "event": "双十二促销", "promo_condition": "限时特惠"},
+      {"date": "2024-01-15", "price": 8199, "event": "年货节促销", "promo_condition": "年货节跨店满减"},
+      {"date": "2024-03-08", "price": 7799, "event": "三八节大促降价", "promo_condition": "苹果官方春季优惠"},
+      {"date": "2024-05-20", "price": 7299, "event": "618 开门红预热", "promo_condition": "平台补贴券"},
+      {"date": "2024-06-18", "price": 6799, "event": "618 巅峰大促跳水", "promo_condition": "叠加消费券与店铺补贴"},
+      {"date": "2024-07-20", "price": 6849, "event": "618 后常态小幅反弹", "promo_condition": "常规补贴价"},
+      {"date": "2024-08-20", "price": 6699, "event": "新机发布前清仓准备", "promo_condition": "百亿补贴直降"},
+      {"date": "2024-09-15", "price": 6399, "event": "iPhone 16 发布当周旧款官方清仓", "promo_condition": "官方降价与渠道清库"}
+    ]
+  },
+  {
+    "sku_id": "rtx4080-asus-tuf-jd",
+    "product_name": "华硕 TUF Gaming GeForce RTX 4080 16GB",
+    "channel": "京东自营 华硕旗舰店",
+    "specification": "16GB GDDR6X 3风扇中端旗舰",
+    "observation_type": "公开零售价格关键节点 (Discrete Price Anchors)",
+    "milestones": [
+      {"date": "2022-11-16", "price": 9499, "event": "RTX 4080 全球首发指导价 (MSRP)", "promo_condition": "原价发售"},
+      {"date": "2022-12-20", "price": 9299, "event": "上市次月溢价回落", "promo_condition": "渠道破发小降"},
+      {"date": "2023-02-15", "price": 9099, "event": "年后供需稳定", "promo_condition": "满减优惠"},
+      {"date": "2023-04-15", "price": 8799, "event": "二季度淡季促销", "promo_condition": "平台促销"},
+      {"date": "2023-06-18", "price": 8199, "event": "618 旗舰年中大促", "promo_condition": "大促特价"},
+      {"date": "2023-08-15", "price": 8349, "event": "618 后小幅回弹", "promo_condition": "常态平价"},
+      {"date": "2023-10-25", "price": 9199, "event": "4090 禁售波及市场恐慌囤货炒作", "promo_condition": "渠道涨价溢价"},
+      {"date": "2023-11-11", "price": 8499, "event": "双十一大促强制控价", "promo_condition": "官方大促补贴"},
+      {"date": "2023-12-20", "price": 8299, "event": "市场冷静理性回归", "promo_condition": "常规满减"},
+      {"date": "2024-01-31", "price": 7699, "event": "RTX 4080 Super 上市替代清仓", "promo_condition": "停产清仓跳水"}
+    ]
+  },
+  {
+    "sku_id": "ps5-disc-drive-jd",
+    "product_name": "索尼 PlayStation 5 光驱版主机 (CFI-1000/1200)",
+    "channel": "京东自营 / 索尼官方直营",
+    "specification": "国行光驱版 标准配置",
+    "observation_type": "公开零售价格关键节点 (Discrete Price Anchors)",
+    "milestones": [
+      {"date": "2021-06-01", "price": 4699, "event": "首发缺货黄牛与渠道严重溢价 (MSRP 3899)", "promo_condition": "溢价捆绑套装"},
+      {"date": "2021-11-11", "price": 4299, "event": "双十一首批加量放货溢价小降", "promo_condition": "预约抽签现货"},
+      {"date": "2022-03-15", "price": 4099, "event": "全球芯片供应链缓和", "promo_condition": "常规渠道溢价"},
+      {"date": "2022-06-18", "price": 3899, "event": "产能完全恢复，重回官方原价 3899", "promo_condition": "原价现货发售"},
+      {"date": "2022-11-11", "price": 3699, "event": "上市后首次破发大促", "promo_condition": "双十一平台满减"},
+      {"date": "2023-06-18", "price": 3199, "event": "年中大促补贴破发", "promo_condition": "百亿补贴+店铺券"},
+      {"date": "2023-11-11", "price": 2899, "event": "PS5 Slim 新机上市前旧款历史大跳水", "promo_condition": "百亿补贴深度促销"}
+    ]
+  }
+]

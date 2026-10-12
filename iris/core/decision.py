@@ -375,10 +375,10 @@ def p2_probability(profile: Dict, fc_windows: Dict, vol_pct: Optional[float],
     conf = _confidence(pick_p1_window(fc_windows, w0))
     return {"probability": p2, "n_scenarios": n_scen, "buy_count": buy_count,
             "wait_count": n_scen - buy_count, "confidence": conf,
+            "metric_name": "多情景买入建议一致率",
             "method": "perturbation-grid-v1",
             "note": ("确定性参数扰动网格（分层采样 v1）：P2 = 各（档位/期限/波动率/"
-                     "通胀预期/供需）情景下「裁决 = 买」的份额；替代品维度单列于 "
-                     "alternatives 节，不进 P2"),
+                     "通胀预期/供需）情景下「裁决 = 买」的一致率份额（多情景决策稳健度）"),
             "dimensions": dims}
 
 

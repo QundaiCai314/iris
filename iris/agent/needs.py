@@ -18,7 +18,7 @@ CATEGORY_RULES: Dict[str, dict] = {
                 "keywords": ["显卡", "rtx", "gtx", "rx", "gpu", "图形卡"]},
     "游戏机":   {"necessary": False, "hedonic": "hedonic",
                 "purpose": ["主机游戏", "派对 / 家庭娱乐", "收藏 / 尝鲜", "其他"],
-                "keywords": ["游戏机", "ps5", "xbox", "switch", "掌机"]},
+                "keywords": ["游戏机", "游戏主机", "主机", "playstation", "ps5", "ps4", "xbox", "switch", "掌机"]},
     "手机":     {"necessary": False, "hedonic": "utilitarian",
                 "purpose": ["日常通讯", "拍照 / 影像", "游戏", "工作 / 学习", "其他"],
                 "keywords": ["手机", "iphone", "mate", "pixel", "小米"]},

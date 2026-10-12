@@ -493,7 +493,7 @@ function banner(card) {
           '</svg>' +
           '<span class="meter-center-text">' + pct1(p2Prob) + '</span>' +
         '</div>' +
-        '<div class="meter-info"><div class="meter-title">P2 决策胜率</div><div class="meter-sub">60天内最优买入</div></div>' +
+        '<div class="meter-info"><div class="meter-title">P2 决策稳健度</div><div class="meter-sub">多情景买入一致率</div></div>' +
       '</div>' +
     '</div>' +
   '</div>';
@@ -567,16 +567,16 @@ function priceSpectrumHtml(card) {
   var mrPos = mr.equilibrium_price ? Math.max(3, Math.min(97, (mr.equilibrium_price - minP) / span * 100)).toFixed(1) : null;
 
   var bandHtml = (cb.lower_bound && cb.upper_bound)
-    ? '<div class="spectrum-band" style="left:' + cbLeft + '%;width:' + cbWidth + '%;" title="共形预测带: ¥' + cb.lower_bound + '~¥' + cb.upper_bound + '"></div>' : '';
+    ? '<div class="spectrum-band" style="left:' + cbLeft + '%;width:' + cbWidth + '%;" title="分位数置信带: ¥' + cb.lower_bound + '~¥' + cb.upper_bound + '"></div>' : '';
 
   var mrHtml = mrPos
     ? '<div class="spectrum-marker mr-marker" style="left:' + mrPos + '%;" title="OU长期中枢: ¥' + mr.equilibrium_price + '"><div class="marker-line"></div><span class="marker-tag">中枢 ¥' + mr.equilibrium_price + '</span></div>' : '';
 
   return '<div class="spectrum-card">' +
     '<div class="spectrum-header">' +
-      '<div class="spectrum-title"><span class="spectrum-pill">PRICE SPECTRUM</span> 价格空间与共形置信区间</div>' +
+      '<div class="spectrum-title"><span class="spectrum-pill">PRICE SPECTRUM</span> 价格空间与分位数经验置信带</div>' +
       '<div class="spectrum-legend">' +
-        '<span class="legend-item"><span class="legend-swatch band-swatch"></span> 90% 置信带</span>' +
+        '<span class="legend-item"><span class="legend-swatch band-swatch"></span> ' + (cb.confidence_level || '90%') + ' 置信带</span>' +
         '<span class="legend-item"><span class="legend-swatch cur-swatch"></span> 现价 ¥' + last + '</span>' +
         (mrPos ? '<span class="legend-item"><span class="legend-swatch mr-swatch"></span> OU 中枢 ¥' + mr.equilibrium_price + '</span>' : '') +
       '</div>' +
@@ -867,8 +867,8 @@ function kpiQuartetHtml(card) {
     : "<div class='kpi-tile'><div class='kpi-lbl'>SAS 状态</div><div class='kpi-val'>无击穿</div><div class='kpi-sub'>处于公允等待区间</div></div>";
 
   var conformalHtml = (cb.lower_bound && cb.upper_bound)
-    ? "<div class='kpi-tile'><div class='kpi-lbl'>共形预测带 (90%)</div><div class='kpi-val'>¥" + cb.lower_bound + "~" + cb.upper_bound + "</div><div class='kpi-sub'>动态带宽 ±" + cb.bandwidth_pct + "% · 有限样本保证</div></div>"
-    : "<div class='kpi-tile'><div class='kpi-lbl'>共形覆盖</div><div class='kpi-val'>--</div><div class='kpi-sub'>残差分位校准中</div></div>";
+    ? "<div class='kpi-tile'><div class='kpi-lbl'>经验置信带 (" + (cb.confidence_level || '90%') + ")</div><div class='kpi-val'>¥" + cb.lower_bound + "~" + cb.upper_bound + "</div><div class='kpi-sub'>动态带宽 ±" + cb.bandwidth_pct + "% · 分位数动态校准</div></div>"
+    : "<div class='kpi-tile'><div class='kpi-lbl'>置信带</div><div class='kpi-val'>--</div><div class='kpi-sub'>分位数校准中</div></div>";
 
   var mrHtml = (mr.is_mean_reverting && mr.equilibrium_price)
     ? "<div class='kpi-tile'><div class='kpi-lbl'>OU 长期中枢</div><div class='kpi-val'>¥" + mr.equilibrium_price + "</div><div class='kpi-sub'>偏离 " + (mr.current_deviation_pct > 0 ? "+" : "") + mr.current_deviation_pct + "% · 半衰期 " + mr.half_life_days + " 天</div></div>"

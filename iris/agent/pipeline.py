@@ -203,9 +203,9 @@ def detect_profile_conflicts(old_profile: Dict, new_overrides: Dict) -> Optional
 
 
 def evidence_for(profile: Dict, fcw: Dict, slim: Dict, source: str = "synthetic-demo") -> List[Dict]:
-    data_note = ("真实电商历史价格归档数据（经离线清洗校验），真实市场成交追踪"
-                 if source == "real-market-archive"
-                 else "演示价序列为合成剧本（含真实量级锚点），非真实抓取；结论仅演示引擎")
+    data_note = ("基于真实零售价格节点锚定的拟真基准序列（经离线清洗校验，平滑插值）"
+                 if ("real" in (source or "") or "benchmark" in (source or ""))
+                 else "演示价序列为全生命周期合成剧本（含真实量级锚点），供确定性回测演示")
     ev = [
         {"ref": "[Tier-1 事实·可核验] data: " + (source or "synthetic-demo"),
          "note": data_note},

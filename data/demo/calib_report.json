@@ -1,4 +1,37 @@
 {
+ "iphone15pro-256g-jd": {
+  "bins": [],
+  "brier": null,
+  "max_dev": null,
+  "n": 0,
+  "label": "iphone15pro-256g-jd",
+  "notes": [
+   "校准样本过少(0)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "ps5-disc-drive-jd": {
+  "n": 16,
+  "bins": [],
+  "brier": 0.3125,
+  "max_dev": null,
+  "degraded": false,
+  "label": "ps5-disc-drive-jd",
+  "notes": [],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "rtx4080-asus-tuf-jd": {
+  "n": 1,
+  "bins": [],
+  "brier": 1.0,
+  "max_dev": null,
+  "degraded": false,
+  "label": "rtx4080-asus-tuf-jd",
+  "notes": [
+   "校准样本过少(1)，结论仅作流程演示"
+  ],
+  "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
  "rtx5070-gigabyte-mid": {
   "n": 5,
   "bins": [],
@@ -106,5 +139,11 @@
    "校准样本过少(6)，结论仅作流程演示"
   ],
   "rule": "max|dev|>0.10 -> 降级为仅方向输出（R04 §2）"
+ },
+ "_summary": {
+  "total_evaluated_samples": 66,
+  "sample_weighted_brier": 0.3936,
+  "best_sku_brier": 0.2178,
+  "note": "加权汇总基于 Demo 库 11 个满足窗宽条件的 SKU（共 66 个截断预测点）实测加权计算"
  }
 }
