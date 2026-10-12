@@ -172,11 +172,11 @@ def compute_tradein_subsidy(category: str, price: float, efficiency_tier: int = 
     is_capped = theo > cap
 
     note = (
-        "按 %d 级能效/数码标准享受国家以旧换新补贴：立减约 ¥%d（有效补贴率 %.1f%%）。"
+        "按 %d 级能效/数码标准享受国家以旧换新补贴：立减约 %d 元（有效补贴率 %.1f%%）。"
         % (efficiency_tier, int(round(actual)), effective_rate)
     )
     if is_capped:
-        note += "（已达国家最高 ¥%d 补贴封顶，边际补贴效率稀释）" % int(cap)
+        note += "（已达国家最高 %d 元补贴封顶，边际补贴效率稀释）" % int(cap)
 
     return {
         "eligible": True,
@@ -524,7 +524,7 @@ def build_conditions(profile: Dict, dec: Dict, p2: Dict,
         conds.append({
             "scenario": "tradein_subsidy",
             "text": ("若申请以旧换新与国补：该型号符合国家超长期特别国债补贴范围，"
-                     "测算可享财政立减约 ¥%d（有效补贴率 %.1f%%）；"
+                     "测算可享财政立减约 %d 元（有效补贴率 %.1f%%）；"
                      "若手头有旧机置换，建议对比平台一键以旧换新与二手自售净现金流。"
                      % (tradein["actual_subsidy_yuan"], tradein["effective_rate_pct"])),
             "ref": "国务院两新行动方案（超长期特别国债以旧换新支持）"

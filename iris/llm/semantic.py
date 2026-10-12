@@ -20,11 +20,12 @@ logger = logging.getLogger("iris.llm")
 PARSE_SYSTEM_PROMPT = """你是一个电商与消费品量化分析助理。
 请从用户输入的商品链接或描述中提取结构化信息，输出纯 JSON 格式（不要包含任何 markdown 标记或额外解释）：
 {
-  "name": "标准商品型号名称，例如 '华硕 TUF-RTX5080-O16G-GAMING' 或 '布洛芬缓释胶囊'",
-  "category": "品类标准词（显卡、手机、笔记本、游戏机、家电、相机、药品、医疗用品、基础食品、其他）",
+  "name": "标准商品型号名称，例如 '华硕 TUF-RTX5080-O16G-GAMING' 或 '布洛芬缓释胶囊'，若非商品则设为 null",
+  "category": "品类标准词（显卡、手机、笔记本、游戏机、家电、相机、药品、医疗用品、基础食品），若非明确商品则设为 null",
   "brand": "品牌名（如 华硕、苹果、联想、中美史克等），未知则写 null",
   "is_essential": true 或 false（是否为药品、急救医疗、基础口粮等无弹性必需品）
-}"""
+}
+注意：若用户输入纯闲聊、天气、非商品文本，category 与 name 必须输出 null，绝不可强行假定！"""
 
 
 def _clean_json_str(text: str) -> str:
@@ -58,11 +59,12 @@ def parse_product_semantic(text: str) -> Optional[Dict]:
     try:
         raw_json = _clean_json_str(res["content"])
         data = json.loads(raw_json)
-        if not data.get("category"):
+        cat = data.get("category")
+        if not cat or cat in ("其他", "未知", "null", "None"):
             return None
         return {
             "name": data.get("name") or text[:30],
-            "category": data.get("category"),
+            "category": cat,
             "brand": data.get("brand"),
             "is_essential": bool(data.get("is_essential")),
             "source": f"llm:{res.get('model')}",
