@@ -445,64 +445,208 @@ function banner(card) {
   var d = card.decision;
   var k = LIGHT_KEY[d.traffic_light] || "yellow";
   var recTxt0 = recTxt(d.recommendation);
-  return '<div class="banner ' + k + '"><div><span class="light-dot ' + k + '"></span>' +
-    "<div class='big'>" + recTxt0 + "　" + LIGHT[d.traffic_light] + "</div>" +
-    "<div class='mid'>P1（60 天降价≥5% 概率）≈ <b>" +
-    pct1(card.p1["60"].probability) + "</b>（n=" + card.p1["60"].n + "）　｜　" +
-    "P2（现在买是 60 天内最优决策）≈ <b>" + pct1(d.p2.probability) + "</b>" +
-    "</div></div></div>";
+  var p1Prob = card.p1 && card.p1["60"] && card.p1["60"].probability != null ? card.p1["60"].probability : 0;
+  var p1N = card.p1 && card.p1["60"] ? card.p1["60"].n : 0;
+  var p2Prob = d.p2 && d.p2.probability != null ? d.p2.probability : 0;
+  var st = card.stats || {};
+  var lastPrice = st.last_price != null ? "¥" + st.last_price : "";
+  var prodName = (card.meta && card.meta.brand ? card.meta.brand.toUpperCase() + " " : "") +
+                 (card.meta && card.meta.product_id ? card.meta.product_id.toUpperCase() : "");
+
+  var circ = 213.6;
+  var p1Offset = (circ * (1 - Math.min(1, Math.max(0, p1Prob)))).toFixed(1);
+  var p2Offset = (circ * (1 - Math.min(1, Math.max(0, p2Prob)))).toFixed(1);
+
+  var statusTitle = d.recommendation === "switch" ? "VALUE ARBITRAGE · 换款平替最优"
+                  : d.recommendation === "buy" ? "OPTIMAL TIMING · 建议现在买入"
+                  : "TIMING BUFFER · 建议观望等待";
+
+  var headline = d.recommendation === "switch" ? "当前款高位溢价，平替方案性价比极高"
+               : d.recommendation === "buy" ? "价格处于安全边际，买入综合效用最高"
+               : "短期降价概率显著，建议设阈等待击穿";
+
+  return '<div class="dossier-hero ' + k + '">' +
+    '<div class="dossier-hero-main">' +
+      '<div class="dossier-badge-row">' +
+        '<span class="dossier-status-pill ' + k + '"><span class="pulse-dot"></span> ' + statusTitle + '</span>' +
+        (prodName ? '<span class="dossier-meta-chip">' + esc(prodName) + (lastPrice ? ' · ' + lastPrice : '') + '</span>' : '') +
+      '</div>' +
+      '<h1 class="dossier-headline">' + recTxt0 + ' <span class="dossier-light-tag">' + LIGHT[d.traffic_light] + '</span></h1>' +
+      '<p class="dossier-subhead">' + headline + '</p>' +
+    '</div>' +
+    '<div class="dossier-hero-meters">' +
+      '<div class="meter-box">' +
+        '<div class="svg-radial-wrap">' +
+          '<svg width="76" height="76" viewBox="0 0 76 76">' +
+            '<circle cx="38" cy="38" r="34" class="meter-bg" />' +
+            '<circle cx="38" cy="38" r="34" class="meter-fill" style="stroke-dasharray:' + circ + ';stroke-dashoffset:' + p1Offset + ';" />' +
+          '</svg>' +
+          '<span class="meter-center-text">' + pct1(p1Prob) + '</span>' +
+        '</div>' +
+        '<div class="meter-info"><div class="meter-title">P1 降价概率</div><div class="meter-sub">60天降≥5% (n=' + p1N + ')</div></div>' +
+      '</div>' +
+      '<div class="meter-box">' +
+        '<div class="svg-radial-wrap">' +
+          '<svg width="76" height="76" viewBox="0 0 76 76">' +
+            '<circle cx="38" cy="38" r="34" class="meter-bg" />' +
+            '<circle cx="38" cy="38" r="34" class="meter-fill" style="stroke-dasharray:' + circ + ';stroke-dashoffset:' + p2Offset + ';" />' +
+          '</svg>' +
+          '<span class="meter-center-text">' + pct1(p2Prob) + '</span>' +
+        '</div>' +
+        '<div class="meter-info"><div class="meter-title">P2 决策胜率</div><div class="meter-sub">60天内最优买入</div></div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
 }
-function kpiRow(card) {
-  var st = card.stats, lb = st.lookbacks;
-  var comp = card.decision && card.decision.decomposition;
-  var strikeCol = "";
-  if (comp && comp.strike_price && comp.net_pct > 0) {
-    strikeCol = "<div><b style='color:#635bff;'>¥" + comp.strike_price + "</b><span>击穿目标价</span></div>";
-  }
-  return '<div class="kpi">' +
-    "<div><b>" + st.last_price + "</b><span>现价（元）</span></div>" +
-    "<div><b>" + (lb["90"].pct_position * 100).toFixed(0) + "%</b><span>90 天历史分位</span></div>" +
-    "<div><b>" + (lb["365"].pct_position * 100).toFixed(0) + "%</b><span>1 年历史分位</span></div>" +
-    "<div><b>" + (lb["730"].pct_position * 100).toFixed(0) + "%</b><span>2 年历史分位</span></div>" +
-    strikeCol +
-    "</div>";
+
+function arbitrageCardHtml(card, profile) {
+  var d = card.decision;
+  var sw = d.switch_to;
+  if (!sw && d.recommendation !== "switch") { return ""; }
+  var st = card.stats || {};
+  var origPrice = st.last_price || (sw ? sw.price + sw.saving_yuan : 0);
+  var origName = (card.meta && card.meta.brand ? card.meta.brand.toUpperCase() + " " : "") +
+                 (card.meta && card.meta.product_id ? card.meta.product_id.toUpperCase() : "原选定型号");
+  var altName = (sw ? sw.brand.toUpperCase() + " " + sw.product_id.toUpperCase() + " " + (sw.tier || "") : "推荐高性价比平替");
+  var altPrice = sw ? sw.price : 0;
+  var saveYuan = sw ? sw.saving_yuan : (origPrice - altPrice);
+  var savePct = sw ? sw.saving_pct : (saveYuan / (origPrice || 1) * 100);
+  var benchPct = sw ? Math.round(sw.bench_ratio * 100) : 85;
+  var purp = (profile && profile.purpose) || "日常/综合用途";
+
+  return '<div class="arbitrage-card">' +
+    '<div class="arb-header">' +
+      '<div class="arb-title-group">' +
+        '<span class="arb-badge">VALUE ARBITRAGE · 决策平替对冲方案</span>' +
+        '<h3 class="arb-title">换一个买更划算：性能达 ' + benchPct + '%，直省 ¥' + saveYuan + ' (' + savePct.toFixed(1) + '%)</h3>' +
+      '</div>' +
+      '<div class="arb-tag-save">-¥' + saveYuan + '</div>' +
+    '</div>' +
+    '<div class="arb-comparison-grid">' +
+      '<div class="arb-col">' +
+        '<div class="arb-col-header"><span class="arb-col-label">原评估目标</span><span class="arb-col-price">¥' + origPrice + '</span></div>' +
+        '<div class="arb-col-name">' + esc(origName) + '</div>' +
+        '<div class="arb-bar-row">' +
+          '<span class="arb-bar-desc">性能基准 Benchmark</span>' +
+          '<div class="arb-track"><div class="arb-fill" style="width:100%;"></div></div>' +
+          '<span class="arb-bar-pct">100%</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="arb-vs-badge">VS</div>' +
+      '<div class="arb-col highlight">' +
+        '<div class="arb-col-header"><span class="arb-col-label highlight">推荐高性价比平替</span><span class="arb-col-price highlight">¥' + altPrice + '</span></div>' +
+        '<div class="arb-col-name highlight">' + esc(altName) + '</div>' +
+        '<div class="arb-bar-row">' +
+          '<span class="arb-bar-desc">满足【' + esc(purp) + '】用途</span>' +
+          '<div class="arb-track"><div class="arb-fill highlight" style="width:' + benchPct + '%;"></div></div>' +
+          '<span class="arb-bar-pct highlight">' + benchPct + '%</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="arb-footer-note">' +
+      '<b>量化裁决：</b>满足您的【' + esc(purp) + '】用途，原目标存在约 ' + savePct.toFixed(1) + '% 的旗舰/散热溢价。若非追求极限跑分，选择此平替可立即节约 ¥' + saveYuan + '。' +
+    '</div>' +
+  '</div>';
 }
-function conformalHtml(card) {
-  var cb = card.stats && card.stats.conformal_bounds;
-  if (!cb) { return ""; }
-  return "<div class='cond' style='background:rgba(99,91,255,0.06);border-left:3px solid #635bff;margin-top:8px;'>" +
-    "<b>共形预测波动带（ACI " + esc(cb.confidence_level || "90%") + " 置信覆盖）：</b>" +
-    "无分布假设价格区间 <b>¥" + cb.lower_bound + " ~ ¥" + cb.upper_bound + "</b>" +
-    "（动态带宽 ±" + cb.bandwidth_pct + "%，基于时序残差分位数校准，有限样本覆盖保证）" +
-    "</div>";
+
+function priceSpectrumHtml(card) {
+  var st = card.stats || {}, lb = st.lookbacks || {};
+  var cb = st.conformal_bounds || {};
+  var mr = st.mean_reversion || {};
+  var last = st.last_price || 0;
+  if (!last) { return ""; }
+
+  var lb90 = lb["90"] || {};
+  var minP = lb90.min || (cb.lower_bound ? Math.round(cb.lower_bound * 0.92) : Math.round(last * 0.8));
+  var maxP = lb90.max || (cb.upper_bound ? Math.round(cb.upper_bound * 1.08) : Math.round(last * 1.2));
+  var span = Math.max(1, maxP - minP);
+
+  var curPos = Math.max(3, Math.min(97, (last - minP) / span * 100)).toFixed(1);
+  var cbLeft = cb.lower_bound ? Math.max(0, (cb.lower_bound - minP) / span * 100).toFixed(1) : "0";
+  var cbWidth = (cb.lower_bound && cb.upper_bound) ? Math.min(100 - parseFloat(cbLeft), (cb.upper_bound - cb.lower_bound) / span * 100).toFixed(1) : "0";
+  var mrPos = mr.equilibrium_price ? Math.max(3, Math.min(97, (mr.equilibrium_price - minP) / span * 100)).toFixed(1) : null;
+
+  var bandHtml = (cb.lower_bound && cb.upper_bound)
+    ? '<div class="spectrum-band" style="left:' + cbLeft + '%;width:' + cbWidth + '%;" title="共形预测带: ¥' + cb.lower_bound + '~¥' + cb.upper_bound + '"></div>' : '';
+
+  var mrHtml = mrPos
+    ? '<div class="spectrum-marker mr-marker" style="left:' + mrPos + '%;" title="OU长期中枢: ¥' + mr.equilibrium_price + '"><div class="marker-line"></div><span class="marker-tag">中枢 ¥' + mr.equilibrium_price + '</span></div>' : '';
+
+  return '<div class="spectrum-card">' +
+    '<div class="spectrum-header">' +
+      '<div class="spectrum-title"><span class="spectrum-pill">PRICE SPECTRUM</span> 价格空间与共形置信区间</div>' +
+      '<div class="spectrum-legend">' +
+        '<span class="legend-item"><span class="legend-swatch band-swatch"></span> 90% 置信带</span>' +
+        '<span class="legend-item"><span class="legend-swatch cur-swatch"></span> 现价 ¥' + last + '</span>' +
+        (mrPos ? '<span class="legend-item"><span class="legend-swatch mr-swatch"></span> OU 中枢 ¥' + mr.equilibrium_price + '</span>' : '') +
+      '</div>' +
+    '</div>' +
+    '<div class="spectrum-bar-wrap">' +
+      '<div class="spectrum-track">' +
+        bandHtml +
+        mrHtml +
+        '<div class="spectrum-pin" style="left:' + curPos + '%;">' +
+          '<div class="pin-glow"></div>' +
+          '<div class="pin-badge">¥' + last + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="spectrum-axis">' +
+        '<span>¥' + Math.round(minP) + ' (90D 低)</span>' +
+        '<span>¥' + Math.round(maxP) + ' (90D 高)</span>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
 }
-function meanReversionHtml(card) {
-  var mr = card.stats && card.stats.mean_reversion;
-  if (!mr || !mr.is_mean_reverting) { return ""; }
-  return "<div class='cond' style='background:rgba(255,159,28,0.06);border-left:3px solid #ff9f1c;margin-top:8px;'>" +
-    "<b>均值回归计量模型（Ornstein-Uhlenbeck / Vasicek）：</b>" +
-    "长期均衡中枢 <b>¥" + mr.equilibrium_price + "</b>（偏离 " + (mr.current_deviation_pct > 0 ? "+" : "") + mr.current_deviation_pct + "%），" +
-    "偏离半衰期 <b>" + mr.half_life_days + " 天</b> —— <span class='muted2'>" + esc(mr.regime_desc) + "</span>" +
-    "</div>";
+
+function chartCardHtml(card) {
+  return '<div class="chart-card">' +
+    '<div class="chart-header">' +
+      '<div class="chart-title-wrap">' +
+        '<span class="chart-pill">MARKET TRAJECTORY</span>' +
+        '<h3 class="chart-heading">真实周 K 线走势与波动通道</h3>' +
+      '</div>' +
+      '<div class="chart-meta">7D 周频 · 真实市场归档序列</div>' +
+    '</div>' +
+    '<div id="kline-box" class="kline-viewport"><div class="chart-loading">加载价格周线图...</div></div>' +
+  '</div>';
 }
-function priceProtectionHtml(card) {
+
+function behavioralGridHtml(card) {
   var pp = card.decision && card.decision.price_protection;
-  if (!pp) { return ""; }
-  return "<div class='cond plain' style='background:rgba(0,212,255,0.08);border-left:3px solid #00d4ff;margin-top:10px;'>" +
-    "<b>30 天价保期权公允评估（Hopper 模型 / 回望看跌期权）：</b>" +
-    "公允期权价值 <b>¥" + pp.fair_premium_yuan + "</b>（期望下行 " + pp.expected_drop_pct + "%，30天降价概率 " + (pp.drop_probability * 100).toFixed(0) + "%）。" +
-    "<br><span class='muted2'>" + esc(pp.arbitrage_advice) + "</span>" +
-    "</div>";
-}
-function prospectTheoryHtml(card) {
-  var cpt = card.decision && (card.decision.prospect_theory || (card.decision.decomposition && card.decision.decomposition.prospect_theory));
-  if (!cpt) { return ""; }
-  return "<div class='cond' style='background:rgba(139,92,246,0.06);border-left:3px solid #8b5cf6;margin-top:12px;'>" +
-    "<b>累积前景理论主观心理价值（Kahneman & Tversky 1979/1992，损失厌恶 λ=2.25）：</b>" +
-    "<br>客观数学期望：<b>¥" + cpt.objective_expected_yuan + "</b> ｜ 心理等价值 (CE)：<b>¥" + cpt.certainty_equivalent_yuan + "</b>" +
-    " ｜ 损失厌恶折价：<b>¥" + cpt.loss_aversion_wedge_yuan + "</b>" +
-    "<br><span class='muted2'>" + esc(cpt.behavior_advice) + "</span>" +
-    "</div>";
+  var hints = card.behavior_hints || [];
+  var cpu = null, fresh = null;
+  hints.forEach(function (h) {
+    if (h.rule === "cost_per_use_nudge") { cpu = h; }
+    if (h.rule === "fresh_card") { fresh = h; }
+  });
+
+  var ppCard = pp ? (
+    '<div class="b-card">' +
+      '<div class="b-badge-row"><span class="b-badge cyan">HOPPER OPTION</span><span class="b-sub">30天回望看跌期权</span></div>' +
+      '<div class="b-val">¥' + pp.fair_premium_yuan + '</div>' +
+      '<div class="b-desc">期望下行 <b>' + pp.expected_drop_pct + '%</b>，30天降价概率 <b>' + (pp.drop_probability * 100).toFixed(0) + '%</b>。</div>' +
+      '<div class="b-note">' + esc(pp.arbitrage_advice) + '</div>' +
+    '</div>'
+  ) : '';
+
+  var cpuCard = cpu ? (
+    '<div class="b-card">' +
+      '<div class="b-badge-row"><span class="b-badge amber">COST PER USE</span><span class="b-sub">单次使用折旧精算</span></div>' +
+      '<div class="b-val">折旧评估</div>' +
+      '<div class="b-note">' + esc(cpu.text) + '</div>' +
+    '</div>'
+  ) : '';
+
+  var freshCard = fresh ? (
+    '<div class="b-card">' +
+      '<div class="b-badge-row"><span class="b-badge bone">COOLING PERIOD</span><span class="b-sub">冲动消费阻断</span></div>' +
+      '<div class="b-val">24H 冷却</div>' +
+      '<div class="b-note">' + esc(fresh.text) + '</div>' +
+    '</div>'
+  ) : '';
+
+  if (!ppCard && !cpuCard && !freshCard) { return ""; }
+  return '<div class="behavioral-grid">' + ppCard + cpuCard + freshCard + '</div>';
 }
 function p1Table(card) {
   var rows = "";
@@ -592,32 +736,50 @@ function evidenceHtml(card) {
   }).join("");
 }
 function editorHtml(profile) {
-  var opts = {
-    deadline: [["none", "不着急，能等到好价"], ["within_30", "一个月内"], ["within_90", "三个月内"], ["now", "必须马上有"]],
-    usage_intensity: [["rarely", "偶尔"], ["low", "每周 1-3 次"], ["medium", "每周 3-10h"], ["high", "重度每天用"]],
-    hedonic: [["utilitarian", "需要（影响正事）"], ["hedonic", "想要（升级体验）"]],
-    wait_tier: [["low", "贴现高·难等"], ["mid", "一般"], ["high", "贴现低·能等"]],
-    budget_tier: [["low", "入门就够"], ["mid", "主流中档"], ["high", "旗舰顶配"], ["flexible", "看性价比"]],
-    price_view: [["up", "感觉要涨"], ["stable", "平稳"], ["down", "会降"], ["uncertain", "说不准"]],
-    supply_news: [["no", "缺货消息少"], ["yes", "缺货/涨价消息多"]],
-    alt_acceptable: [["no", "只接受全新同款"], ["yes", "可接受二手/平替"]]
+  var meta = {
+    deadline: { title: "时间紧迫度", en: "DEADLINE HORIZON", opts: [["none", "不着急，能等到好价"], ["within_30", "一个月内"], ["within_90", "三个月内"], ["now", "必须马上有"]] },
+    usage_intensity: { title: "使用频次", en: "USAGE INTENSITY", opts: [["rarely", "偶尔"], ["low", "每周 1-3 次"], ["medium", "每周 3-10h"], ["high", "重度每天用"]] },
+    hedonic: { title: "消费动机", en: "PURCHASE MOTIVE", opts: [["utilitarian", "需要（影响正事）"], ["hedonic", "想要（升级体验）"]] },
+    wait_tier: { title: "等待贴现档", en: "DISCOUNT TIER", opts: [["low", "贴现高·难等"], ["mid", "一般"], ["high", "贴现低·能等"]] },
+    budget_tier: { title: "预算偏好", en: "BUDGET BRACKET", opts: [["low", "入门就够"], ["mid", "主流中档"], ["high", "旗舰顶配"], ["flexible", "看性价比"]] },
+    price_view: { title: "价格走势预期", en: "PRICE OUTLOOK", opts: [["up", "感觉要涨"], ["stable", "平稳"], ["down", "会降"], ["uncertain", "说不准"]] },
+    supply_news: { title: "供需舆情", en: "SUPPLY CLIMATE", opts: [["no", "缺货消息少"], ["yes", "缺货/涨价消息多"]] },
+    alt_acceptable: { title: "平替/二手接受度", en: "SUBSTITUTION BIAS", opts: [["no", "只接受全新同款"], ["yes", "可接受二手/平替"]] }
   };
-  var out = '<div class="editor-grid">';
-  Object.keys(opts).forEach(function (k) {
-    var cur = profile[k] != null ? profile[k] : opts[k][0][0];
-    out += "<label>" + k + "<select id='ed-" + k + "'>" +
-      opts[k].map(function (o) {
-        return "<option value='" + o[0] + "'" + (o[0] === cur ? " selected" : "") + ">" + o[1] + "</option>";
-      }).join("") + "</select></label>";
+
+  var out = '<div class="sim-grid">';
+  Object.keys(meta).forEach(function (k) {
+    var item = meta[k];
+    var cur = profile[k] != null ? profile[k] : item.opts[0][0];
+    out += '<div class="sim-tile">' +
+      '<div class="sim-tile-header">' +
+        '<span class="sim-tile-title">' + item.title + '</span>' +
+        '<span class="sim-tile-en">' + item.en + '</span>' +
+      '</div>' +
+      '<select id="ed-' + k + '" class="sim-select">' +
+        item.opts.map(function (o) {
+          return '<option value="' + o[0] + '"' + (o[0] === cur ? ' selected' : '') + '>' + o[1] + '</option>';
+        }).join('') +
+      '</select>' +
+    '</div>';
   });
-  out += "</div>";
+  out += '</div>';
+
   var purp = profile.purpose || "游戏";
-  out += '<p><label>用途 <select id="ed-purpose">' +
-    ["游戏", "AI / 跑模型", "3D / 视频创作", "编程 / 日常", "其他"].map(function (p) {
-      return "<option" + (p === purp ? " selected" : "") + ">" + p + "</option>";
-    }).join("") + '</select></label> ' +
-    '<button id="btn-recalc">按新参数重算</button> ' +
-    '<button id="btn-reset" class="ghost">重置为问卷原答案</button></p>';
+  out += '<div class="sim-bottom-bar">' +
+    '<div class="sim-purpose-wrap">' +
+      '<div class="sim-purpose-header"><span class="sim-tile-title">核心应用场景</span><span class="sim-tile-en">PRIMARY USE CASE</span></div>' +
+      '<select id="ed-purpose" class="sim-select">' +
+        ["游戏", "AI / 跑模型", "3D / 视频创作", "编程 / 日常", "其他"].map(function (p) {
+          return '<option' + (p === purp ? ' selected' : '') + '>' + p + '</option>';
+        }).join('') +
+      '</select>' +
+    '</div>' +
+    '<div class="sim-action-buttons">' +
+      '<button id="btn-recalc" class="button btn-recompute">按新参数重算 (RECOMPUTE)</button>' +
+      '<button id="btn-reset" class="button btn-reset">重置为问卷原答案 (RESET)</button>' +
+    '</div>' +
+  '</div>';
   return out;
 }
 function historyHtml(hist) {
@@ -666,25 +828,28 @@ function setHint(msg) {
   if (h) { h.textContent = msg; }
 }
 function userBarHtml() {
-  var status = "<span id='hint-status' class='muted2'></span>";
+  var status = "<span id='hint-status' class='user-hint-msg'></span>";
   if (!S.user && !S.snap) {
-    return "<div class='user-toolbar'><span class='muted2'>游客模式：</span>" +
-      "<button id='btn-hint-login' class='small'>登录 / 注册（出卡自动存档 + 关注）</button>" +
-      status + "</div>";
+    return "<div class='user-toolbar'>" +
+      "<span class='user-status-pill'>游客模式 (GUEST)</span>" +
+      "<span class='user-tip-text'>出卡已自动存档，登录后可同步多设备并开启变价关注预警</span>" +
+      "<button id='btn-hint-login' class='button btn-user-action'>登录 / 注册</button>" +
+      status +
+    "</div>";
   }
   var parts = [];
   if (S.snap) {
-    parts.push("<button id='btn-rerun' class='small'>用这份画像重新出卡 →</button>");
-    parts.push("<span class='muted2'>历史快照 · " + esc(S.snap.at) + "</span>");
+    parts.push("<button id='btn-rerun' class='button btn-user-action'>用此画像重新出卡 →</button>");
+    parts.push("<span class='user-tip-text'>历史快照 · " + esc(S.snap.at) + "</span>");
   } else if (S.user) {
-    parts.push("<span class='muted2'>已登录：出卡自动存档到「我的数据」</span>");
+    parts.push("<span class='user-status-pill on'>已登录: " + esc(S.user) + "</span>");
   }
   if (S.user && S.sku_id) {
-    parts.push("<button id='btn-watch' class='small'>关注该商品</button>");
+    parts.push("<button id='btn-watch' class='button btn-user-action'>关注该商品</button>");
   }
   if (S.user && S.session_id && (S.savedState === "anon" || S.dirty)) {
-    parts.push("<button id='btn-save-ver' class='small'>" +
-      (S.dirty ? "把当前参数版本另存为一条历史" : "把这张决策卡存入我的历史") + "</button>");
+    parts.push("<button id='btn-save-ver' class='button btn-user-action'>" +
+      (S.dirty ? "另存为新历史" : "存入我的历史") + "</button>");
   }
   if (!parts.length) { return ""; }
   return "<div class='user-toolbar'>" + parts.join(" ") + status + "</div>";
@@ -694,21 +859,28 @@ function kpiQuartetHtml(card) {
   var comp = card.decision && card.decision.decomposition;
   var cb = st.conformal_bounds || {};
   var mr = st.mean_reversion || {};
+  var p90 = lb["90"] ? Math.round(lb["90"].pct_position * 100) : 0;
+  var p365 = lb["365"] ? Math.round(lb["365"].pct_position * 100) : 0;
 
   var strikeHtml = (comp && comp.strike_price && comp.net_pct > 0)
-    ? "<div class='kpi-tile'><div class='kpi-lbl'>SAS 击穿目标价</div><div class='kpi-val' style='color:#f59f00;'>¥" + comp.strike_price + "</div><div class='kpi-sub'>最优停止 (-" + comp.strike_drop_pct.toFixed(1) + "%)</div></div>"
-    : "<div class='kpi-tile'><div class='kpi-lbl'>SAS 状态</div><div class='kpi-val'>无击穿</div><div class='kpi-sub'>处于公允区间</div></div>";
+    ? "<div class='kpi-tile'><div class='kpi-lbl'>SAS 击穿临界点</div><div class='kpi-val amber'>¥" + comp.strike_price + "</div><div class='kpi-sub'>降 -" + comp.strike_drop_pct.toFixed(1) + "% 触发买入</div></div>"
+    : "<div class='kpi-tile'><div class='kpi-lbl'>SAS 状态</div><div class='kpi-val'>无击穿</div><div class='kpi-sub'>处于公允等待区间</div></div>";
 
   var conformalHtml = (cb.lower_bound && cb.upper_bound)
-    ? "<div class='kpi-tile'><div class='kpi-lbl'>共形预测带</div><div class='kpi-val'>¥" + cb.lower_bound + "~" + cb.upper_bound + "</div><div class='kpi-sub'>置信覆盖 90% (±" + cb.bandwidth_pct + "%)</div></div>"
-    : "<div class='kpi-tile'><div class='kpi-lbl'>共形覆盖</div><div class='kpi-val'>--</div><div class='kpi-sub'>校准中</div></div>";
+    ? "<div class='kpi-tile'><div class='kpi-lbl'>共形预测带 (90%)</div><div class='kpi-val'>¥" + cb.lower_bound + "~" + cb.upper_bound + "</div><div class='kpi-sub'>动态带宽 ±" + cb.bandwidth_pct + "% · 有限样本保证</div></div>"
+    : "<div class='kpi-tile'><div class='kpi-lbl'>共形覆盖</div><div class='kpi-val'>--</div><div class='kpi-sub'>残差分位校准中</div></div>";
 
   var mrHtml = (mr.is_mean_reverting && mr.equilibrium_price)
-    ? "<div class='kpi-tile'><div class='kpi-lbl'>OU 长期中枢</div><div class='kpi-val'>¥" + mr.equilibrium_price + "</div><div class='kpi-sub'>半衰期 " + mr.half_life_days + " 天 (" + (mr.current_deviation_pct > 0 ? "+" : "") + mr.current_deviation_pct + "%)</div></div>"
-    : "<div class='kpi-tile'><div class='kpi-lbl'>长期中枢</div><div class='kpi-val'>¥" + st.last_price + "</div><div class='kpi-sub'>价格平稳</div></div>";
+    ? "<div class='kpi-tile'><div class='kpi-lbl'>OU 长期中枢</div><div class='kpi-val'>¥" + mr.equilibrium_price + "</div><div class='kpi-sub'>偏离 " + (mr.current_deviation_pct > 0 ? "+" : "") + mr.current_deviation_pct + "% · 半衰期 " + mr.half_life_days + " 天</div></div>"
+    : "<div class='kpi-tile'><div class='kpi-lbl'>长期中枢</div><div class='kpi-val'>¥" + st.last_price + "</div><div class='kpi-sub'>价格平稳无结构偏离</div></div>";
 
   return "<div class='kpi-quartet'>" +
-    "<div class='kpi-tile'><div class='kpi-lbl'>现价与分位</div><div class='kpi-val'>¥" + st.last_price + "</div><div class='kpi-sub'>90天分位 " + ((lb["90"] ? lb["90"].pct_position : 0) * 100).toFixed(0) + "% (1年 " + ((lb["365"] ? lb["365"].pct_position : 0) * 100).toFixed(0) + "%)</div></div>" +
+    "<div class='kpi-tile'>" +
+      "<div class='kpi-lbl'>现价与分位</div>" +
+      "<div class='kpi-val'>¥" + st.last_price + "</div>" +
+      "<div class='kpi-meter-row'><div class='kpi-meter-bar'><div class='kpi-meter-fill' style='width:" + p90 + "%'></div></div><span class='kpi-meter-txt'>90D分位 " + p90 + "%</span></div>" +
+      "<div class='kpi-sub'>1年历史分位 " + p365 + "%</div>" +
+    "</div>" +
     strikeHtml +
     conformalHtml +
     mrHtml +
@@ -716,38 +888,34 @@ function kpiQuartetHtml(card) {
 }
 
 function renderCard(card, profile, hist, keepEditorOpen, snap) {
-  var d = card.decision;
-  var pl = d.plain_language || null;
-  var plainHtml = (pl && pl.text)
-    ? "<div class='cond plain' style='margin-bottom:1.25rem;'><b>裁决摘要：</b>" + esc(pl.text) + "</div>" : "";
-  var hints = card.behavior_hints || [];
-  var hintsHtml = hints.length
-    ? "<div class='bhints' style='margin-bottom:1.25rem;'>" + hints.map(function (h) {
-        return "<div class='bhint'><b>" + esc(h.rule) + "</b> " + esc(h.text) + "</div>";
-      }).join("") + "</div>"
-    : "";
   var snapNote = snap
     ? "<div class='cond' style='margin-bottom:1rem;'><b>历史快照</b> · 保存于 " + esc(snap.at || "") + "</div>"
     : "";
 
   var simHtml = "<div class='simulator-box'>" +
-    "<div class='simulator-title'>参数推演模拟器 (HYPOTHESIS SIMULATOR)</div>" +
+    "<div class='simulator-title-row'>" +
+      "<div><span class='sim-pill'>CALIBRATION</span><h3 class='simulator-title'>参数推演模拟器 (HYPOTHESIS SIMULATOR)</h3></div>" +
+      "<span class='sim-subtitle'>动态微调用户画像参数，实时推演边际效用与决策树分支</span>" +
+    "</div>" +
     editorHtml(profile) +
     "</div>";
 
   var deepTelemetry = "<details class='telemetry-drawer'>" +
-    "<summary>+ QUANTITATIVE TELEMETRY (点击展开数理分解、K线图与全口径)</summary>" +
-    "<div style='margin-top:1rem;'>" +
-    "<div id='kline-box' style='margin-bottom:1rem;'></div>" +
+    "<summary>" +
+      "<span>+ QUANTITATIVE TELEMETRY (点击展开数理分解、全口径表格与依据链)</span>" +
+      "<span class='telemetry-pill'>5 MODELS AUDIT</span>" +
+    "</summary>" +
+    "<div class='telemetry-body' style='margin-top:1.2rem;'>" +
     p1Table(card) + decompTable(card) + conditionsHtml(card) + eventsHtml(card) + altTable(card) + evidenceHtml(card) +
     "</div>" +
     "</details>";
 
   return banner(card) +
+    arbitrageCardHtml(card, profile) +
+    priceSpectrumHtml(card) +
     kpiQuartetHtml(card) +
-    plainHtml +
-    priceProtectionHtml(card) +
-    hintsHtml +
+    chartCardHtml(card) +
+    behavioralGridHtml(card) +
     snapNote +
     userBarHtml() +
     simHtml +

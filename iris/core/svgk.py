@@ -8,14 +8,22 @@ GREEN = "#21a366"
 GRID = "#e2e2e2"
 AXIS = "#666666"
 
+DARK_RED = "#ff6b6b"
+DARK_GREEN = "#4ade80"
+DARK_GRID = "rgba(243, 241, 226, 0.08)"
+DARK_AXIS = "rgba(243, 241, 226, 0.45)"
+DARK_TEXT = "#f3f1e2"
+
 def _fmt(v: float) -> str:
     return ("%d" % round(v)) if abs(v) >= 100 else ("%.1f" % v)
 
 def kline_svg(title: str, ohlc: List[dict], out_path: Optional[str] = None,
-              width: int = 960, height: int = 360, show_ma: bool = False) -> Optional[str]:
+              width: int = 960, height: int = 360, show_ma: bool = False,
+              theme: str = "light") -> Optional[str]:
     """ohlc: [{date, open, high, low, close}]，按时间升序。"""
     if not ohlc:
         raise ValueError("无数据可画")
+    is_dark = (theme == "dark")
     pad_l, pad_r, pad_t, pad_b = 70, 24, 46, 30
     plot_w, plot_h = width - pad_l - pad_r, height - pad_t - pad_b
     n = len(ohlc)
@@ -33,25 +41,32 @@ def kline_svg(title: str, ohlc: List[dict], out_path: Optional[str] = None,
     def x(i: int) -> float:
         return pad_l + plot_w * (i + 0.5) / n
 
+    bg_fill = "#161515" if is_dark else "#ffffff"
+    title_fill = DARK_TEXT if is_dark else "#222"
+    grid_color = DARK_GRID if is_dark else GRID
+    axis_color = DARK_AXIS if is_dark else AXIS
+    up_color = DARK_RED if is_dark else RED
+    down_color = DARK_GREEN if is_dark else GREEN
+
     parts = []
     parts.append('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d">'
                  % (width, height, width, height))
-    parts.append('<rect x="0" y="0" width="%d" height="%d" fill="#ffffff"/>' % (width, height))
-    parts.append('<text x="%d" y="26" font-size="15" font-family="sans-serif" fill="#222">%s</text>'
-                 % (pad_l, _escape(title)))
+    parts.append('<rect x="0" y="0" width="%d" height="%d" fill="%s"/>' % (width, height, bg_fill))
+    parts.append('<text x="%d" y="26" font-size="15" font-family="system-ui, -apple-system, sans-serif" font-weight="600" fill="%s">%s</text>'
+                 % (pad_l, title_fill, _escape(title)))
     # 网格与 Y 轴
     for g in range(6):
         gy = pad_t + plot_h * g / 5.0
         price = hi - (hi - lo) * g / 5.0
         parts.append('<line x1="%d" y1="%.1f" x2="%d" y2="%.1f" stroke="%s" stroke-width="1"/>'
-                     % (pad_l, gy, pad_l + plot_w, gy, GRID))
-        parts.append('<text x="%d" y="%.1f" font-size="11" fill="%s" text-anchor="end">%s</text>'
-                     % (pad_l - 8, gy + 4, AXIS, _fmt(price)))
+                     % (pad_l, gy, pad_l + plot_w, gy, grid_color))
+        parts.append('<text x="%d" y="%.1f" font-size="11" font-family="monospace" fill="%s" text-anchor="end">%s</text>'
+                     % (pad_l - 8, gy + 4, axis_color, _fmt(price)))
     # 蜡烛
     cw = max(2.0, plot_w / n * 0.55)
     for i, k in enumerate(ohlc):
         up = k["close"] >= k["open"]
-        color = RED if up else GREEN
+        color = up_color if up else down_color
         cx = x(i)
         oy, cy = y(k["open"]), y(k["close"])
         hy, ly = y(k["high"]), y(k["low"])
@@ -64,8 +79,8 @@ def kline_svg(title: str, ohlc: List[dict], out_path: Optional[str] = None,
                      % (cx - cw / 2, top, cw, max(1.0, bot - top), color))
     # X 轴日期标签（首中尾）
     for idx in (0, n // 2, n - 1):
-        parts.append('<text x="%.1f" y="%d" font-size="10" fill="%s" text-anchor="middle">%s</text>'
-                     % (x(idx), height - 8, AXIS, ohlc[idx]["date"]))
+        parts.append('<text x="%.1f" y="%d" font-size="10" font-family="monospace" fill="%s" text-anchor="middle">%s</text>'
+                     % (x(idx), height - 8, axis_color, ohlc[idx]["date"]))
     parts.append('</svg>')
     svg_text = "\n".join(parts)
     if out_path is None:

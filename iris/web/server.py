@@ -275,7 +275,7 @@ def recompute(b: RecomputeBody):
 
 
 @app.get("/api/kline")
-def kline(sku_id: str, weeks: int = 0):
+def kline(sku_id: str, weeks: int = 0, theme: str = "dark"):
     d = pipeline.load_demo()
     if sku_id not in d["skus"]:
         raise HTTPException(404, "未知 SKU: %s" % sku_id)
@@ -287,7 +287,7 @@ def kline(sku_id: str, weeks: int = 0):
     src_label = "真实市场归档" if getattr(ser, "source", "") == "real-market-archive" else "合成演示数据"
     title = "%s %s %s · 周线（%s）" % (sku.brand.upper(),
                                      sku.product_id.upper(), sku.tier, src_label)
-    svg = kline_svg(title, ohlc, None)
+    svg = kline_svg(title, ohlc, None, theme=theme)
     return Response(content=svg, media_type="image/svg+xml; charset=utf-8")
 
 # ---------- M8 用户与数据管理 ----------
