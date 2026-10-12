@@ -43,9 +43,23 @@ function isAuthErr(e) {
   return m.indexOf("401") >= 0 || m.indexOf("未登录") >= 0;
 }
 function updateDialNav(pane) {
+  var menu = $("dial-items");
   var h = $("dial-item-history");
   var s = $("dial-item-showcase");
   var a = $("dial-item-auth");
+
+  var rotMap = {
+    "pane-history": "24deg",
+    "pane-showcase": "0deg",
+    "pane-questions": "0deg",
+    "pane-card": "0deg",
+    "pane-auth": "-24deg"
+  };
+
+  if (menu) {
+    menu.style.setProperty("--dial-rot", rotMap[pane] || "0deg");
+  }
+
   if (h) h.classList.toggle("active", pane === "pane-history");
   if (s) s.classList.toggle("active", pane === "pane-showcase" || pane === "pane-questions" || pane === "pane-card");
   if (a) a.classList.toggle("active", pane === "pane-auth");
